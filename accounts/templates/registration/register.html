@@ -1,0 +1,56 @@
+{% extends "base_central.html" %}
+{% load static %}
+
+{% block content_header %} 
+<span style="font-size:x-large;margin:10px">Registrace nového uživatele</span>
+{% endblock %} 
+{% block content_main %} 
+    <br>
+    {% if messages %}
+    <ul class="messages" style="color:red;font-weight:bold">
+        {% for message in messages %}
+            <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <form  action="{% url 'register' %}" method="POST">
+        <table>{% csrf_token %} 
+            {% for field in form %}
+            <tr>
+                <td  style="text-align:left;">{{ field.label_tag }}</td>
+                <td style="text-align:left;">{{ field }}
+                    {% if field.name == 'password1' %}
+                        <span style="font-size:small;font-weight: bold;"><input type="checkbox"  id="show-password">&nbsp;Zobrazit heslo&nbsp;</span>
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" style="text-align:left;font-size:small;">{{ field.help_text }}
+                    {% if field.name == 'born_on' %}<br><br>{% endif %}</td>           
+            </tr>
+            {% endfor %}
+        </table>
+        <hr><br>
+            <div style="display: flex; justify-content: space-between;">
+              <span><button class="button-font-size" type="submit">&nbsp;Registrovat&nbsp;</button>&nbsp;&nbsp;</span>
+              <span><a class="a-diskuse" href="{% url 'home_discussions'  %}">&nbsp;X&nbsp;</a></span>
+            </div>
+    </form>
+    <br><br>
+<script>
+    const passwordInput1 = document.querySelector('#id_password1');
+    const passwordInput2 = document.querySelector('#id_password2');
+    const showPasswordCheckbox = document.querySelector('#show-password');
+
+    showPasswordCheckbox.addEventListener('change', () => {
+        if (showPasswordCheckbox.checked) {
+            passwordInput1.type = 'text';
+            passwordInput2.type = 'text';
+        } else {
+            passwordInput1.type = 'password';
+            passwordInput2.type = 'password';
+        }
+    });
+</script>
+{% endblock %} 
+

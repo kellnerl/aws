@@ -1,0 +1,305 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <title>svobodné diskuse noncensura</title>
+  <link rel="stylesheet" type="text/css" href="{% static 'discussions/css/style_discussions.css' %}">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <script>
+    // Uložení pozice posunu stránky do localStorage
+    function saveScrollPosition() {
+      localStorage.setItem('scrollPosition', window.scrollY);
+    }
+
+    // Obnovení pozice posunu stránky z localStorage
+    function restoreScrollPosition() {
+      var scrollPosition = localStorage.getItem('scrollPosition');
+      if (scrollPosition) {
+        window.scrollTo(0, parseInt(scrollPosition));
+      }
+    }
+
+    // Zavolání funkce pro uložení pozice při scrollování stránky
+    window.addEventListener('scroll', saveScrollPosition);
+  </script>
+</head>
+
+<body onload="restoreScrollPosition()" style="padding: 0px;min-height: 100vh;">
+<header  style="height:44px;display: flex;justify-content: center;align-items: center;">
+   <!-- <div class="container" style="position:fixed; overflow: false; background-color: #dbdaf1">-->
+      <!--   <div class="container" style="background-color:white; height:35px;margin:0px;padding: 2px;font-size:small;position:fixed; z-index: 9998; overflow: false; display: flex; justify-content: space-between;">-->
+          <div class="container" style="overflow: auto; margin:0px;padding:8px;color: darkblue; background-color: white; font-size: small;position:fixed;overflow: false; z-index: 9998;display: flex; justify-content: space-between;min-width:800px">
+           <!-- <span style="margin-top:1px">
+              <img src="{% static 'images/diskuse_logo.png' %}" width="32px" height="auto" alt="Obrázek">
+            </span>-->
+            <span>
+                <a class="a-diskuse-reverze" style="height:32px;font-size: x-large;border-radius: 0px; padding: 2px;margin: 2px;" href="{% url 'home_discussions' %}">&nbsp;<b>Svobodné diskuse<span style="font-size:medium;">&nbsp;&nbsp;noncensura.cz</b>&nbsp;</span></a>  
+             </span>
+          {% if not login %}
+            <span style="margin-top:11px">
+             <a href="{% url 'day_events' %}"" style="color:darkblue;">{{svatek}}</a>&nbsp;&nbsp;&nbsp;&nbsp;
+            </span>
+          {% if request.user.is_anonymous %} 
+            <span style="margin-top:8px">
+             <a href="{% url 'login' %}">přihlásit</a>
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <a href="{% url 'using_manual' %}" class="a-small-button">&nbsp;&quest;&nbsp;</a>
+            </span>
+          {% else %} 
+          <span style="margin-top:8px">
+            <div class="dropdown">
+              <span class="s-char">{{ request.user.first_name|slice:"0:1" }}{{ request.user.last_name|slice:"0:1" }}</span>
+              <span style="font-size:medium;"><!--{{ request.user.username }}-->&nbsp;&blacktriangledown;&nbsp;&nbsp;&nbsp;</span>
+              <div class="dropdown-content" style="text-align: left; font-size: small; position: fixed;overflow: true;z-index: 9999;">
+                <a href="{% url 'user_info' request.user.username %}">Profil uživatele</a>
+                <hr>
+                <a href="{% url 'user_detail' request.user.id %}">Nastavení profilu</a>
+                <a href="{% url 'user_context' request.user.id %}">Nastavení prostředí</a>
+                <hr>
+                <a href="{% url 'password_reset' %}">Reset hesla</a>
+                <hr>
+                <a href="{% url 'logout' %}">Odhlásit se</a>
+              </div>       
+            </div>
+            &nbsp;&nbsp;&nbsp;
+            <a href="{% url 'using_manual' %}" class="a-small-button">&nbsp;&quest;&nbsp;</a>
+             </span>
+          {% endif %} 
+          {% endif %} 
+     </div>
+</header>
+
+<main>
+    {% if messages %}
+    <ul>
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    
+    {% block base_content %}
+    {% endblock %}
+</main>
+<footer>
+    <div class="container" style="overflow: auto; color: white; background-color: darkblue; font-size: small;">
+      <span>portál 'Svobodné diskuse' na www.noncensura.cz provozuje IPE software s.r.o., verze {{version}}</span>
+      <a href="mailto: info@ipe.cz" style="color: white; text-align: right;">email: info@ipe.cz </a>
+      {% if request.user.is_anonymous %} 
+        <a href="{% url 'register' %}" style="color: white; text-align: right;">nová registrace</a>
+      {% endif %}   
+    </div> 
+</footer>
+<!-- Vložení plovoucího menu -->
+
+<script>
+
+document.addEventListener('DOMContentLoaded', function() {
+            var dropdown = document.querySelector('.dropdown');
+            var dropdownContent = document.querySelector('.dropdown-content');
+            
+            dropdown.addEventListener('click', function() {
+                dropdownContent.style.display = dropdownContent.style.display === 'none' ? 'block' : 'none';
+            });
+        });
+
+
+  function redirectToURL(url) {
+    window.location.href = url;
+  }
+  var sectionValue = "{{ section }}";
+  var tabId, tabContentId, tabLinks;
+  if (sectionValue==0) {
+      tabContentId = "tabx-content";
+      tabId = "tab"+sectionValue; 
+  } else {
+    tabContentId = "tabx-content";
+    tabId = "tab"+sectionValue;
+  };
+  
+  tabContent = document.getElementsByClassName("tab-content");
+  for (i = 0; i < tabContent.length; i++) {
+      tabContent[i].style.display = "none";    
+  }
+  if (tabContent.length>0) {
+    tabContent[0].style.justifyContent = "center";
+    tabContent[0].style.alignItems = "center";
+  }
+ 
+  tabLinks = document.getElementsByClassName("tab");
+  for (i = 0; i < tabLinks.length; i++) {
+
+      tabLinks[i].style.backgroundColor = "#d9d9d9";
+      var hint = tabLinks[i].getAttribute("hint");
+      tabLinks[i].style.backgroundColor = "#bebebe";
+      tabLinks[i].style.color = "#3a3a3a";
+      tabLinks[i].style.fontWeight = "bold";
+  }
+  /* první tab */
+  if (tabLinks.length>0) {
+      tabLinks[0].style.color = "darkblue";
+      tabLinks[0].style.fontWeight = "bold"; 
+  }
+  /* vybraný tab */ 
+  if (document.getElementById(tabContentId) != null) {
+      document.getElementById(tabContentId).style.display = "block";
+      document.getElementById(tabId).style.color = "black";
+      var hint = document.getElementById(tabId).getAttribute("hint");
+      if (hint=="M") {
+        document.getElementById(tabId).style.color = "darkred";
+      }
+      if (hint=="T") {
+        document.getElementById(tabId).style.color = "blue";
+      }
+      if (hint=="D") {
+        document.getElementById(tabId).style.color = "#471fb6";
+      }
+      document.getElementById(tabId).style.border = "0px";
+      document.getElementById(tabId).style.backgroundColor = "#e0e0e0"; 
+      tabLinks[0].style.color = "darkblue";
+      document.getElementById(tabId).style.fontWeight = "bold";
+  }
+
+  var sectionValue = "{{ user_section_name }}";
+  if (sectionValue.length>0) {
+  var tabId, tabContentId, tabLinks;
+
+  tabContentId = "tabx-content3";
+  tabId = "tab_"+sectionValue; 
+
+  tabContent = document.getElementsByClassName("tabx-content3");
+  for (i = 0; i < tabContent.length; i++) {
+      tabContent[i].style.display = "none";    
+  }
+  if (tabContent.length>0) {
+    tabContent[0].style.justifyContent = "left";
+    tabContent[0].style.alignItems = "left";
+  }
+ 
+  tabLinks = document.getElementsByClassName("tab");
+  for (i = 0; i < tabLinks.length; i++) {
+      tabLinks[i].style.backgroundColor = "#d9d9d9";
+      var hint = tabLinks[i].getAttribute("hint");
+      if (hint=="D") {
+        tabLinks[i].style.color = "#471fb6";
+      }
+      if (hint=="M") {
+        tabLinks[i].style.fontWeight = "bold";
+      }
+      if (hint=="T") {
+        tabLinks[i].style.fontWeight = "bold";
+      }
+  }
+     
+  if (document.getElementById(tabContentId) != null) {
+      document.getElementById(tabContentId).style.display = "block";
+      document.getElementById(tabId).style.backgroundColor = "darkblue"; 
+      document.getElementById(tabId).style.color = "#ffffff"; 
+  }
+ }
+  var sectionValue = "{{ section_name }}";
+  var tabId, tabContentId, tabLinks;
+
+  tabContentId = "tabx-content2";
+  tabId = "tab_"+sectionValue;   
+  
+  tabContent = document.getElementsByClassName("tabx-content2");
+  for (i = 0; i < tabContent.length; i++) {
+      tabContent[i].style.display = "none";    
+  }
+
+  if (tabContent.length>0) {
+    tabContent[0].style.justifyContent = "left";
+    tabContent[0].style.alignItems = "left";
+  }
+
+     
+  if (document.getElementById(tabContentId) != null) {
+      document.getElementById(tabContentId).style.display = "block";
+      document.getElementById(tabId).style.backgroundColor = "darkblue"; 
+      document.getElementById(tabId).style.color = "#ffffff"; 
+  }  
+ 
+ function zobrazitElement(senderId, elementId, nodename) {
+  saveScrollPosition()
+  var skrytyElement = document.getElementById(elementId);
+  var senderElement = document.getElementById(senderId);
+  skrytyElement.style.display = "block";
+  senderElement.style.display = "none";
+  restoreScrollPosition()
+}
+
+function zobrazitElement2(senderId, elementId, nodename) {
+  saveScrollPosition()
+  var skrytyElement = document.getElementById(elementId);
+  var senderElement = document.getElementById(senderId);
+  skrytyElement.style.display = "flex";;
+  senderElement.style.display = "none";
+  restoreScrollPosition()
+}
+
+var elements = document.getElementsByClassName('rate');
+for (var i = 0; i < elements.length; i++) {
+elements[i].addEventListener('click', function() {
+
+  var url = this.getAttribute('data-url');
+  var elem = this
+  var xhr = new XMLHttpRequest();
+  var csrftoken = getCookie('csrftoken');
+  xhr.open('POST', url);
+  xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+  xhr.setRequestHeader('X-CSRFToken', csrftoken); // Set the CSRF token header
+  xhr.onload = function() {
+    if (xhr.status === 200) {
+      // Successful response - you can perform additional actions here
+      var response = JSON.parse(xhr.responseText);
+      elem.innerHTML = response.data.new_value + " "; // Update the element with the new value
+
+    } else {
+      // Error processing the request
+    }
+  };
+  xhr.send();
+});
+}
+
+// Helper function to retrieve the CSRF token from the cookie
+function getCookie(name) {
+var cookieValue = null;
+if (document.cookie && document.cookie !== '') {
+  var cookies = document.cookie.split(';');
+  for (var i = 0; i < cookies.length; i++) {
+    var cookie = cookies[i].trim();
+    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+      cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+      break;
+    }
+  }
+}
+return cookieValue;
+}
+</script>
+<script>
+  // Získání formuláře a tlačítek pomocí jejich ID
+  var form = document.getElementById("searchForm");
+  var searchButton = document.getElementById("searchButton");
+  var clearButton = document.getElementById("clearButton");
+
+  // Přidání události na stisk klávesy
+  form.addEventListener("keydown", function(event) {
+      // Pokud byla stisknuta klávesa Enter
+      if (event.keyCode === 13) {
+          // Zamezení výchozího chování (odeslání formuláře)
+          event.preventDefault();
+          // Ověření, které tlačítko je aktivní a provedení akce
+          //if (document.activeElement === searchButton) {
+              searchButton.click(); // Simulace kliknutí na tlačítko
+          //}
+      }
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,102 @@
+[
+  {
+    "model": "discussions.articletheme",
+        "pk": 1,
+        "fields": {
+          "name": "vše",
+          "number": 0,
+          "description": "všechna a ostatní témate"
+        }
+  },
+  {
+   "model": "discussions.articletheme",
+       "pk": 2,
+       "fields": {
+         "name": "politika",
+         "number": 1,
+         "description": "články o politice"
+       }
+  },
+  {
+    "model": "discussions.articletheme",
+       "pk": 3,
+       "fields": {
+         "name": "zprávy",
+         "number": 2,
+         "description": "zprávy"
+       }
+  },
+  {
+    "model": "discussions.articletheme",
+        "pk": 4,
+        "fields": {
+          "name": "společnost",
+          "number": 3,
+          "description": "sociální a společenská témata"
+        }
+  },
+  {
+    "model": "discussions.articletheme",
+        "pk": 5,
+        "fields": {
+          "name": "ekonomika finance",
+          "number": 4,
+          "description": "ekonomika a finance"
+        }
+  },
+  {
+    "model": "discussions.articletheme",
+         "pk": 6,
+         "fields": {
+           "name": "věda technika",
+           "number": 5,
+           "description": "články o technice a vědeckých objevech a tématech"
+         }
+  },
+  {
+    "model": "discussions.articletheme",
+       "pk": 7,
+       "fields": {
+         "name": "kultura",
+         "number": 6,
+         "description": "články o hudbě, divadle, filmech a výtvarném umění"
+       }
+  },
+  {
+    "model": "discussions.articletheme",
+       "pk": 8,
+       "fields": {
+         "name": "sport",
+         "number": 7,
+         "description": "články o sportu a sportovní zprávy"
+       }
+  },
+  {
+   "model": "discussions.articletheme",
+       "pk": 9,
+       "fields": {
+         "name": "hobby",
+         "number": 8,
+         "description": "záliby, hobby, volný čas"
+       }
+    },
+    {
+    "model": "discussions.articletheme",
+        "pk": 10,
+        "fields": {
+          "name": "vztahy sex",
+          "number": 9,
+          "description": "partnerské vztahy a sexuální problematika"
+        }
+  },
+  {
+   "model": "discussions.articletheme",
+       "pk": 11,
+       "fields": {
+         "name": "bulvár",
+         "number": 10,
+         "description": "bulvární články"
+       }
+  } 
+  ]
+   

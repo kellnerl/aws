@@ -1,0 +1,50 @@
+{% extends "base_header.html" %}
+{% load static %}
+{% load custom_filters %}
+
+{% block content_header %}
+<span style="font-size:x-large;margin:10px">Pokročilé vyhledávání diskusí</span>
+{% endblock %}
+
+{% block content_main %}
+
+<form  method="POST" action="{% url 'advanced_search' %}"">
+  <table>
+    {% csrf_token %}
+    {% for field in form %}
+      <tr>
+        <td>{{ field.label_tag }}</td>
+        <td>{{ field }}</td>
+      </tr>
+    {% endfor %}
+  </table>
+  <hr>
+  <div style="display: flex; justify-content: space-between;">
+    <button type="submit" class="button-font-size">&nbsp;Vyhledat diskuse&nbsp;</button>&nbsp;&nbsp;
+    <span style="text-align: right; font-size: medium;"><a class="a-diskuse" href="{% url 'home_discussions' %}">&nbsp;X&nbsp;</a></span>
+  </div>
+  </form>
+  <style>
+    .text-area-frame {
+        border: 1px solid #010000;
+        padding: 4px;
+        background-color: #f5f4f4;
+        margin: 1 auto
+    }
+  </style>
+    <br>
+   {% if page_obj %}
+    <span style="color:#471fb6;"><b>Dle zvolených kritérií nalezeno {{diskuses.count}} diskusí.</b></span>
+    {% if diskuses.count > page_obj|length %}
+     <span style="color:#471fb6;">Zobrazeno prvních {{page_obj|length}}.</span>
+     {% endif  %}
+   {% else %}
+     <span style="color:#471fb6;">Dle zvolených kritérií nenalezena žádná diskuse</span>
+     <div style="text-align: right;""><img src="{% static 'images/noncensura.gif' %}" width="180" height="auto" alt="Obrázek"></div> 
+   {% endif  %}
+    <div>
+      {% for discussion in page_obj %}
+        {% include "discussions/discussion_frame.html" %}
+      {% endfor %}
+    </div> 
+{% endblock %}

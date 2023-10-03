@@ -1,0 +1,21 @@
+{% load mptt_tags %}
+  {% recursetree comment.reply_comments %}
+    <div>
+    <li class="comment" style="list-style-type: none;">
+        {% include "comments/node_element.html" %}
+      
+        {% if not node.is_leaf_node %}
+
+        {% if node.level == 0 and not auto_show_all_replies and root_id != node.id  %}
+        
+            <ul class="replies" style="display: none;list-style-type: none;" id="ul{{node.id}}">
+        {% else %}
+            <ul class="replies">
+        {% endif %}
+          {{ children }}
+          </ul>
+        {% endif %}
+        </li>
+   </div>
+  {% endrecursetree %}
+ 

@@ -1,0 +1,52 @@
+# Použijte základní obraz Python s instalací Django
+FROM python:3.9
+
+# Nastavte pracovní adresář
+WORKDIR /diskuze
+
+# Zkopírujte requirements.txt do kontejneru
+COPY requirements.txt .
+
+# Nainstalujte závislosti
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Zkopírujte zbytek projektu do kontejneru
+COPY . .
+
+# Nastavte proměnné prostředí pro Django
+# ENV DJANGO_SETTINGS_MODULE=diskuze.settings
+ENV PYTHONUNBUFFERED 1
+
+# Nastavit proměnné prostředí pro připojení k PostgreSQL
+ENV DB_HOST=localhost
+ENV DB_PORT=5432
+ENV DB_NAME=diskuzedb
+ENV DB_USER=postgres
+ENV DB_PASSWORD=diskuzepostgres
+ENV POSTGRES_HOST=localhost
+ENV POSTGRES_PORT=5432
+ENV POSTGRES_DB=diskuzedb
+ENV POSTGRES_USER=postgres
+ENV POSTGRES_PASSWORD=diskuzepostgres
+
+# Nainstalujte PostgreSQL
+#RUN apt-get update && apt-get install -y postgresql-client
+
+RUN sleep 10
+# Spustit migrace a sběr statických souborů
+RUN python manage.py makemigrations
+RUN python manage.py migrate
+RUN python manage.py collectstatic --noinput
+
+#RUN echo "from django.contrib.auth import get_user_model; User = get_user_model(); #User.objects.filter(username='admin').exists() or User.objects.create_superuser('admin', #'ipe@ipe.com', 'admin')" | python manage.py shell
+
+# Exponujte port 8000
+EXPOSE 8000
+
+# Příkaz pro čekání na spuštění databázového serveru PostgreSQL
+# Příkaz 'sleep 5' je pouze dočasný, doporučuje se použít lepší způsob čekání na dostupnost databáze
+CMD bash -c "sleep 5 && \
+#    python manage.py loaddata discussions/fixtures/*.json && \
+    python manage.py runserver 0.0.0.0:8000"
+
+

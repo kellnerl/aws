@@ -1,0 +1,112 @@
+from django import forms
+import requests
+from utils import remove_utm_parameters
+from django.core.exceptions import ValidationError
+from discussions.models import Comment
+from discussions.models import Domain
+from discussions.models import Discussion
+from discussions.models import ArticleTheme
+
+
+class URLExistsValidator:
+    def __call__(self, value):
+        try:
+            response = requests.head(value)
+            if response.status_code != 200:
+                raise  ValidationError("The URL does not exist.")
+        except requests.exceptions.RequestException:
+            raise ValidationError("An error occurred while checking the URL.")
+
+class URLField(forms.URLField):
+    default_validators = [URLExistsValidator()]
+
+# comment creating a form
+class CommentCopyLinkForm(forms.ModelForm):
+    url=forms.CharField (label='',required=True, widget=forms.TextInput(attrs={'class': 'input-font','size': '42'}))
+    comment=forms.CharField (label='',required=True, widget=forms.TextInput(attrs={'class': 'input-font','size': '42'}))
+  
+    class Meta:
+        model = Comment
+        fields = ['url']  # Uveďte pole, která chcete zahrnout do formuláře
+
+# comment creating a form
+class CommentForm(forms.ModelForm):
+    content=forms.CharField (label='',required=True, widget=forms.Textarea(attrs={'rows': '6', 'size': '80', 'placeholder':'napište komentář k článku'}))
+  
+    class Meta:
+        model = Comment
+        fields = ['content']  # Uveďte pole, která chcete zahrnout do formuláře
+
+# comment reply a form
+class CommentReplyForm(forms.ModelForm):
+    content=forms.CharField (label='',required=False, widget=forms.Textarea(attrs={'rows': '8', 'placeholder':'napište reakci ke komentáři'}))
+  
+    class Meta:
+        model = Comment
+        fields = ['content']  # Uveďte pole, která chcete zahrnout do formuláře
+
+class SearchDiscussionForm(forms.ModelForm):
+    search_value = forms.CharField(max_length=320, widget=forms.TextInput(attrs={'class': 'input-font', 'size':65, 'placeholder':'zadejte část nebo celé url článku nebo část nebo celý titulek diskuse'}))
+
+    class Meta:
+        model = Discussion
+        fields = ['search_value']
+        
+class AdvancedSearchDiscussionForm(forms.ModelForm):
+    title=forms.CharField(label='Titulek článku', required=False, widget=forms.TextInput(attrs={'class': 'input-font', 'size':60, 'placeholder':'hledaný text'}))
+    author=forms.CharField(label='Author článku', required=False, widget=forms.TextInput(attrs={'class': 'input-font', 'size':20, 'placeholder':'jméno autora článku'}))
+    domain_choices = [('', '---------')] + list(Domain.objects.values_list('domain','domain'))
+    domain_field = forms.ChoiceField(choices=domain_choices, label='Doména článku', required=False)
+    theme_choices = [('', '---------')] + list(ArticleTheme.objects.values_list('id','name'))
+    theme_field = forms.ChoiceField(choices=theme_choices, label='Téma článku', required=False)
+    search_value_created_before = forms.DateField(label='Diskuse vložena před',required=False, widget=forms.SelectDateWidget())
+    search_value_created_after  = forms.DateField(label='Diskuse vložena po',required=False, widget=forms.SelectDateWidget())
+    search_value_last_comment_before = forms.DateField(label='Poslední komentář před',required=False, widget=forms.SelectDateWidget())
+    search_value_last_comment_after  = forms.DateField(label='Poslední komentář po',required=False,  widget=forms.SelectDateWidget())
+    orderby_choices = [('1', 'dle času založení diskuze'),('2', 'dle počtu příspěvků'),('3', 'dle času posledního příspěvku')]
+    orderby = forms.ChoiceField(choices=orderby_choices, label='Seřadit dle', widget=forms.RadioSelect, required=True)
+    class Meta:
+        model = Discussion
+        # Uveďte pole, která chcete zahrnout do formuláře
+        fields = ['title', 'domain_field','theme_field', 'author', 'search_value_created_before', 'search_value_created_after', 'search_value_last_comment_before', 'search_value_last_comment_after','active','orderby']  
+        labels = {'active':'Aktivní diskuse'} 
+
+
+# discussion creating a form
+class CreateDiscussionForm(forms.ModelForm):
+    url=URLField(label='URL článku', max_length=400, widget=forms.TextInput(attrs={'class': 'input-font', 'size':64, 'placeholder':'povinné pole - zkopíruj url článku'}))
+    title=forms.CharField(label='Titulek článku', max_length=400, widget=forms.TextInput(attrs={'class': 'input-font', 'size':44, 'placeholder':'Povinné pole - zadej titulek článku'}))
+    author=forms.CharField(label='Author článku', required=False, widget=forms.TextInput(attrs={'class': 'input-font', 'size':20, 'placeholder':'jméno autora článku'}))
+    theme_choices = [('', '---------')] + list(ArticleTheme.objects.filter(id__gt=1).values_list('id','name'))
+    theme_field = forms.ChoiceField(choices=theme_choices, label='Téma článku', required=True)
+ #empty_label='Nezadáno',
+    class Meta:
+        model = Discussion
+        fields = ['url','title','theme_field','author']
+        labels = {'url': 'Url článku:', 'title':'Titulek článku',}
+       # widgets = {
+       #     'url': forms.TextInput(attrs={'size':82, 'class': 'input-font', 'placeholder':'povinné pole - zkopíruj url článku'}),
+       #     'title': forms.TextInput(attrs={'size':48, 'class': 'input-font', 'placeholder':'povinné pole - zadej titulek článku'}),
+       # }
+
+    def clean_url(self):
+        url = self.cleaned_data['url']
+        # Kontrola existence URL
+        response = requests.head(url)
+        if response.status_code != 200:
+            raise forms.ValidationError('Neplatná URL.', 'invalid_url')
+
+        # Kontrola unikátnosti URL v modelu Article
+        if url:
+            if Discussion.objects.filter(url=url).exists():
+                raise forms.ValidationError('Tato URL již existuje.', 'article_exists')
+        return remove_utm_parameters(url)
+    
+    def save(self, commit=True):
+        instance = super().save(commit=commit)
+        
+        # Create and save Model Diskuse
+        
+        return instance
+    
+   

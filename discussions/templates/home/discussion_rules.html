@@ -1,0 +1,45 @@
+{% extends "base_header.html" %}
+{% load static %}
+
+{% block content_header %} 
+<span style="font-size:x-large;margin:10px">Pravidla registrace a diskutování</span>
+{% endblock %}
+
+{% block content_main %}
+            <article>
+                <section>
+                <p><b>Registrace uživatele</b></p>
+                <lo>
+                <li>Osoby mladší 15ti let. Na našem diskusním porále se mohou registrovat pouze osoby starší 14 let.</li>
+                <li>Vícenásobná registrace. Vícenásobná registrace není povolena a je považována za porušení podmínek registrace.
+                  Provozovatel porálu má právo smazat duplicitní účty. </li>
+                <li>Registrovaný uživatel se zavazuje při využívání služeb diskusního portálu
+                   dodržovat platné právní předpisy, podmínky registrace a pravidla diskutování
+                   ; případné porušení může mít za následek zrušení či pozastavení registrace.</li>
+                <li>Registrovaný uživatel nesmí při využívání služeb diskusního portálu
+                   rozesílat obchodní sdělení, Nesmí v rámci služby rozesílat informace za účelem zmatení či uvedení v omyl uživatele internetu (phishing). 
+                   Uživatelé nesmí šířit počítačové viry a jiný závadný software.
+                  </li>   
+                <li>Blokace a zrušení registrace. Při poskytnutí nepravdivých údajů, porušení podmínek diskutování
+                  může být registrace zrušena nebo zablokována po dobu stanovenou provozovatelem.
+              </lo> 
+              <hr>
+              <p><b>Diskutování</b></p>
+                <lo>
+                  <li>Nejsou přípustné příspěvky vulgární nebo obscénní.</li>
+                  <li>Není povoleno opakované vkládání stejných příspěvků, tzv. tapetování.</li>
+                  <li>Nejsou přípustné příspěvky obsahující urážky, pomluvy či vyhrožování komukoliv násilím. </li>
+                  <li>Nejsou přípustné příspěvky obsahující podněcování nenávisti k jednotlivcům nebo skupinám obyvatel, zejména na základě národnostní, rasové nebo náboženské příslušnosti.</li>
+                </lo> 
+                </article>
+            <hr><br>
+            <div style="text-align:right">
+              <a class="a-diskuse" href="{%url 'navigate_back' %}">&nbsp;X&nbsp;</a>&nbsp;&nbsp;&nbsp;
+             <br><br>
+            </div>
+            <div style="text-align: right;""><img src="{% static 'images/noncensura.gif' %}" width="200" height="auto" alt="Obrázek"></div>
+
+{% endblock %}
+{% block footer %}
+  {{ footer }}
+{% endblock %}

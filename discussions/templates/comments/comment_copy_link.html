@@ -1,0 +1,23 @@
+{% extends "base_central.html" %}
+{% load static %}
+
+
+
+{% block content_header %} 
+<span style="font-size:x-large;margin:10px">Sdílet URL odkaz komentáře</span>
+{% endblock %} 
+{% block content_main %} 
+    <div style="text-align:right;"><a class="a-diskuse" href="{% url 'navigate_back' %}">&nbsp;X&nbsp;</a></div>
+    <hr>
+    <form  action="{% url 'comment_copy_link' comment_id%}" method="POST">
+        {% csrf_token %}
+        <input type="text" size="40" name="{{ form.url.name }}" value="{{ form.url.value }}" readonly>
+        <input type="text" size="40" name="{{ form.comment.name }} " value="{{ form.comment.value }}" hidden>
+        <button type="submit" onclick="copyToClipboard('url', 'comment')">Zkopírovat do schránky</button>
+    <br><br>
+    </form>
+{% endblock %} 
+
+
+
+

@@ -1,0 +1,52 @@
+{% extends "base_header.html" %}
+{% load static %}
+
+{% block content_header %} 
+<span style="font-size:x-large;margin:10px">Události, které nastaly dne {{day}}.{{month}}.</span>
+{% endblock %}
+
+{% block content_main %}
+<div style="display: flex; justify-content: space-between;">
+<span style="text-align: left;">
+    <div class="horizontal-line" style="margin-top:12px;margin-bottom:6px;justify-content:left">
+        <span class="line-text{% if daydelta == 'yesterday' %}-selected{% else %}-invisible{% endif%}" style="font-size:medium;">
+         <a class="a-bold-hover{% if daydelta == 'yesterday' %}-selected{% endif%}" href="?daydelta=yesterday" title="události včera">&nbsp;včera&nbsp;</a>
+       </span>
+       <span class="line-text{% if daydelta == 'today' %}-selected{% else %}-invisible{% endif%}" style="font-size:medium;">
+         <a class="a-bold-hover{% if daydelta == 'today' %}-selected{% endif%}" href="?daydelta=today" title="události dnes">&nbsp;dnes&nbsp;</a>
+       </span>
+       <span class="line-text{% if daydelta == 'tommorow' %}-selected{% else %}-invisible{% endif%}" style="font-size:medium;">
+         <a class="a-bold-hover{% if daydelta == 'tommorow' %}-selected{% endif%}" href="?daydelta=tommorow" title="události zítra">&nbsp;zítra&nbsp;</a>
+       </span>
+     </div>
+</span>
+<span>
+    <a class="a-diskuse" href="{%url 'navigate_back' %}">&nbsp;X&nbsp;</a>&nbsp;&nbsp;&nbsp;
+</span>
+</div>
+<br>
+<div>
+<table style="border-collapse: collapse;width: 100%;background-color:white;">
+    <thead>
+        <tr style="border: 1px solid black;padding: 8px;text-align: left;">
+            <th>&nbsp;rok</th>
+            <th>událost</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in events %}
+        <tr style="border: 1px solid black;padding: 8px;text-align: left;">
+            <td>&nbsp;{{ item.year }}&nbsp;</td>
+            <td style="font-size:small;">{{ item.text }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</div>
+            <hr>
+            <div style="text-align:right">
+              <a class="a-diskuse" href="{%url 'navigate_back' %}">&nbsp;X&nbsp;</a>&nbsp;&nbsp;&nbsp;
+              <br><br>
+            </div>
+  
+{% endblock %}

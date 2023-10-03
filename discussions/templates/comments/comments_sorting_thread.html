@@ -1,0 +1,14 @@
+
+  <div class="horizontal-line" style="justify-content:left">
+     <span class="line-text" style="font-size:medium;">
+      {% if diskuse_id == 0 %}
+      <a class="a-bold-hover"  href="{% url 'user_comments' request.user.username %}">&nbsp;všechny komentáře&nbsp;</a>
+      {% else %}
+      <a class="a-bold-hover"  href="{% url 'comments' diskuse_id %}">&nbsp;všechny komentáře&nbsp;</a>
+      {% endif %}    
+    </span>
+    <span class="line-text-selected" style="font-size:medium;">
+      <a class="a-bold-hover-selected"  href="#">&nbsp;vybrané vlákno&nbsp;</a>
+    </span>
+    <span class="line-text" style="white-space: pre-line;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+  </div>

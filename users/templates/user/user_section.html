@@ -1,0 +1,48 @@
+{% extends "base_header.html" %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'users/css/style_users.css' %}">
+{% block footer %}
+{% endblock %}
+
+{% block content_header %}
+<div class="white_container">
+  <h2>Vytvoření uživatelské sekce </h2>
+  <div style="text-align: right; font-size: large;"><a href="{% url 'user_context' request.user.id %}">odejít</a></div>
+</div>
+{% endblock %}
+
+{% block content_main %}
+<div class="container">
+
+<form  method="POST" action="{% url 'user_section_new' userid 8 %}">
+  <table>
+    {% csrf_token %}
+    {% for field in form %}
+      <tr>
+        <td>{{ field.label_tag }}</td>
+        <td>{{ field }}</td>
+      </tr>
+    {% endfor %}
+  </table>
+  <button type="submit" class="button-font-size">Uložit sekci</button>
+  </form>
+ 
+  <br>
+  <p style="color:#471fb6;">Domény této sekce:</p>
+  
+  {% for domain in section_domains %}
+  <div class="text-area-frame" style="margin-bottom: 0.0em;">
+    <p style="margin-bottom: 0.2em; margin-top: 0.1em;font-size: large;">
+      <span>{{domain.domain}}</span>
+      <span><a class="a-diskuse" href="?op=d%">Odebrat doménu </a>&nbsp;&nbsp;</a></span>
+    </p>
+  </div> 
+  <br>
+  {% endfor %} 
+  <br>
+  <a class="a-diskuse" href="{% url 'user_section_domains' usersectionid  %}">&nbsp;Přidat domény {{ userdetail.user.username}}&nbsp;</a>&nbsp;&nbsp;
+
+  <br>
+  </div>
+
+{% endblock %}

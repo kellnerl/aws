@@ -1,0 +1,18 @@
+
+{% extends "base_central.html" %}
+{% load static %}
+
+{% block content_header %} 
+<span style="font-size:x-large;margin:10px">Registrace nového uživatele</span>
+{% endblock %} 
+{% block content_main %} 
+    <div style="text-align: right; font-size: large;"></div>
+    <p>Registrace uživatele {{ username }} proběhla úspěšně.,</p>
+    <br>
+    <p>Účet je vytvořen, ale zatím je neaktivní.</p>
+    <p>Na zadanou emailovou adresu byl odeslán email pro aktivaci účtu.</p>
+    <br>  
+    <br><br>
+    <a class="a-small-button" href="{% url 'home_discussions' %}" style="color: rgb(9, 24, 190); text-align: right;">&nbsp;pokračovat&nbsp;</a>
+    <br><br><br>
+{% endblock %} 

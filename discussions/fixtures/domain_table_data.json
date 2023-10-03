@@ -1,0 +1,183 @@
+[
+    {
+   "model": "discussions.domain",
+       "pk": 1,
+       "fields": {
+         "domain": "www.idnes.cz",
+         "parent": null,
+         "section": 3
+       }
+    },
+    {
+     "model": "discussions.domain",
+       "pk": 2,
+       "fields": {
+         "domain": "www.seznam.cz",
+         "parent": null,
+         "section": 4
+       }
+    },
+    {
+   "model": "discussions.domain",
+       "pk": 3,
+       "fields": {
+          "domain": "neviditelnypes.lidovky.cz",
+          "parent": null,
+          "section": 5
+       }
+   },
+   {
+    "model": "discussions.domain",
+        "pk": 4,
+        "fields": {
+            "domain": "www.lidovky.cz",
+            "parent": 3,
+            "section": 5
+        }
+     },
+   {
+   "model": "discussions.domain",
+       "pk": 5,
+       "fields": {
+          "domain": "www.atlas.cz",
+          "parent": null,
+          "section": 6
+       }
+    },
+   {
+   "model": "discussions.domain",
+       "pk": 6,
+       "fields": {
+          "domain": "atlas.centrum.cz",
+          "parent": 5,
+          "section": 6     
+        }
+    },
+    {
+       "model": "discussions.domain",
+          "pk": 7,
+          "fields": {
+             "domain": "www.aktualne.cz",
+             "parent": 5,
+             "section": 6      
+           }
+        },
+   {
+      "model": "discussions.domain",
+          "pk": 8,
+          "fields": {
+             "domain": "www.seznamzpravy.cz",
+             "parent": 2,
+             "section": 4   
+           }
+   },
+   {
+        "model": "discussions.domain",
+            "pk": 9,
+            "fields": {
+                "domain": "www.novinky.cz",
+                "parent": 2,
+                "section": 4     
+            }
+   },
+   {
+      "model": "discussions.domain",
+            "pk": 10,
+            "fields": {
+                "domain": "www.super.cz",
+                "parent": 2,
+                "section": 4    
+            }
+   },
+   {
+      "model": "discussions.domain",
+            "pk": 11,
+            "fields": {
+                "domain": "www.sport.cz",
+                "parent": 2,
+                "section": 4      
+            }
+   },
+   {
+      "model": "discussions.domain",
+            "pk": 12,
+            "fields": {
+                "domain": "www.stream.cz",
+                "parent": 2,
+                "section": 4     
+            }
+   },
+   {
+      "model": "discussions.domain",
+            "pk": 13,
+            "fields": {
+                "domain": "www.prozeny.cz",
+                "parent": 2,
+                "section": 4   
+            }   
+   },
+   {
+      "model": "discussions.domain",
+            "pk": 14,
+            "fields": {
+               "domain": "zpravy.aktualne.cz",
+               "parent": 5,
+               "section": 6      
+            }
+   },
+   {
+      "model": "discussions.domain",
+               "pk": 15,
+               "fields": {
+                  "domain": "nazory.aktualne.cz",
+                  "parent": 5,
+                  "section": 6      
+               }
+   },
+   {
+      "model": "discussions.domain",
+                  "pk": 16,
+                  "fields": {
+                     "domain": "sport.aktualne.cz",
+                     "parent": 5,
+                     "section": 6     
+                  }
+   },
+   {
+      "model": "discussions.domain",
+                  "pk": 17,
+                  "fields": {
+                        "domain": "magazin.aktualne.cz",
+                        "parent": 5,
+                        "section": 6   
+                  }
+   },
+   {
+      "model": "discussions.domain",
+                     "pk": 18,
+                     "fields": {
+                           "domain": "www.youtube.com",
+                           "parent": null,
+                           "section": 7     
+                     }
+   },
+   {
+      "model": "discussions.domain",
+                  "pk": 19,
+                  "fields": {
+                        "domain": "www.blesk.cz",
+                        "parent": null,
+                        "section": 9
+                  }
+   },
+   {
+      "model": "discussions.domain",
+                     "pk": 20,
+                     "fields": {
+                              "domain": "www.parlamentnilisty.cz",
+                              "parent": null,
+                              "section": 8
+                     }
+      }
+]
+   

@@ -1,0 +1,70 @@
+{% extends "base_header.html" %}
+{% load static %}
+
+{% block footer %}
+{% endblock %}
+{% load custom_filters %}
+
+{% block content_header %}
+  <div>
+    <span style="text-align: left; font-size: x-large;">Přispěvky uživatele </span>
+    <span style="text-align: right; font-size: x-large;">{{ user.username }}</span>
+  </div>
+{% endblock %}
+
+{% block content_main %}
+  <div style="text-align: right;">
+    <a class="a-diskuse" href="{%url 'navigate_back' %}">&nbsp;X&nbsp;</a>&nbsp;&nbsp;&nbsp;
+  </div>
+  {% include "comments/comments_sorting.html" %}
+  {% include "comments/comments_pagination.html" %}
+<hr>
+<div>
+    {% for comment in page_obj %}
+    <fieldset name="a{{node.id}}" style="border: none;border-radius: 5px;padding: 5px;margin: 4px;">
+      <span class="text-muted font-weight-bold">
+    {% if not request.user.is_anonymous %} 
+    <a  href="{% url 'comments' comment.discussion.id %}">{{ comment.discussion }}</a>
+    {% else %}
+    <span>{{ comment.discussion }}</span>
+    {% endif %}
+  </span>
+  &bull;
+  <span style="font-size: small;" title="{{ comment.created_on|date:'d.m.Y' }} {{ comment.created_on|date:'H:i' }}">
+    {% if display_time %} 
+      {{ comment.created_on|date:"d.m.Y" }} {{ comment.created_on|date:"H:i" }}
+    {% else %}
+      {{ comment.created_on|timediff }}    
+    {% endif %} 
+  </span> 
+  &bull; 
+  <span style="text-align: left; font-size: small;">
+    počet reakcí: <b>{{ comment.replies_count }}</b>
+  </span>
+      <p style="padding: 2px;margin: 3px; ">
+        {{ comment.content|safe }}
+      </p>
+  </fieldset>
+  <div style="display: flex; justify-content: space-between;">
+    <span>
+      <span style="color: green;">&nbsp;+{{ comment.plus }} </span> | <span style="color: red;">-{{ comment.minus }}</span>                    
+    </span>
+    {% if comment.replies_count %}
+    <span style="font-size: small;padding: 0px;margin-top: 3px;border-radius: 10px;font-weight: normal;">
+      &nbsp;<a class="a-xsmall-button" href="{% url 'comments_thread' comment.discussion.id comment.id %}">&nbsp;vlákno&nbsp;</a>&nbsp;
+    </span>
+    {% endif %}
+    </div>
+    <br>
+    {% endfor %}
+</div>
+<hr>
+{% include "comments/comments_pagination.html" %}
+
+{% endblock %}
+
+
+
+
+  
+

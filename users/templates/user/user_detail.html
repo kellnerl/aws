@@ -1,0 +1,42 @@
+{% extends "base_header.html" %}
+{% load static %}
+
+
+{% block content_header %}
+  <span style="text-align: left; font-size: x-large;">Nastavení profilu uživatele {{request.user.username}}</span>
+{% endblock %}
+
+{% block content_main %}
+<div style="font-size:medium"><b>Jméno a příjmení: </b>{{request.user.first_name}}  {{request.user.last_name}}</div>
+<div style="font-size:medium"><b>Datum narození: </b>{{userdetail.born_on|date:'d.m.Y'}}</div>
+<div style="font-size:medium"><b>Datum registrace: </b>{{request.user.date_joined}}</div>
+
+<br><br>
+{% if userdetail.photo %}
+<img src="{{ userdetail.photo.url }}" alt="Fotka uživatele" height="120" width="auto">
+{% endif %}
+<form  method="POST" enctype="multipart/form-data" action="{% url 'user_detail' userid %}"">
+  <table>
+    {% csrf_token %}
+    {% for field in form %}
+      <tr>
+        <td>{{ field.label_tag }}</td>
+        <td>{{ field }}</td>
+      </tr>
+    {% endfor %}
+  </table>
+  <span style="font-size:small">Zadáním těchto nepovinných údajů, souhlasím s jejich zveřejněním ostatním přihlášených uživatelům ve formě obrazovky profil uživatele.<span>
+  <br><hr><br>
+  <div style="display: flex; justify-content: space-between;">
+    <button type="submit" class="button-font-size">&nbsp;Uložit změny&nbsp;</button>&nbsp;&nbsp;
+    <span style="text-align: right; font-size: medium;">
+
+      <a class="a-small-button" href="{% url 'user_context' request.user.id %}">&nbsp;Nastavení prostředí uživatele&nbsp;</a>
+      <a class="a-diskuse" href="{%url 'navigate_back' %}">&nbsp;X&nbsp;</a>
+    </span>
+  </div>
+  </form>
+  <br>
+
+  
+{% endblock %}

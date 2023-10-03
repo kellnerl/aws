@@ -1,0 +1,107 @@
+{% extends "base_header.html" %}
+{% load custom_filters %}
+{% load static %}
+
+{% block content_header %} 
+<div style="font-size:x-large;margin-top:10px;text-align: left; white-space: nowrap;overflow: hidden;text-overflow: ellipsis; ">
+ Diskusní komentář <!--<a href="{{diskuse_url}}">{{ diskuse_title }}</a>-->
+</div>
+{% endblock %} 
+{% block content_main %} 
+ 
+{% include "discussions/discussion_frame.html" %}
+<hr>
+<!--<div  style="padding: 2px;margin: 1px"-->
+    <br>
+    <div class="parent-div" style="padding: 4px;margin: 1px;">
+      <!-- <a  name="a{{comment.id}}" style="font-size:x-small;padding: 0px;margin: 0px;"></a>-->
+        <fieldset name="a{{comment.id}}" style="border: 1px solid darkblue;border-radius: 5px;padding: 4px;margin: 4px;">
+            <span class="text-muted font-weight-bold">
+            <a  href="{% url 'user_comments' 0 comment.created_by  %}"><b>{{ comment.created_by }}</b></a>
+        </span>&bull;
+        <span style="font-size: small;" title="{{ comment.created_on|date:'d.m.Y' }} {{ comment.created_on|date:'H:i' }}">
+          {% if display_time %} 
+            {{ comment.created_on|date:"d.m.Y" }} {{ comment.created_on|date:"H:i" }}
+          {% else %}
+            {{ comment.created_on|timediff }}          
+          {% endif %} 
+        </span>    
+            <p style="padding: 2px;margin: 3px; ">
+              {{ comment.content|safe }}
+            </p>
+        </fieldset>
+        <div class="parent-div"  style="padding:1px; margin:4px; margin-top:3px; display:flex; justify-content: space-between;"">
+          {% if not request.user.is_anonymous %} 
+            {% if request.user.username|lower == comment.created_by|lower %}
+            <span>
+            <span style="color:gray">
+              <a href="#" style="color: green;" class="rate" data-url="{% url 'comment_rate_positive' comment.id %}">+{{ comment.plus }}&nbsp;</a>|<a href="#" style="color: red;" class="rate" data-url="{% url 'comment_rate_negative' comment.id %}">&nbsp;–{{ comment.minus }}&nbsp;</a>             
+            </span>
+            {% if comment.replies_count == None or comment.replies_count == 0 %}
+            
+            {% else %}
+                <span></span>
+            {% endif %}
+            </span>
+            {% else %}
+            <span>
+                <span style="color:gray">
+                <a href="#" style="color: green;" class="rate" data-url="{% url 'comment_rate_positive' comment.id %}">
+                +{{ comment.plus}}&nbsp;</a>|<a href="#" style="color: red;" class="rate" data-url="{% url 'comment_rate_negative' comment.id %}">&nbsp;–{{ comment.minus}}&nbsp;</a>&nbsp;
+                </span>
+                <span style="font-size: small;padding: 0px;margin-top: 3px;border-radius: 6px;">
+                    {% if thread_id %}
+                    &nbsp;<a  class="a-xsmall-button" href="{% url 'reply_comment_thread' 'reply' diskuse_id comment.id thread_id %}">&nbsp;reagovat&nbsp;&triangleright;&nbsp;</a>
+                    {% else %}
+                    &nbsp;<a  class="a-xsmall-button" href="{% url 'reply_comment' 'reply' diskuse_id comment.id%}">&nbsp;reagovat&nbsp;&triangleright;&nbsp;</a>
+                    {% endif %}
+                </span>
+            </span>
+            {% endif %}
+            
+          {% else %}
+          <span>
+            <span style="color:gray">
+                <a href="#" style="color: green;" class="rate" data-url="{% url 'comment_rate_positive' comment.id %}">+{{ comment.plus }}&nbsp;</a>|<a href="#" style="color: red;" class="rate" data-url="{% url 'comment_rate_negative' comment.id %}">&nbsp;–{{ comment.minus }}&nbsp;</a>
+                </span>
+                {% if thread_id %}
+            <span style="font-size: small;padding: 0px;margin-top: 3px;border-radius: 10px;">
+                &nbsp;<a class="a-xsmall-button" href="{% url 'reply_comment_thread' 'reply' diskuse_id comment.id thread_id%}">&nbsp;reagovat&nbsp;&triangleright;&nbsp;</a></span>
+            </span>     
+            {% else %} 
+            <span style="font-size: small;padding: 0px;margin-top: 3px;border-radius: 10px;">
+                &nbsp;<a class="a-xsmall-button" href="{% url 'reply_comment' 'reply' diskuse_id comment.id %}">&nbsp;reagovat&nbsp;&triangleright;&nbsp;</a></span>
+            </span>  
+            {% endif %} 
+          </span>
+          
+          {% endif %}
+          </div>
+          {% if not request.user.is_anonymous %} 
+          {% if reply_comment == comment.id %}
+          <div id="{{comment.id}}" style="padding: 0px;margin: 0px;">
+          {% else %}
+          <div id="{{comment.id}}" hidden>
+          {% endif %}
+          {% if operation == 'edit' %}
+          <form  style="padding: 0px;margin: 0px;" method="POST" action="{% url 'reply_comment' 'edit' diskuse_id comment.id %}">{% csrf_token %} 
+              <br>
+              {{ form_reply.as_table }}
+              <br> 
+              <button type="submit" class="a-xsmall-button" name="edit">&nbsp;Uložit&nbsp;</button>
+              <button type="submit" class="a-xsmall-button" name="cancel">&nbsp;Zrušit&nbsp;</button>
+          </form>
+          {% else %}
+            <form  method="POST" action="{% url 'reply_comment' 'reply'  diskuse_id comment.id %}">{% csrf_token %} 
+              <br>
+              {{ form_reply.as_table }} 
+              <br>
+              <button type="submit" class="a-xsmall-button" name="reply">&nbsp;Uložit&nbsp;</button>
+              <button type="submit" class="a-xsmall-button" name="cancel">&nbsp;Zrušit&nbsp;</button>
+          </form>
+          {% endif %}
+          </div>
+          {% endif %}
+
+</div>
+{% endblock %} 

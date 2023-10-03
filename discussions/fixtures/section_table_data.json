@@ -1,0 +1,94 @@
+[
+  {
+    "model": "discussions.section",
+      "pk": 1,
+      "fields": {
+        "name": "nové",
+        "description": "dnes založené diskuse",
+        "number": "1",
+        "type": "T"
+      }
+   },
+  {
+  "model": "discussions.section",
+    "pk": 2,
+    "fields": {
+      "name": "oblíbené",
+      "description": "mé oblíbené diskuse",
+      "number": "2",
+      "type": "M"
+    }
+  },
+  {
+  "model": "discussions.section",
+    "pk": 3,
+    "fields": {
+      "name": "iDnes",
+      "description": "články na ",
+      "number": "3",
+      "type": "P",
+      "scrapping": "True"
+    }
+},
+{
+"model": "discussions.section",
+    "pk": 4,
+    "fields": {
+      "name": "seznam",
+      "description": "články na ",
+      "number": "4",
+      "type": "P",
+      "scrapping": "True"
+    }
+ },
+{
+"model": "discussions.section",
+    "pk": 5,
+    "fields": {
+      "name": "neviditelnypes",
+      "description": "články na ",
+      "number": "5",
+      "type": "P"
+    }
+ },
+ {
+  "model": "discussions.section",
+      "pk": 6,
+      "fields": {
+        "name": "atlas",
+        "description": "diskuse na ",
+        "number": "6",
+        "type": "P"
+      }
+  },
+  {
+   "model": "discussions.section",
+       "pk": 7,
+       "fields": {
+         "name": "youtube",
+         "description": "diskuse na ",
+         "number": "7",
+         "type": "P"
+       }
+   },
+   {
+    "model": "discussions.section",
+        "pk": 8,
+        "fields": {
+          "name": "parlamentnilisty",
+          "description": "diskuse na ",
+          "number": "8",
+          "type": "P"
+        }
+    },
+    {
+      "model": "discussions.section",
+          "pk": 9,
+          "fields": {
+            "name": "blesk",
+            "description": "články na ",
+            "number": "9",
+            "type": "P"
+          }
+       }
+]

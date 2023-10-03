@@ -1,0 +1,68 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <title>Svobodná diskuse</title>
+  <link rel="stylesheet" type="text/css" href="{% static 'accounts/css/style_accounts.css' %}">
+</head>
+<body>
+<header>
+    <div class="container" style="overflow: false; background-color: #dbdaf1">
+        <div style="text-align: left; font-size: x-large;">
+          <a class="a-diskuse" href={% url 'about' %}>noncensura-svobodná diskuze</a>
+        </div>
+    </div>
+</header>
+<main>
+    {% block form_header %}{% endblock %}
+    {% block form_content %}{% endblock %}
+</main>
+<footer>
+    <div class="container" style="overflow: auto; color: white; background-color: rgb(71, 31, 182)">
+      <span>{{ footer }}</span>
+      <a href="mailto: info@ipe.cz" style="color: white; text-align: right;">email: info@ipe.cz </a>       
+    </div>
+    
+</footer>
+<!-- Vložení plovoucího menu -->
+<script>
+function redirectToURL(url) {
+    window.location.href = url;
+  }
+
+  var sectionValue = "{{ section }}";
+  var tabId, tabContentId, tabLinks;
+  if (sectionValue==0) {
+      tabContentId = "tabx-content";
+      tabId = "tab"+sectionValue; 
+  } else {
+    tabContentId = "tabx-content";
+    tabId = "tab"+sectionValue;
+  };
+  
+  tabContent = document.getElementsByClassName("tab-content");
+  for (i = 0; i < tabContent.length; i++) {
+      tabContent[i].style.display = "none";    
+  }
+  if (tabContent.length>0) {
+    tabContent[0].style.justifyContent = "left";
+    tabContent[0].style.alignItems = "left";
+  }
+ 
+  tabLinks = document.getElementsByClassName("tab");
+  for (i = 0; i < tabLinks.length; i++) {
+      tabLinks[i].style.backgroundColor = "#d9d9d9";
+  }
+
+     
+  if (document.getElementById(tabContentId) != null) {
+      document.getElementById(tabContentId).style.display = "block";
+      document.getElementById(tabId).style.backgroundColor = "#471fb6"; 
+      document.getElementById(tabId).style.color = "#ffffff"; 
+  }
+
+</script>
+</body>
+
+</html>

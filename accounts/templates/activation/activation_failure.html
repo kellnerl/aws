@@ -1,0 +1,17 @@
+
+{% extends "account_base.html" %}
+{% load static %}
+
+{% block form_header %} 
+<h2>Aktivace nového účtu</h2>
+{% endblock %} 
+{% block form_content %} 
+<div style="text-align: right; font-size: large;"><a href="{% url 'discussions' 0 %}">zpět</a></div>
+    <br>
+    <p>Aktivace účtu neproběhla,</p>
+    <br>
+    <p>Kontaktujte provozovatele portálu na ipe@ipe.cz</p>
+    <br><br><br>
+    <a href="{% url 'discussions' 0%}" style="color: rgb(9, 24, 190); text-align: right;">pokračujte</a>
+    <br><br><br>
+{% endblock %} 

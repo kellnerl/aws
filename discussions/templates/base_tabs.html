@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% load static %}
+ 
+{% block base_content %}
+<div class="container" style="background-color: #ababab; padding:10px;padding-top:14px; overflow:false;z-index: 9990;">
+        <!-- Záložky -->
+        <div class="tabs">
+          {% for section in sections %}
+          {% if section.number == 0 %}
+          <div id="tab0" class="tab" onclick="redirectToURL(`{% url 'home_discussions'  %}`)">{{section.name}}</div>
+          {% else %} 
+           <div id="{{section.tabname}}" hint= "{{section.type}}" title="{{section.description}}, {{section.title}}" class="tab" onclick="redirectToURL(`{% url 'discussions' section.number section.type %}`)">{{section.name}}</div>
+          {% endif %}
+          {% endfor %}  
+        </div>
+         <!-- Obsah záložek min-height: 626px; -->
+        <div id="tabx-content" class="tab-content" style="min-height: 600px;">
+            {% block tabx_content %}{% endblock %}
+        </div>
+</div>
+{% endblock  %}
+
+
+
+<script>
+   
+  function redirectToURL(url) {
+    alert("aaa")
+    window.location.href = url;
+  }
+
+
+  // Funkce pro otevření záložky
+  function openTab(evt, tabName) {  
+    alert("bbb")
+    var i, tabContent, tabLinks;
+    tabContent = document.getElementsByClassName("tab-content");
+    for (i = 0; i < tabContent.length; i++) {
+      tabContent[i].style.display = "none";
+    }
+    tabLinks = document.getElementsByClassName("tab");
+    for (i = 0; i < tabLinks.length; i++) {
+      tabLinks[i].style.backgroundColor = "#ccc";
+      
+    }
+    document.getElementById(tabName).style.display = "block";
+    evt.currentTarget.style.backgroundColor = "#ccc";
+
+
+  }
+    // Inicializace - otevření první záložky
+   // document.getElementById("tab1").click();
+   
+
+    var elements = document.getElementsByClassName('rate');
+
+  for (var i = 0; i < elements.length; i++) {
+  elements[i].addEventListener('click', function() {
+    var url = this.getAttribute('data-url');
+    var elem = this
+    var xhr = new XMLHttpRequest();
+    var csrftoken = getCookie('csrftoken');
+    xhr.open('POST', url);
+    xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    xhr.setRequestHeader('X-CSRFToken', csrftoken); // Set the CSRF token header
+    xhr.onload = function() {
+      if (xhr.status === 200) {
+        // Successful response - you can perform additional actions here
+        var response = JSON.parse(xhr.responseText);
+        elem.innerHTML = response.data.new_value; // Update the element with the new value
+
+      } else {
+        // Error processing the request
+      }
+    };
+    xhr.send();
+  });
+  }
+
+ // Helper function to retrieve the CSRF token from the cookie
+function getCookie(name) {
+  var cookieValue = null;
+  if (document.cookie && document.cookie !== '') {
+    var cookies = document.cookie.split(';');
+    for (var i = 0; i < cookies.length; i++) {
+      var cookie = cookies[i].trim();
+      if (cookie.substring(0, name.length + 1) === (name + '=')) {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        break;
+      }
+    }
+  }
+  return cookieValue;
+}
+  </script>

@@ -1,0 +1,14 @@
+<span style="color:gray">
+  {% if node %} 
+  <a  style="color: green;" class="rate" data-url="{% if not request.user.is_anonymous and request.user.username|lower != node.created_by|lower %} {% url 'comment_rate_positive' node.id %}{% endif %}">
+    <b>+{{ node.plus}}</b>
+  </a>|<a style="color: red;" class="rate" data-url="{% if not request.user.is_anonymous and request.user.username|lower != node.created_by|lower %}{% url 'comment_rate_negative' node.id %}{% endif %}"><b>–{{ node.minus}}</b>&nbsp;
+  </a>&nbsp;
+  {% else %} 
+  <a  style="color: green;" class="rate" data-url="{% if not request.user.is_anonymous and request.user.username|lower != comment.created_by|lower %} {% url 'comment_rate_positive' comment.id %}{% endif %}">
+    <b>+{{ comment.plus}}</b>
+    </a>|<a style="color: red;" class="rate" data-url="{% if not request.user.is_anonymous and request.user.username|lower != comment.created_by|lower %}{% url 'comment_rate_negative' comment.id %}{% endif %}"><b>–{{ comment.minus}}</b>&nbsp;
+    </a>&nbsp;
+  {% endif %} 
+</span>
+ 

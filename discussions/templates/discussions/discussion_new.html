@@ -1,0 +1,28 @@
+{% extends "base_header.html" %}
+{% load static %}
+
+
+{% block content_header %}
+<span style="font-size:x-large;margin:10px">Založení nové diskuse k článku</span>
+{% endblock %}
+
+{% block content_main %}
+<form  method="POST" action="{% url 'new_discussion' 'https:\\' 'none' 'none' 'none' %}">
+  <table>
+    {% csrf_token %}
+    {% for field in form %}
+      <tr>
+        <td>{{ field.label_tag }}</td>
+        <td>{{ field }}</td>
+      </tr>
+    {% endfor %}
+  </table>
+  <br><hr>
+  <div style="display: flex; justify-content: space-between;">
+    <button type="submit" class="button-font-size">&nbsp;Vytvořit diskusi&nbsp;</button>&nbsp;&nbsp;
+    <span style="text-align: right; font-size: medium;">
+      <a class="a-diskuse" href="{%url 'navigate_back' %}">&nbsp;X&nbsp;</a>&nbsp;&nbsp;&nbsp;
+    </span>
+  </div>
+  </form>
+{% endblock %}

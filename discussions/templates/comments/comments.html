@@ -1,0 +1,100 @@
+{% extends "base_header.html" %}
+{% load static %}
+{% load mptt_tags %}
+{% load custom_filters %}
+
+
+
+{% block content_header %}
+  <div style="font-size:x-large;margin-top:10px;text-align: left; white-space: nowrap;overflow: hidden;text-overflow: ellipsis; ">
+  <!--<span style="font-size:x-large;margin:10px">Diskuse:-->
+    Diskuse<a href="{{discussion.url}}">{{ discussion.title }}</a>
+  <!--</span>-->
+  </div>
+
+{% endblock %}
+{% block content_main %}
+<div class="text-area-frame" style="background-color:whitesmoke;">
+  <span style="text-align: left;margin:10px;font-weight:normal;font-size:medium">{{ discussion.domain }}</span>
+  {% if discussion.theme %}<span style="font-weight:normal;font-size: medium">&bull;&nbsp;&nbsp;<b>téma:</b> {{ discussion.theme }}</span>{% endif %}
+  {% if discussion.author %}<span style="font-weight:normal;font-size: medium">&nbsp;&bull;&nbsp;&nbsp;<b>author:</b> {{ discussion.author }}</span>{% endif %}
+</div>
+{% if not request.user.is_anonymous and not thread_id %} 
+<form  method="POST" action="{% url 'new_comment' diskuse_id %}">{% csrf_token %} 
+    {{ form_comment.as_p }} 
+    <div style="display: flex; justify-content: space-between;">
+    <button type="submit" class="button-font-size">&nbsp;Uložit komentář&nbsp;</button>&nbsp;&nbsp;
+    <span>
+      {% if request.user in discussion.favorite.all %} 
+        <a class="a-small-button" href="{% url 'discussion_favorite_remove' diskuse_id %}">&nbsp;<span style="color:red;">&#x2764;</span>&nbsp;odebrat diskusi z oblíbených&nbsp;</a>&nbsp;&nbsp;
+      {% else %}
+        <a class="a-small-button" href="{% url 'discussion_favorite_add' diskuse_id %}">&nbsp;<span style="color:red;">&#x2661;</span>&nbsp;přidat diskusi do oblíbených&nbsp;</a>&nbsp;&nbsp;
+      {% endif %}
+      <span style="text-align: right; font-size: medium;">
+        <a class="a-diskuse" href="{% url 'navigate_back'%}">&nbsp;X&nbsp;</a>&nbsp;&nbsp;&nbsp;
+    </span>
+    </span>
+    
+    </div>
+    <hr>
+</form>
+{% else %}
+  <br>
+  <div style="text-align: right;">
+    <a class="a-diskuse" href="{%url 'navigate_back' %}">&nbsp;X&nbsp;</a>&nbsp;&nbsp;&nbsp;
+  </div>
+{% endif %}
+
+
+
+{% if page_obj %}
+<p  style="text-align: left; font-size: medium;">
+  {% if not thread_id %}
+    {% include "comments/comments_sorting.html" %}
+  {% else %}
+    {% include "comments/comments_sorting_thread.html" %}
+  {% endif %}
+  {% include "comments/comments_pagination.html" %}
+</p>
+{% else %} 
+<p style="text-align: left; font-size: medium;">
+  <span style="color:#471fb6;">Nebyl vložen žádný komentář</span>
+</p> 
+{% endif %}
+
+{% if not thread_id %}
+   {% for comment in page_obj %}
+    {% if comment.replies_count == 0 %}
+      {% include "comments/comment_element.html" %}
+    {% else %}
+      {% include "comments/comment_replies_tree.html" %}
+    {% endif %}
+   {% endfor %}
+{% else %}
+  {% include "comments/comment_tree.html" %}
+{% endif %}
+
+<hr>
+<!-- Display pagination links -->
+{% if page_obj %}
+  {% include "comments/comments_pagination.html" %}
+{% endif %}
+<br><br><br><br><br><br><br><br><br><br><br>
+{% endblock %}
+
+{% block content2 %}
+
+    {% for comment,structure in comments|tree_info %}
+    {% if structure.new_level %}<ul><li>{% else %}</li><li>{% endif %}
+        <fieldset>
+        <legend><b>{{ comment.author }}</b> {{ node.created|date:"d.m.Y" }} {{ node.created|date:"H:i" }} </legend>
+        <p>{{ comment.content }}</p>
+        </fieldset>
+        <p><a href="#" style="color: green; font-weight: bold;" class="rate" data-url="{% url 'comment_rate_positive' comment.id %}">
+          +{{ comment.plus }}</a> | <a href="#" style="color: red; font-weight: bold;" class="rate" data-url="{% url 'comment_rate_negative' comment.id %}">-{{ comment.minus }}</a>
+          {% if not request.user.is_anonymous %} <a class="a-small-button" href="{% url 'reply_comment' section diskuse_id comment.id%}">reagovat</a>{% endif %}</p>    {% for level in structure.closed_levels %}</li></ul>{% endfor %}
+    {% endfor %}
+{% endblock %}
+
+  
+

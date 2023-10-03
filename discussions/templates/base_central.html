@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% load static %}
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>svobodné diskuse noncensura</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'discussions/css/style_discussions.css' %}">
+   
+   
+    <style>
+        /* Styly pro container */
+        .central-container {
+            display: flex;
+            justify-content: center; /* Zarovnání na horizontální střed */
+            align-items: center; /* Zarovnání na vertikální střed */
+            min-height: 60vh; /* Minimální výška 100% viditelného okna pro vertikální zarovnání */
+        }
+
+        /* Styly pro obsah uvnitř containeru */
+        .content {
+            text-align: center; /* Zarovnání textu na střed */
+            background-color: #e0e0e0;
+        }
+    </style>
+</head>
+<body>
+    <div class="central-container">
+        <div class="content">
+            <div class="headline" style="margin-top:1px;padding-top: 10px;width: auto;">
+            {% block content_header %}
+            {% endblock %}
+            </div>
+            <div class="container" style="margin-top:1px;padding: 16px;width: auto;">
+            {% block content_main %}
+            {% endblock  %}
+            </div>
+            <div class="container" style="width: auto; padding: 4px; color: white; background-color: darkblue; font-size: small;">
+                <span>portál 'Svobodné diskuse' na www.noncensura.cz</span>            
+            </div> 
+        </div>
+    </div>
+    <script>
+    function copyToClipboard(name) {
+        const myField = document.getElementsByName(name)[0];
+        myField.select();
+        document.execCommand('copy');
+        //alert('Hodnota byla zkopírována do schránky: ' + myField.value);
+    }
+    </script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+{% load mptt_tags %}
+  {% recursetree page_obj %}
+    <div>
+    <li class="comment" style="list-style-type: none;">
+        {% include "comments/node_element.html" %}
+
+        {% if not node.is_leaf_node %}
+          <ul class="replies" id="ul{{node.id}}" style="list-style-type: none;">
+          {{ children }}
+          </ul>
+        {% endif %}
+   </li>
+   </div>
+  {% endrecursetree %}

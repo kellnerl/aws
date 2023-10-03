@@ -1,0 +1,12 @@
+from django.http import HttpResponseNotFound
+
+class NotFoundMiddleware:
+    def __init__(self, get_response):
+        self.get_response = get_response
+
+    def __call__(self, request):
+        response = self.get_response(request)
+        if response.status_code == 404:
+            # Zde můžete provést požadované akce, například logování, odeslání upozornění, atd.
+            return HttpResponseNotFound("Stránka nenalezena.")
+        return response

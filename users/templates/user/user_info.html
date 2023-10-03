@@ -1,0 +1,68 @@
+{% extends "base_header.html" %}
+{% load static %}
+
+
+{% block content_header %}
+<div class="white_container">
+  <span style="text-align: left; font-size: x-large;">Profil uživatele {{userdetail.user.username}} </span>
+ </div>
+{% endblock %}
+
+{% block content_main %}
+{% if userdetail.photo %}
+<img src="{{ userdetail.photo.url }}" alt="Fotka uživatele" height="100" width="auto">
+{% endif %}
+<br><br>
+  <table style="color:darkblue;">
+      {% if userdetail.about_me %}
+      <tr>
+        <td><b>Něco o mne:</b></td>
+        <td>{{ userdetail.about_me }}</td>
+      </tr>
+      {% endif %}
+      <tr>
+        <td><b>Jméno a příjmení:</b></td>
+        <td>{{ userdetail.first_name }} {{ userdetail.last_name }}</td>
+      </tr>
+      <tr>
+        <td><b>Věk:</b></td>
+        <td>{{ age }} let</td>
+      </tr>
+      {% if userdetail.place_of_residence %}
+      <tr>
+        <td><b>Bydliště:</b></td>
+        <td>{{ userdetail.place_of_residence }}</td>
+      </tr>
+      {% endif %}
+  </table>
+  <hr>
+  <table style="font-size:small">
+    <tr>
+      <td><b>Datum registrace:</b></td>
+      <td>{{userdetail.user.date_joined}}</td>
+    </tr>
+    <tr>
+      <td><b>Poslední přihlášení:</b></td>
+      <td>{{userdetail.user.last_login}}</td>
+    </tr>
+    <tr>
+      <td><b>Počet kometářů:</b></td>
+      <td>{{comment_count}}</td>
+    </tr>
+    <tr>
+      <td><b>Počet reakcí:</b></td>
+      <td>{{reply_count}}</td>
+    </tr>
+</table>
+  <br><hr>
+  <div style="display: flex; justify-content: space-between;">
+    <span>
+      <a class="a-small-button" href="{% url 'user_comments' 0 userdetail.user.username %}">&nbsp;Příspěvky uživatele {{ userdetail.user.username}}&nbsp;</a>&nbsp;&nbsp;
+    </span>
+    <span>
+      <a class="a-diskuse" href="{%url 'navigate_back' %}">&nbsp;X&nbsp;</a>&nbsp;&nbsp;&nbsp;
+    </span>
+    </div>
+  <br><br>
+  
+{% endblock %}

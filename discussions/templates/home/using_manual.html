@@ -1,0 +1,79 @@
+{% extends "base_header.html" %}
+{% load static %}
+
+{% block content_header %} 
+<span style="font-size:x-large;margin:10px">Jak používat portál Svobodná diskuse</span>
+{% endblock %}
+
+{% block content_main %}
+<div style="text-align:right">
+  <a class="a-diskuse" href="{%url 'navigate_back' %}">&nbsp;X&nbsp;</a>&nbsp;&nbsp;&nbsp;
+  
+</div>
+            <article>
+                <section>
+                <p><b>Domovská stránka</b></p>
+                <lo>
+                  <li>Domovská stránka</li>
+                  <li>Vyhledávání diskusí</li>
+                  <li>Pokroilé vyhledávání</li>
+                  <li>Vyhledávání článků</li>
+                  <li>Založení nové diskuse...</li>
+                <br><br>
+                </section>
+                <section>
+                <p><b>Diskutování</b></p>
+                <lo>
+                  <li>Přidání příspěvku</li>
+                  <li>Reagování za komentář</li>
+                  <li>Smazání vlastního příspěvku</li>
+                  <li>Hodnocení příspěvku </li>
+                </lo>
+                <br><br>
+                </section>
+                <section>
+                <p><b>Uživatelký účet</b></p>
+                <lo>
+                  <li>Nepřihlášený uživatel</li>
+                  <li>Registrace uživatele</li>
+                  <li>Přihlášení</li>
+                  <li> Reset hesla</li>
+                </lo>
+                <br><br>
+                </section>
+                <section>
+                <p><b>Záložky/sekce</b></p>
+                <lo>
+                  <li>Moje diskuse</li>
+                  <li>Předdefinované sekce</li>
+                  <lI>Uživatelsky vytvoření sekce</li>
+                </lo>
+                <br><br>
+                </section>
+                <section>
+                <p><b>Profil uživatele</b></p>
+                <lo>
+                  <li>Profil uživatele
+                    <li>Nastavení profilu uživatele</li>
+                </lo>
+                </section>
+                <section>
+                <p><b>Prostředí uživatele</b></p>
+                <lo>
+                  <li>Nastavení prostředí uživatele</li>
+                </lo>
+                </section>
+            </article>
+            <br>
+            <hr><br>
+            <div style="text-align:right">
+             <!-- <a class="a-diskuse" href="{% url 'home_discussions' %}">&nbsp;X&nbsp;</a>&nbsp;&nbsp;&nbsp;-->
+              <a class="a-diskuse" href="{%url 'navigate_back' %}">&nbsp;X&nbsp;</a>&nbsp;&nbsp;&nbsp;
+     
+              <br><br>
+            </div>
+  
+{% endblock %}
+{% block footer %}
+  {{ footer }}
+{% endblock %}

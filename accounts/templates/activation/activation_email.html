@@ -1,0 +1,5 @@
+<p>Dobrý den {{ user.username }},</p>
+<br>
+<p>Pro dokončení registrace účtu na Diskuse.cz klikněte na následující odkaz:
+
+<a href="{{ domain }}{% url 'activate' uidb64=uid token=token %}" target="_blank">Aktivovat účet</a></p>    

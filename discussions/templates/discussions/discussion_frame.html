@@ -1,0 +1,29 @@
+{% load custom_filters %}
+<div class="text-area-frame" style="margin-bottom: 0.0em;margin-top:5px;">
+    <p style="margin-bottom: 0.2em; margin-top: 0.1em;font-size: large;"><span><a href="{{ discussion.url }}">{{ discussion.title }}</a></span><br>
+      <span style="font-size: medium">&nbsp;{{ discussion.domain }}</span>{% if discussion.theme %}<span style="font-size: small"> &bull; téma:<b> {{ discussion.theme }}</b></span>{% endif %}{% if discussion.author %}<span style="font-size: small"> &bull; author:<b> {{ discussion.author }}</b></span>{% endif %}
+      <span style="font-size: small" title="vložil: {{ discussion.created_by}}, {{ discussion.created_on|date:'d.m.Y' }}">&nbsp;&bull;&nbsp;&nbsp;vloženo<b>
+     {% if display_time %} 
+        {{ discussion.created_on|date:"d.m.Y" }}  
+     {% else %}
+        {{ discussion.created_on|timediff }}
+     {% endif %} </b>
+     </span><br>
+    <span style="font-size: small">
+     {% if discussion.comments_count %} <!-- discussion.comments_set.count -->
+      <a class="a-diskuse" href="{% url 'comments' discussion.id %}">Diskuse ({{discussion.comments_count}}) </a>&nbsp;&nbsp; {{discussion.basic_comments_count|comment_cnt_str}} {{discussion.replies_count|reply_cnt_str}} {% endif %}{% if discussion.last_comment %}<span style="font-size: small;" title="{{ discussion.last_comment|date:'d.m.Y' }} {{ discussion.last_comment|date:'H:i' }}">, 
+       poslední příspěvek<b> 
+       {% if display_time %} 
+          {{ discussion.last_comment|date:"d.m.Y" }} {{ discussion.last_comment|date:"H:i" }}
+       {% else %}
+          {{ discussion.last_comment|timediff }}
+       {% endif %}</b>
+     </span>
+      {% else %}
+        {% if not request.user.is_anonymous %}
+          <a class="a-diskuse" href="{% url 'comments' discussion.id %}">Začni diskusi </a>&nbsp;&nbsp;</a>
+        {% endif %}
+      {% endif %}
+     </span>
+    </p>
+  </div> 
