@@ -1,8 +1,11 @@
 {% extends "base_header.html" %}
 {% load static %}
-
+<link rel="stylesheet" type="text/css" href="{% static 'users/css/style_users.css' %}">
 {% block content_header %} 
-<span style="font-size:x-large;margin:10px">O portále Svobodná diskuse na noncensura.cz</span>
+<div style="margin-top:1px;padding-top: 1px;padding-bottom: 1px; display: flex; justify-content: space-between; align-items: center;">
+  <span style="text-align: left; font-size: large;">O diskusním portálu</span>
+  <span style="text-align: right; font-size: medium;"><a class="a-diskuse" href="{%url 'navigate_back' %}">&nbsp;X&nbsp;</a>&nbsp;&nbsp;&nbsp;</span>
+</div>
 {% endblock %}
 
 {% block content_main %}
@@ -22,10 +25,6 @@
                 </section>
             </article>
             <hr>
-            <div style="text-align:right">request.session.previous_url
-                   <a class="a-diskuse" href="{%url 'navigate_back' %}">&nbsp;X&nbsp;</a>&nbsp;&nbsp;&nbsp;
-              <br><br>
-            </div>
             <div style="text-align: right;""><img src="{% static 'images/noncensura.gif' %}" width="200" height="auto" alt="Obrázek"></div>
 
 {% endblock %}

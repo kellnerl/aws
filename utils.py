@@ -41,6 +41,8 @@ def remove_https_prefix(url):
     return url
 
 def get_page_obj(request, data_set, number_per_page):
+    if data_set.count == 0:
+        return None, 0
     paginator = Paginator(data_set, number_per_page)
     # Get the current page number from the request's GET parameters
     page_number = request.GET.get('page')

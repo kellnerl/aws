@@ -2,7 +2,10 @@
 {% load static %}
 
 {% block content_header %} 
-<span style="font-size:x-large;margin:10px">Registrace nového uživatele</span>
+<div style="display: flex; justify-content: space-between; align-items: center;">
+    <span style="text-align:left; font-size:x-large;">Registrace nového uživatele</span>
+    <span style="text-align:right; font-size: small;"><a class="a-diskuse" href="{% url 'home_discussions' %}">&nbsp;X&nbsp;</a></span>
+  </div>
 {% endblock %} 
 {% block content_main %} 
     <br>
@@ -32,8 +35,8 @@
         </table>
         <hr><br>
             <div style="display: flex; justify-content: space-between;">
+              <span>&nbsp;</span>
               <span><button class="button-font-size" type="submit">&nbsp;Registrovat&nbsp;</button>&nbsp;&nbsp;</span>
-              <span><a class="a-diskuse" href="{% url 'home_discussions'  %}">&nbsp;X&nbsp;</a></span>
             </div>
     </form>
     <br><br>

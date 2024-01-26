@@ -174,8 +174,6 @@ def article_search (request):
         if form.is_valid():
             key_word = form.cleaned_data['key_word']
             section = form.cleaned_data['section']
-            lastperiod = form.cleaned_data['lastperiod']
-            print(lastperiod)
       #  else:
       #      return redirect('article_search', request)
      

@@ -2,35 +2,44 @@ version: "3.3"
 
 services:
   db:
-    image:  postgres
+    image: postgres
     volumes:
-      - ./data/db:/var/lib/postgresql/data
+      - ./postgres/db:/var/lib/postgresql/data
+      - ./postgres/init.sql:/docker-entrypoint-initdb.d/init.sql  # Přidáváme init.sql
+#      - ./postgres/pg_hba.conf:/etc/postgresql/pg_hba.conf
     ports:
       - "5432:5432"
     environment:
-      - POSTGRES_DB=diskuze
+      - POSTGRES_DB=noncensuradb
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-
+    networks:
+      - diskuze_network  # Přidejte, pokud používáte vlastní síť
   web:
-    build: .
-    command: python manage.py makemigrations && python manage.py migrate && gunicorn 0.0.0.0:8000 diskuze.wsgi:application
-    volumes:
-      - .:/code
+    build:
+      context: .
     ports:
       - "8000:8000"
+    command: bash -c "while ! python -c 'import psycopg2; conn = psycopg2.connect(host=\"db\", port=5432, user=\"postgres\", password=\"postgres\", dbname=\"noncensuradb\"); conn.close()' > /dev/null 2>&1; do sleep 1; done && python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
     environment:
-      - POSTGRES_NAME=diskuze
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+      - DJANGO_SETTINGS_MODULE=diskuze.settings
+    networks:
+      - diskuze_network  # Přidejte, pokud používáte vlastní síť
     depends_on:
       - db
 
-  nginx:
-    build:
-      context: ./nginx
-    ports:
-      - "80:80"
-    depends_on:
-      - web
+#  nginx:
+#    image: nginx:latest
+#    volumes:
+#      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+#    ports:
+#      - "80:80"
+#    networks:
+#      - diskuze_network  # Přidejte, pokud používáte vlastní síť
+#    depends_on:
+#      - web
+
+networks:
+  diskuze_network:  # Přidejte, pokud používáte vlastní síť
+    driver: bridge  # Přidejte, pokud používáte vlastní síť
 

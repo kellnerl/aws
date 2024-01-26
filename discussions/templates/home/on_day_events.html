@@ -1,14 +1,17 @@
 {% extends "base_header.html" %}
 {% load static %}
-
+<link rel="stylesheet" type="text/css" href="{% static 'users/css/style_users.css' %}">
 {% block content_header %} 
-<span style="font-size:x-large;margin:10px">Události, které nastaly dne {{day}}.{{month}}.</span>
+<div style="display: flex; justify-content: space-between; align-items: center;">
+  <span style="text-align: left; font-size:large;">Události, které nastaly dne {{day}}.{{month}}.</span>
+  <span style="text-align: right; font-size:small;"><a class="a-diskuse" href="{%url 'navigate_back' %}">&nbsp;X&nbsp;</a>&nbsp;&nbsp;&nbsp;</span>
+</div>
 {% endblock %}
 
 {% block content_main %}
 <div style="display: flex; justify-content: space-between;">
 <span style="text-align: left;">
-    <div class="horizontal-line" style="margin-top:12px;margin-bottom:6px;justify-content:left">
+    <div class="horizontal-line" style="margin-top:2px;margin-bottom:6px;justify-content:left">
         <span class="line-text{% if daydelta == 'yesterday' %}-selected{% else %}-invisible{% endif%}" style="font-size:medium;">
          <a class="a-bold-hover{% if daydelta == 'yesterday' %}-selected{% endif%}" href="?daydelta=yesterday" title="události včera">&nbsp;včera&nbsp;</a>
        </span>
@@ -20,11 +23,7 @@
        </span>
      </div>
 </span>
-<span>
-    <a class="a-diskuse" href="{%url 'navigate_back' %}">&nbsp;X&nbsp;</a>&nbsp;&nbsp;&nbsp;
-</span>
 </div>
-<br>
 <div>
 <table style="border-collapse: collapse;width: 100%;background-color:white;">
     <thead>

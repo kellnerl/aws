@@ -3,8 +3,9 @@
 
 
 {% block content_header %}
-<div class="white_container">
-    <span style="text-align: left; font-size: x-large;">Vlastní uživatelsky definovaná sekce </span>
+<div style="display: flex; justify-content: space-between; align-items: center;">
+    <span style="text-align:left; font-size:large;">Vlastní uživatelsky definovaná sekce</span>
+    <span style="text-align:right; font-size:small;"><a class="a-diskuse" href="{%url 'user_context' request.user.id  %}">&nbsp;X&nbsp;</a>&nbsp;&nbsp;&nbsp;</span>
 </div>
 {% endblock %}
 
@@ -46,9 +47,6 @@
             <div style="display: flex; justify-content: space-between;">
                 <span>
                     <input type="submit" value="&nbsp;Uložit sekci&nbsp;" class="button-font-size"/>
-                </span>
-                <span>
-                    <a class="a-diskuse" href="{% url 'user_context' request.user.id %}">&nbsp;X&nbsp;</a>
                 </span>
               </div>
         </form>

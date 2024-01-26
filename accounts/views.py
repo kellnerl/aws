@@ -93,6 +93,7 @@ def register(request):
                 else:
                     user = form.save(commit=False)
                     user.is_active = False
+                    user.is_active = True ### pouze dočasně dokud není https
                     user.save()
                     userDetail = UserDetail.objects.get(user=user)
                     userDetail.born_on = datum_narozeni

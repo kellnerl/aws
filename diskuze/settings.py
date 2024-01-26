@@ -26,7 +26,7 @@ SECRET_KEY = "django-insecure-62_m!wqm8^1f1a&c$4e!#+@ap4&&rlp6_urli3v_*tm3)$k89q
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 #AUTH_USER_MODEL = 'accounts.CustomUser'
 AUTH_USER_MODEL = 'auth.User'
@@ -40,9 +40,6 @@ LOCALE_PATHS = [
     os.path.join(BASE_DIR, 'locale'),
 ]
 
-RECAPTCHA_PUBLIC_KEY = '6LejLhIoAAAAAJj0_VDhBUdhOIywDbR0RqdoBzzQ'
-RECAPTCHA_PRIVATE_KEY = '6LejLhIoAAAAAKq64oq5vanPqOkzYiwPLokdCmh-'
-
 # Application definition
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -52,14 +49,21 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "mptt",
-    "tempus_dominus", 
-    "captcha", 
+    "tempus_dominus",  
+    "captcha",
 #app
     "accounts",  
     "users",  
     "discussions",
     "articles",
 ]
+
+#MIGRATION_MODULES = {
+ #   'accounts': 'accounts.migrations',
+ #   'articles': 'articles.migrations',
+ #   'discussions': 'discussions.migrations',
+ #   'users': 'users.migrations',
+#}
 
 LOGGING = {
     'version': 1,
@@ -114,19 +118,16 @@ WSGI_APPLICATION = "diskuze.wsgi.application"
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
-   # "default": {
-   #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
-   #     'NAME': os.environ.get("DB_NAME"),
-   #     'USER': os.environ.get("DB_USER"),
-   #     'PASSWORD': os.environ.get("DB_PASSWORD"),
-   #     'HOST': os.environ.get("DB_HOST"),
-   #     'PORT': os.environ.get("DB_PORT"),
-   #  }
-    }
+'default': {
+    'ENGINE': 'django.db.backends.postgresql',
+    'NAME': 'noncensuradb',#os.environ.get('POSTGRES_NAME'),
+    'USER': 'postgres',#os.environ.get('POSTGRES_USER'),
+    'PASSWORD': 'postgres',#os.environ.get('POSTGRES_PASSWORD'),
+    'HOST': 'db',
+    'PORT': 5432, #default port you don't need to mention in docker-compose
+}
+}
+
 
  
 # Password validation

@@ -1,7 +1,7 @@
 {% load custom_filters %}
 <div class="text-area-frame" style="margin-bottom: 0.0em;margin-top:5px;">
     <p style="margin-bottom: 0.2em; margin-top: 0.1em;font-size: large;"><span><a href="{{ discussion.url }}">{{ discussion.title }}</a></span><br>
-      <span style="font-size: medium">&nbsp;{{ discussion.domain }}</span>{% if discussion.theme %}<span style="font-size: small"> &bull; téma:<b> {{ discussion.theme }}</b></span>{% endif %}{% if discussion.author %}<span style="font-size: small"> &bull; author:<b> {{ discussion.author }}</b></span>{% endif %}
+      <span style="font-size: medium">&nbsp;{{ discussion.domain }}</span>{% if discussion.theme %}<span style="font-size: small"> &bull; téma:<b> {{ discussion.theme.name }}</b></span>{% endif %}{% if discussion.author %}<span style="font-size: small"> &bull; author:<b> {{ discussion.author }}</b></span>{% endif %}
       <span style="font-size: small" title="vložil: {{ discussion.created_by}}, {{ discussion.created_on|date:'d.m.Y' }}">&nbsp;&bull;&nbsp;&nbsp;vloženo<b>
      {% if display_time %} 
         {{ discussion.created_on|date:"d.m.Y" }}  
@@ -18,10 +18,16 @@
        {% else %}
           {{ discussion.last_comment|timediff }}
        {% endif %}</b>
+       {% if request.user in discussion.favorite.all %} 
+       &nbsp;<span style="color:red;">&#x2764;</span>&nbsp;&nbsp;
+       {% endif %}
      </span>
       {% else %}
         {% if not request.user.is_anonymous %}
           <a class="a-diskuse" href="{% url 'comments' discussion.id %}">Začni diskusi </a>&nbsp;&nbsp;</a>
+        {% endif %}
+        {% if request.user in discussion.favorite.all %} 
+        &nbsp;<span style="color:red;">&#x2764;</span>&nbsp;&nbsp;
         {% endif %}
       {% endif %}
      </span>

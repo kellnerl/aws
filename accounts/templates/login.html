@@ -2,9 +2,13 @@
 {% load static %}
 
 {% block content_header %} 
-<span style="font-size:x-large;margin:10px">Přihlášení uživatele</span>
+<div style="display: flex; justify-content: space-between; align-items: center;">
+  <span style="text-align:left; font-size:x-large; ">Přihlášení uživatele</span>
+  <span style="text-align:right; font-size: small;"><a class="a-diskuse" href="{% url 'home_discussions' %}">&nbsp;X&nbsp;</a></span>
+</div>
 {% endblock %} 
-{% block content_main %} 
+
+{% block content_main %}
     {% if form.errors %}
       <div style="color: red;font-size:small">Přihlášení se nezdařilo. Zkontrolujte své údaje.</div>
     {% else %}
@@ -25,8 +29,8 @@
     <span style="text-align: right; font-size: small;"></span><a href="{% url 'register' %}" style="text-align: right; font-size: small;color: rgb(9, 24, 190); text-align: right;">&nbsp;nový uživatel(registrace)&nbsp;</a></span>&nbsp;&nbsp;  
     <br><hr><br>
     <div style="display: flex; justify-content: space-between;">
+      <span>&nbsp;</span>
       <button type="submit" class="button-font-size">&nbsp;Přihlásit&nbsp;</button>&nbsp;&nbsp;
-      <span style="text-align: right; font-size: medium;"><a class="a-diskuse" href="{% url 'home_discussions' %}">&nbsp;X&nbsp;</a></span>
     </div>
     <br><hr>
     </form>

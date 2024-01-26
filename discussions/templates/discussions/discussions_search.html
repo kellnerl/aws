@@ -1,9 +1,13 @@
 {% extends "base_header.html" %}
 {% load static %}
 {% load custom_filters %}
+<link rel="stylesheet" type="text/css" href="{% static 'users/css/style_users.css' %}">
 
 {% block content_header %}
-<span style="font-size:x-large;margin:10px">Pokročilé vyhledávání diskusí</span>
+<div style="display: flex; justify-content: space-between; align-items: center;">
+  <span style="text-align:left; font-weight:bold; font-size: large;"">Pokročilé vyhledání diskusí</span>
+  <span style="text-align:right; font-size: small;"><a class="a-diskuse" href="{%url 'home_discussions' %}">&nbsp;X&nbsp;</a>&nbsp;&nbsp;&nbsp;</span>
+</div>
 {% endblock %}
 
 {% block content_main %}
@@ -20,8 +24,8 @@
   </table>
   <hr>
   <div style="display: flex; justify-content: space-between;">
+    <span style="text-align: right; font-size: medium;">&nbsp;</span>
     <button type="submit" class="button-font-size">&nbsp;Vyhledat diskuse&nbsp;</button>&nbsp;&nbsp;
-    <span style="text-align: right; font-size: medium;"><a class="a-diskuse" href="{% url 'home_discussions' %}">&nbsp;X&nbsp;</a></span>
   </div>
   </form>
   <style>

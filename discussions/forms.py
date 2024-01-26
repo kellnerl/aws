@@ -55,20 +55,30 @@ class SearchDiscussionForm(forms.ModelForm):
 class AdvancedSearchDiscussionForm(forms.ModelForm):
     title=forms.CharField(label='Titulek článku', required=False, widget=forms.TextInput(attrs={'class': 'input-font', 'size':60, 'placeholder':'hledaný text'}))
     author=forms.CharField(label='Author článku', required=False, widget=forms.TextInput(attrs={'class': 'input-font', 'size':20, 'placeholder':'jméno autora článku'}))
-    domain_choices = [('', '---------')] + list(Domain.objects.values_list('domain','domain'))
-    domain_field = forms.ChoiceField(choices=domain_choices, label='Doména článku', required=False)
-    theme_choices = [('', '---------')] + list(ArticleTheme.objects.values_list('id','name'))
-    theme_field = forms.ChoiceField(choices=theme_choices, label='Téma článku', required=False)
+    #domain_choices = [('', '---------')] + list(Domain.objects.values_list('domain','domain'))
+    #domain_field = forms.ChoiceField(choices=domain_choices, label='Doména článku', required=False)
+    #theme_choices = [('', '---------')] + list(ArticleTheme.objects.values_list('id','name'))
+    #theme_field = forms.ChoiceField(choices=theme_choices, label='Téma článku', required=False)
     search_value_created_before = forms.DateField(label='Diskuse vložena před',required=False, widget=forms.SelectDateWidget())
     search_value_created_after  = forms.DateField(label='Diskuse vložena po',required=False, widget=forms.SelectDateWidget())
     search_value_last_comment_before = forms.DateField(label='Poslední komentář před',required=False, widget=forms.SelectDateWidget())
     search_value_last_comment_after  = forms.DateField(label='Poslední komentář po',required=False,  widget=forms.SelectDateWidget())
     orderby_choices = [('1', 'dle času založení diskuze'),('2', 'dle počtu příspěvků'),('3', 'dle času posledního příspěvku')]
     orderby = forms.ChoiceField(choices=orderby_choices, label='Seřadit dle', widget=forms.RadioSelect, required=True)
+    domain_field = forms.ChoiceField(choices=[], label='Doména článku', required=False)
+    theme_field = forms.ChoiceField(choices=[], label='Téma článku', required=False)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        # Načítání dat pro pole s možnými hodnotami až při inicializaci formuláře
+        self.fields['domain_field'].choices = [('', '---------')] + list(Domain.objects.values_list('domain','domain'))
+        self.fields['theme_field'].choices = [('', '---------')] + list(ArticleTheme.objects.values_list('id','name'))
+
     class Meta:
         model = Discussion
         # Uveďte pole, která chcete zahrnout do formuláře
-        fields = ['title', 'domain_field','theme_field', 'author', 'search_value_created_before', 'search_value_created_after', 'search_value_last_comment_before', 'search_value_last_comment_after','active','orderby']  
+        fields = ['title', 'author', 'search_value_created_before', 'search_value_created_after', 'search_value_last_comment_before', 'search_value_last_comment_after','active','orderby']  
         labels = {'active':'Aktivní diskuse'} 
 
 
@@ -77,12 +87,22 @@ class CreateDiscussionForm(forms.ModelForm):
     url=URLField(label='URL článku', max_length=400, widget=forms.TextInput(attrs={'class': 'input-font', 'size':64, 'placeholder':'povinné pole - zkopíruj url článku'}))
     title=forms.CharField(label='Titulek článku', max_length=400, widget=forms.TextInput(attrs={'class': 'input-font', 'size':44, 'placeholder':'Povinné pole - zadej titulek článku'}))
     author=forms.CharField(label='Author článku', required=False, widget=forms.TextInput(attrs={'class': 'input-font', 'size':20, 'placeholder':'jméno autora článku'}))
-    theme_choices = [('', '---------')] + list(ArticleTheme.objects.filter(id__gt=1).values_list('id','name'))
-    theme_field = forms.ChoiceField(choices=theme_choices, label='Téma článku', required=True)
- #empty_label='Nezadáno',
+    #theme_choices = [('', '---------')] + list(ArticleTheme.objects.filter(id__gt=1).values_list('id','name'))
+    #theme_field = forms.ChoiceField(choices=theme_choices, label='Téma článku', required=True)
+    #empty_label='Nezadáno',
+    theme_field = forms.ChoiceField(choices=[], label='Téma článku', required=False)
+
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        # Načítání dat pro pole s možnými hodnotami až při inicializaci formuláře
+        self.fields['theme_field'].choices = [('', '---------')] + list(ArticleTheme.objects.filter(id__gt=1).values_list('id','name'))
+
+
     class Meta:
         model = Discussion
-        fields = ['url','title','theme_field','author']
+        fields = ['url','title', 'author']
         labels = {'url': 'Url článku:', 'title':'Titulek článku',}
        # widgets = {
        #     'url': forms.TextInput(attrs={'size':82, 'class': 'input-font', 'placeholder':'povinné pole - zkopíruj url článku'}),

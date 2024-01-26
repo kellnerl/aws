@@ -33,8 +33,10 @@ def cenzurovat_text(text, sprosta_slova):
 
 class Region(models.Model):
     name = models.CharField(max_length=60, unique=True)
-    abbrevation = models.CharField(max_length=2, unique=True)  
+    #abbrevation = models.CharField(max_length=2, unique=True)  
+    abb = models.CharField(max_length=2, unique=True)
     lang = models.CharField(max_length=2, unique=False)
+
 
 #models.ForeignKey(Section, on_delete=models.CASCADE, null=True, blank=True, related_name='section_set')
 
@@ -43,6 +45,7 @@ class Section(models.Model):
     name = models.CharField(max_length=60, unique=True)
     description = models.CharField(max_length=240, null=True)
     number = models.IntegerField(default=0, unique=True)
+    title = models.CharField(max_length=160, null=True)
     region = models.CharField(max_length=2, default='cz', null=False)
     scrapping = models.BooleanField(default=False, null=False)
     active = models.BooleanField(default=True)
@@ -56,32 +59,36 @@ class Section(models.Model):
     def __str__(self):
         return self.name
 
+class ArticleTheme(models.Model):
+    name = models.CharField(max_length=60, unique=True)
+    description = models.CharField(max_length=240, null=True)
+    number = models.IntegerField(unique=True)
+
+    #def __str__(self):
+    #    return self.name
 
 class Domain(models.Model):
+    #id = models.BigAutoField(primary_key=True)
     domain = models.CharField(max_length=60, unique=True)
     parent = TreeForeignKey('self', on_delete=models.CASCADE,
                             null=True, blank=True, related_name='children')
     section = models.ForeignKey(
         Section, on_delete=models.CASCADE, null=True, blank=True, related_name='section_set')
 
-    def __str__(self):
-        return self.domain
-
-
-class ArticleTheme(models.Model):
-    name = models.CharField(max_length=60, unique=True)
-    description = models.CharField(max_length=240, null=True)
-    number = models.IntegerField(unique=True)
-
-    def __str__(self):
-        return self.name
+    #def __str__(self):
+    #    return self.domain
+    class Meta:
+        db_table = 'domain'
 
 
 class Discussion(models.Model):
+    #id = models.BigAutoField(primary_key=True)
     title = models.CharField(max_length=120, null=False)
     description = models.CharField(max_length=320, null=True)
     url = models.URLField(max_length=240, unique=True, null=False)
     domain = models.CharField(max_length=80)
+    #domain = models.ForeignKey(Domain, on_delete=models.CASCADE, null=True, blank=True, db_column='domain_domain', related_name='domain_set')
+
     author = models.CharField(max_length=120, null=True)
     theme = models.ForeignKey(ArticleTheme, null=True, blank=True, on_delete=models.SET_NULL, related_name='theme_of_dicsussion_set')
     last_comment = models.DateTimeField(null=True)

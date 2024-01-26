@@ -1,8 +1,11 @@
 {% extends "base_header.html" %}
 {% load static %}
-
+<link rel="stylesheet" type="text/css" href="{% static 'users/css/style_users.css' %}">
 {% block content_header %} 
-<span style="font-size:x-large;margin:10px">Pravidla registrace a diskutování</span>
+<div style="display: flex; justify-content: space-between; align-items: center;">
+  <span style="text-align: left; font-size:large;">Pravidla registrace a diskutování</span>
+  <span style="text-align: right; font-size:small;"><a class="a-diskuse" href="{%url 'navigate_back' %}">&nbsp;X&nbsp;</a>&nbsp;&nbsp;&nbsp;</span>
+</div>
 {% endblock %}
 
 {% block content_main %}
@@ -33,10 +36,6 @@
                 </lo> 
                 </article>
             <hr><br>
-            <div style="text-align:right">
-              <a class="a-diskuse" href="{%url 'navigate_back' %}">&nbsp;X&nbsp;</a>&nbsp;&nbsp;&nbsp;
-             <br><br>
-            </div>
             <div style="text-align: right;""><img src="{% static 'images/noncensura.gif' %}" width="200" height="auto" alt="Obrázek"></div>
 
 {% endblock %}

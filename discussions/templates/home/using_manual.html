@@ -1,15 +1,15 @@
 {% extends "base_header.html" %}
 {% load static %}
-
+<link rel="stylesheet" type="text/css" href="{% static 'users/css/style_users.css' %}">
 {% block content_header %} 
-<span style="font-size:x-large;margin:10px">Jak používat portál Svobodná diskuse</span>
+<div style="display: flex; justify-content: space-between; align-items: center;">
+  <span style="text-align: left; font-size:large;">Jak používat portál</span>
+  <span style="text-align: right; font-size:small;"><a class="a-diskuse" href="{%url 'navigate_back' %}">&nbsp;X&nbsp;</a>&nbsp;&nbsp;&nbsp;</span>
+</div>
 {% endblock %}
 
 {% block content_main %}
-<div style="text-align:right">
-  <a class="a-diskuse" href="{%url 'navigate_back' %}">&nbsp;X&nbsp;</a>&nbsp;&nbsp;&nbsp;
-  
-</div>
+
             <article>
                 <section>
                 <p><b>Domovská stránka</b></p>

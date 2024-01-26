@@ -1,9 +1,12 @@
 {% extends "base_header.html" %}
 {% load static %}
-
+<link rel="stylesheet" type="text/css" href="{% static 'users/css/style_users.css' %}">
 
 {% block content_header %}
-<span style="font-size:x-large;margin:20px">Vyhledání článků na vybraném portále</span>
+<div style="display: flex; justify-content: space-between; align-items: center;">
+  <span style="text-align: left; font-size: large; font-weight:bold;">Vyhledání článků</span>
+  <span style="text-align: right; font-size: small;"><a class="a-diskuse" href="{%url 'home_discussions'  %}">&nbsp;X&nbsp;</a>&nbsp;&nbsp;&nbsp;</span>
+</div>
 {% endblock %}
 
 {% block content_main %}
@@ -32,8 +35,7 @@
 <br><br><hr>
   <div style="display: flex; justify-content: space-between;">
     <button type="submit" class="button-font-size">&nbsp;Vyhledat články&nbsp;</button>&nbsp;&nbsp;
-    <span style="text-align: right; font-size: medium;"><a class="a-diskuse" href="{% url 'home_discussions' %}">&nbsp;X&nbsp;</a></span>
-  </div>
+   </div>
   </form>
   <style>
     .text-area-frame {

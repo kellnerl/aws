@@ -4,15 +4,14 @@
 
 
 {% block content_header %}
-<div class="white_container">
-  <span style="text-align: left; font-size: x-large;">Nastavení prostředí uživatele {{request.user.username}} </span>
-  <span style="text-align: left; font-size: medium;">&nbsp;&nbsp;{{request.user.first_name}}  {{request.user.last_name}} </span>
+<div style="display: flex; justify-content: space-between; align-items: center;">
+  <span style="text-align: left; font-size: large;">Nastavení prostředí uživatele&nbsp;&nbsp;{{request.user.first_name}}  {{request.user.last_name}} </span>
+  <span style="text-align: right; font-size: small;"><a class="a-diskuse" href="{%url 'navigate_back'  %}">&nbsp;X&nbsp;</a>&nbsp;&nbsp;&nbsp;</span>
 </div>
 {% endblock %}
 
 {% block content_main %}
-
-<form  method="POST" action="{% url 'user_context' userid %}">
+<form  method="POST" action="{% url 'navigate_back' %}">
   <table>
     {% csrf_token %}
     {% for field in form %}
@@ -27,7 +26,6 @@
     <button type="submit" class="button-font-size">&nbsp;Uložit změny&nbsp;</button>&nbsp;&nbsp;
     <span>
       <a class="a-small-button" href="{% url 'user_detail' request.user.id %}">&nbsp;Nastavení profilu uživatele&nbsp;</a>
-      <a class="a-diskuse" href="{%url 'navigate_back' %}">&nbsp;X&nbsp;</a>
     </span>
   </div> 
   </form>

@@ -1,11 +1,12 @@
 {% extends "base_header.html" %}
 {% load static %}
-
+<link rel="stylesheet" type="text/css" href="{% static 'users/css/style_users.css' %}">
 
 {% block content_header %}
-<div class="white_container">
-  <span style="text-align: left; font-size: x-large;">Profil uživatele {{userdetail.user.username}} </span>
- </div>
+ <div style="display: flex; justify-content: space-between; align-items: center;">
+  <span style="text-align:left; font-size:large;">Profil uživatele {{userdetail.user.username}}</span>
+  <span style="text-align:right; font-size:small;"><a class="a-diskuse" href="{%url 'navigate_back'  %}">&nbsp;X&nbsp;</a>&nbsp;&nbsp;&nbsp;</span>
+</div>
 {% endblock %}
 
 {% block content_main %}
@@ -58,9 +59,6 @@
   <div style="display: flex; justify-content: space-between;">
     <span>
       <a class="a-small-button" href="{% url 'user_comments' 0 userdetail.user.username %}">&nbsp;Příspěvky uživatele {{ userdetail.user.username}}&nbsp;</a>&nbsp;&nbsp;
-    </span>
-    <span>
-      <a class="a-diskuse" href="{%url 'navigate_back' %}">&nbsp;X&nbsp;</a>&nbsp;&nbsp;&nbsp;
     </span>
     </div>
   <br><br>

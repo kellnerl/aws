@@ -53,7 +53,7 @@ def get_sections (request):
         sections = Section.objects.filter(scrapping=True)
         for section in sections:
            id=id+1
-           new_section = UserSection(id=id, name=section.name, number=id-1, user=None, type=str(section.id), description=section.description)
+           new_section = UserSection(id=id, name=section.name, number=id, user=None, title=section.title, type=str(section.id), description=section.description)
            queryset.append(new_section) 
         return queryset #sorted(queryset, key=lambda x: x.number)
     else:
@@ -369,7 +369,7 @@ def new_discussion(request, url, title, theme, author):
             print ("form valid")
             new_discussion = form.save(commit=False)
             selected_theme = form.cleaned_data['theme_field']  # Získání vybrané hodnoty
-            if selected_theme!=None:
+            if selected_theme:
                 new_discussion.theme = ArticleTheme.objects.get(id=selected_theme)
             new_discussion.created_by = request.user
             new_discussion.url = utils.remove_utm_parameters(form.cleaned_data['url'])
@@ -482,14 +482,15 @@ def discussions(request, section_num, section_type):
         diskuses = Discussion.objects.filter(created_on__date__in=[today, yesterday])
     else:
         if request.user.is_anonymous:
-            section = Section.objects.get(id=int(section_type))
+            #section = Section.objects.filter(number=section_num, type=section_type)[0]
+            section = Section.objects.filter(number=section_num)[0]
             user_domains = Domain.objects.filter(section=section)
         else:
             user_section = UserSection.objects.filter(number=section_num,user=request.user)[0]
             user_domains = UserSectionDomain.objects.filter(userSection=user_section)
         diskuses = Discussion.objects.filter(domain__in=user_domains.values_list('domain', flat=True))
      #   diskuses = Discussion.objects.filter(first_level_domain__in=domains.values_list('first_level_domain', flat=True))
-
+    
     if theme_filter > 0:
         diskuses = diskuses.filter(theme=theme_filter+1)
 
@@ -500,7 +501,8 @@ def discussions(request, section_num, section_type):
     else:
         diskuses = diskuses.order_by('-last_comment')
     page_obj, total_pages = utils.get_page_obj(request, diskuses, user_context_instance.rows_per_page)
-
+    ###total_pages =0
+    ###page_obj=None
     sections = get_sections (request)
     themes = ArticleTheme.objects.all().order_by('number')
 

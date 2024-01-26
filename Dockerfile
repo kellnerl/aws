@@ -1,35 +1,30 @@
-# Použijte oficiální Python image
+# base image
 FROM python:3.8
+
+#maintainer
+LABEL Author="IPE software"
+
+# The enviroment variable ensures that the python output is set straight
+# to the terminal with out buffering it first
+ENV PYTHONBUFFERED 1
 ENV PYTHONDONTWRITEBYTECODE=1
-ENV PYTHONUNBUFFERED=1 
 
-# Nastavte pracovní adresář v kontejneru
-WORKDIR /copy
+#directory to store app source code
+RUN mkdir /noncensura
 
-# Nakopírujte requirements.txt a nainstalujte závislosti
-COPY requirements.txt /copy/
-RUN pip install --no-cache-dir -r requirements.txt
+#switch to /app directory so that everything runs from here
+WORKDIR /noncensura
 
-RUN pip install gunicorn
 
-# Nakopírujte zbytek projektu do kontejneru
-COPY . /copy/
+#let pip install required packages
+COPY requirements.txt /noncensura/
+RUN pip install  --no-cache-dir -r requirements.txt
+
+#copy the app code to image working directory
+COPY . /noncensura/
+
 
 # Nastavte prostředí pro Django
 ENV DJANGO_SETTINGS_MODULE=diskuze.settings
 
-# Spusťte migrace a sbal aplikaci
-#RUN python manage.py makemigrations
-#RUN python manage.py migrate
-#RUN python manage.py collectstatic --noinput
-
-
-# Exponujte port, na kterém běží Django
-EXPOSE 8000
-
-ENV PATH="/usr/local/bin:${PATH}"
-
-#RUN export JAVA_HOME="$(dirname $(dirname $(readlink -f $(which java))))" && echo $JAVA_HOME
-
-# Spusťte Django server
 

@@ -1,21 +1,17 @@
 {% extends "base_header.html" %}
 {% load static %}
-
+<link rel="stylesheet" type="text/css" href="{% static 'users/css/style_users.css' %}">
 {% block footer %}
 {% endblock %}
 {% load custom_filters %}
 
 {% block content_header %}
-  <div>
-    <span style="text-align: left; font-size: x-large;">Přispěvky uživatele </span>
-    <span style="text-align: right; font-size: x-large;">{{ user.username }}</span>
-  </div>
+<div style="display: flex; justify-content: space-between; align-items: center;">
+    <span style="text-align: left; font-size: large;">Příspěvky uživatele:{{ user.username }}</span>
+    <span style="text-align: right; font-size: small;"><a class="a-diskuse" href="{%url 'navigate_back' %}">&nbsp;X&nbsp;</a>&nbsp;&nbsp;&nbsp;</span>
+</div>
 {% endblock %}
-
 {% block content_main %}
-  <div style="text-align: right;">
-    <a class="a-diskuse" href="{%url 'navigate_back' %}">&nbsp;X&nbsp;</a>&nbsp;&nbsp;&nbsp;
-  </div>
   {% include "comments/comments_sorting.html" %}
   {% include "comments/comments_pagination.html" %}
 <hr>

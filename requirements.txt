@@ -9,4 +9,4 @@ tldextract
 Pillow
 bs4
 gunicorn
-pytz
+captcha

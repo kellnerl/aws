@@ -1,7 +1,7 @@
 from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
 from django.db.models import Max
-from .models import Comment, Discussion
+from .models import Comment, Discussion, Domain, Section
 from django.contrib.auth.models import User
         
 
@@ -46,3 +46,17 @@ def aktualizovat_discussion_model(sender, instance, **kwargs):
         discussion.last_comment = last_comment['created_on__max']
         discussion.comments_count = Comment.objects.filter(discussion=discussion.id).count()
         discussion.save()
+
+@receiver(post_save, sender=Domain)
+def create_Domain(sender, instance, created, **kwargs):
+    if created:
+        # Title of Section update
+        new_domain = instance
+        section_obj=Section.objects.get(name=new_domain.section.name)
+        domains = Domain.objects.filter(section=section_obj)     
+        title = '  '
+        for domain in domains:
+            title = title + domain.domain + ', '
+        section_obj.title = title[:-2]
+        section_obj.save()
+

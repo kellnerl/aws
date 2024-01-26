@@ -3,7 +3,10 @@
 
 
 {% block content_header %}
-<span style="font-size:x-large;margin:10px">Založení nové diskuse k článku</span>
+<div style="display: flex; justify-content: space-between; align-items: center;">
+  <span style="text-align:left; font-size:large; font-weight:bold;">Nová diskuse k článku</span>
+  <span style="text-align:right; font-size:small;"><a class="a-diskuse" href="{%url 'navigate_back'  %}">&nbsp;X&nbsp;</a>&nbsp;&nbsp;&nbsp;</span>
+</div>
 {% endblock %}
 
 {% block content_main %}
@@ -20,9 +23,6 @@
   <br><hr>
   <div style="display: flex; justify-content: space-between;">
     <button type="submit" class="button-font-size">&nbsp;Vytvořit diskusi&nbsp;</button>&nbsp;&nbsp;
-    <span style="text-align: right; font-size: medium;">
-      <a class="a-diskuse" href="{%url 'navigate_back' %}">&nbsp;X&nbsp;</a>&nbsp;&nbsp;&nbsp;
-    </span>
   </div>
   </form>
 {% endblock %}

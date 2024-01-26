@@ -326,7 +326,8 @@ class UserSectionDomainCreate(CreateView):
     labels = {'name': 'Jméno sekce','description': 'Popis',}
    
     def get_success_url(self):
-        return reverse_lazy('user_context', args=[self.request.user.id, 0, '_'])   
+        #return reverse_lazy('user_context', args=[self.request.user.id, 0, '_'])
+        return reverse_lazy('user_context', args=[self.request.user.id])   
 
     def get_context_data(self, **kwargs):
         data = super(UserSectionDomainCreate, self).get_context_data(**kwargs)
@@ -370,7 +371,8 @@ class UserSectionDomainUpdate(UpdateView):
    # success_url = reverse_lazy('user_context', self.request.user.id, 0, '_')
 
     def get_success_url(self):
-        return reverse_lazy('user_context', args=[self.request.user.id, 0, '_'])
+        #return reverse_lazy('user_context', args=[self.request.user.id, 0, '_'])
+        return reverse_lazy('user_context', args=[self.request.user.id])
 
     def get_context_data(self, **kwargs):
         data = super(UserSectionDomainUpdate, self).get_context_data(**kwargs)
