@@ -38,7 +38,7 @@
             <span>
                 <a class="a-diskuse-reverze" style="height:32px;font-size: x-large;border-radius: 0px; padding: 2px;margin: 2px;" href="{% url 'home_discussions' %}">&nbsp;<b>Svobodné diskuse<span style="font-size:medium;">&nbsp;&nbsp;noncensura.cz</b>&nbsp;</span></a>  
              </span>
-          {% if not login %}
+          {% if not central %}
             <span style="margin-top:11px;color:darkblue;">
              <a href="{% url 'day_events' %}" style="color:darkblue;">dnes {{ aktualni_datum_cas|date:"d.m." }}</a>{{svatek}}&nbsp;&nbsp;&nbsp;
             </span>

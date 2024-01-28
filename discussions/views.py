@@ -390,7 +390,7 @@ def new_discussion(request, url, title, theme, author):
                 return redirect('comments', diskuse_id=str(diskuse[0].id))
     else:  
         form = CreateDiscussionForm(initial={'url':url_param, 'title':title_param, 'theme_field':theme_param, 'author':author_param})
-    return render(request, "discussions/discussion_new.html", {'form': form})
+    return render(request, "discussions/discussion_new.html", {'form': form, 'central': True})
 
 
 @login_required(login_url='/accounts/login')

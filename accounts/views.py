@@ -120,7 +120,7 @@ def register(request):
     else: 
         form = RegistrationForm()
 
-    return render(request, 'registration/register.html', {'form': form, 'login': True})
+    return render(request, 'registration/register.html', {'form': form, 'central': True})
 
 def activate(request, uidb64, token):
     try:

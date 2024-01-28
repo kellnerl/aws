@@ -53,8 +53,10 @@ body {
 }
 
 .headline {
-  background-color: #bbbbbb;
-  color: #29164f;
+  /* background-color: #bbbbbb; */
+  background-color: darkblue;
+  /* color: #29164f; */
+  color: white;
   font-size: large;
   font-weight: bold;
   padding: 10px;
