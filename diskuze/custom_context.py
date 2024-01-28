@@ -1,13 +1,16 @@
 import requests
+from django.utils import timezone
 from datetime import date
+
 # custom_context.py
 def custom_data(request):
     # Zde můžete provádět logiku pro získání hodnoty, kterou chcete předat do headeru
-    version = "0.57"
+    version = "0.61"
     # Získání dnešního data
 
     response = requests.get("https://svatkyapi.cz/api/day")
     data = response.json()
+    aktualni_datum_cas = timezone.now()
  # 
  #   today = date.today()
 
@@ -23,4 +26,4 @@ def custom_data(request):
     else:
         svatek=f"svátek má {data['name']}"
     # Vraťte slovník s daty, které chcete přidat do kontextu
-    return {'svatek': svatek, 'version': version}
+    return {'svatek': svatek, 'version': version, 'aktualni_datum_cas': aktualni_datum_cas}

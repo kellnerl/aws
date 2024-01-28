@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 from urllib.parse import parse_qs, urlparse, urlunparse
 from django.core.paginator import Paginator
 
-from users.models import UserContext, UserSection
+from users.models import UserContext
 
 ############################
 # funkcionalita do první verze:

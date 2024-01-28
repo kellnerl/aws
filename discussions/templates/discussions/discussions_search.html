@@ -5,8 +5,9 @@
 
 {% block content_header %}
 <div style="display: flex; justify-content: space-between; align-items: center;">
-  <span style="text-align:left; font-weight:bold; font-size: large;"">Pokročilé vyhledání diskusí</span>
-  <span style="text-align:right; font-size: small;"><a class="a-diskuse" href="{%url 'home_discussions' %}">&nbsp;X&nbsp;</a>&nbsp;&nbsp;&nbsp;</span>
+  <span style="text-align: left; font-size:medium;">&nbsp;</span>
+  <span style="text-align:left; font-size:20px;"">Pokročilé vyhledání diskusí</span>
+  <span style="text-align:right; font-size:small;"><a class="a-diskuse" href="{%url 'home_discussions' %}">&nbsp;X&nbsp;</a></span>
 </div>
 {% endblock %}
 
@@ -23,7 +24,7 @@
     {% endfor %}
   </table>
   <hr>
-  <div style="display: flex; justify-content: space-between;">
+  <div style="display: flex; justify-content: center; align-items: center;">
     <span style="text-align: right; font-size: medium;">
       <button type="submit" class="button-font-size">&nbsp;&#128269;&nbsp;Vyhledat diskuse&nbsp;</button>
     </span>
@@ -45,7 +46,6 @@
      {% endif  %}
    {% else %}
      <span style="color:#471fb6;">Dle zvolených kritérií nenalezena žádná diskuse</span>
-     <div style="text-align: right;""><img src="{% static 'images/noncensura.gif' %}" width="180" height="auto" alt="Obrázek"></div> 
    {% endif  %}
     <div>
       {% for discussion in page_obj %}

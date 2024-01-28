@@ -3,8 +3,9 @@
 
 {% block content_header %} 
 <div style="display: flex; justify-content: space-between; align-items: center;">
-  <span style="text-align:left; font-size:x-large; ">Přihlášení uživatele</span>
-  <span style="text-align:right; font-size: small;"><a class="a-diskuse" href="{% url 'home_discussions' %}">&nbsp;X&nbsp;</a></span>
+  <span style="text-align: left; font-size:medium;">&nbsp;</span>
+  <span style="text-align:left; font-size:20px; ">Přihlášení uživatele</span>
+  <span style="text-align:right; font-size:small;"><a class="a-diskuse" href="{% url 'home_discussions' %}">&nbsp;X&nbsp;</a></span>
 </div>
 {% endblock %} 
 
@@ -28,13 +29,11 @@
     <span style="text-align: right; font-size: small;"></span><a href="{% url 'password_reset' %}" style="text-align: right; font-size: small;color: rgb(9, 24, 190); text-align: right;">reset hesla&nbsp;</a></span>&nbsp;&nbsp;
     <span style="text-align: right; font-size: small;"></span><a href="{% url 'register' %}" style="text-align: right; font-size: small;color: rgb(9, 24, 190); text-align: right;">&nbsp;nový uživatel(registrace)&nbsp;</a></span>&nbsp;&nbsp;  
     <br><hr><br>
-    <div style="display: flex; justify-content: space-between;">
+    <div style="display: flex; justify-content: center; align-items: center;">
       <span>
-        <button type="submit" class="button-font-size">&nbsp;Přihlásit&nbsp;</button>&nbsp;&nbsp;
+        <button type="submit" class="button-font-size">&nbsp;Přihlásit&nbsp;</button>
       </span>
     </div>
-    <br><hr>
+    <br><br>
     </form>
-   <!-- <div style="text-align: right;""><img src="{% static 'images/noncensura.gif' %}" width="200" height="auto" alt="Obrázek"></div>-->
-
 {% endblock %} 

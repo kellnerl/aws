@@ -3,8 +3,9 @@
 
 {% block content_header %} 
 <div style="display: flex; justify-content: space-between; align-items: center;">
-    <span style="text-align:left; font-size:x-large;">Registrace nového uživatele</span>
-    <span style="text-align:right; font-size: small;"><a class="a-diskuse" href="{% url 'home_discussions' %}">&nbsp;X&nbsp;</a></span>
+    <span style="text-align: left; font-size:medium;">&nbsp;</span>
+    <span style="text-align:left; font-size:20px;">Registrace nového uživatele</span>
+    <span style="text-align:right; font-size:small;"><a class="a-diskuse" href="{% url 'home_discussions' %}">&nbsp;X&nbsp;</a></span>
   </div>
 {% endblock %} 
 {% block content_main %} 
@@ -34,8 +35,8 @@
             {% endfor %}
         </table>
         <hr><br>
-            <div style="display: flex; justify-content: space-between;">
-              <span><button class="button-font-size" type="submit">&nbsp;Registrovat&nbsp;</button>&nbsp;&nbsp;</span>
+            <div style="display: flex; justify-content: center; align-items: center;">
+              <span><button class="button-font-size" type="submit">&nbsp;Registrovat&nbsp;</button>&nbsp;</span>
             </div>
     </form>
     <br><br>

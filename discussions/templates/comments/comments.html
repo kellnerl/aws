@@ -7,9 +7,10 @@
 {% block content_header %}
 <div style="margin-top:1px;padding-top: 1px;padding-bottom: 1px; display: flex; justify-content: space-between; align-items: center; white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
  <!-- <div style="font-size:x-large;margin-top:10px;text-align: left; white-space: nowrap;overflow: hidden;text-overflow: ellipsis; ">-->
-  <span style="text-align: right; font-size: medium;"> Diskuse<a href="{{discussion.url}}">{{ discussion.title }}</a></span>
-  <span style="text-align: left; font-size: small;"><a class="a-diskuse" href="{% url 'navigate_back'%}">&nbsp;X&nbsp;</a>&nbsp;&nbsp;&nbsp;</span>
+  <span style="text-align: right; font-size:19px;display: inline-block; max-width: 780px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"> Diskuse<a href="{{discussion.url}}">{{ discussion.title }}</a></span>
+  <span style="text-align: left; font-size:small;"><a class="a-diskuse" href="{% url 'navigate_back'%}">&nbsp;X&nbsp;</a></span>
 </div>
+
 
 {% endblock %}
 {% block content_main %}
@@ -18,7 +19,7 @@
   {% if discussion.theme %}<span style="font-weight:normal;font-size: medium">&bull;&nbsp;&nbsp;<b>téma:</b> {{ discussion.theme.name }}</span>{% endif %}
   {% if discussion.author %}<span style="font-weight:normal;font-size: medium">&nbsp;&bull;&nbsp;&nbsp;<b>author:</b> {{ discussion.author }}</span>{% endif %}
 </div>
-{% if not request.user.is_anonymous and not thread_id %} 
+{% if not thread_id %} 
 <form  method="POST" action="{% url 'new_comment' diskuse_id %}">{% csrf_token %} 
     {{ form_comment.as_p }} 
     <div style="display: flex; justify-content: space-between;">
@@ -36,9 +37,6 @@
 </form>
 {% else %}
   <br>
-  <div style="text-align: right;">
-    <a class="a-diskuse" href="{%url 'navigate_back' %}">&nbsp;X&nbsp;</a>&nbsp;&nbsp;&nbsp;
-  </div>
 {% endif %}
 
 

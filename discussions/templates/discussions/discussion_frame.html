@@ -23,9 +23,7 @@
        {% endif %}
      </span>
       {% else %}
-        {% if not request.user.is_anonymous %}
           <a class="a-diskuse" href="{% url 'comments' discussion.id %}">Začni diskusi </a>&nbsp;&nbsp;</a>
-        {% endif %}
         {% if request.user in discussion.favorite.all %} 
         &nbsp;<span style="color:red;">&#x2764;</span>&nbsp;&nbsp;
         {% endif %}

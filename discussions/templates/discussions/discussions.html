@@ -22,10 +22,10 @@
   <br>
     <p>
       <a class="a-small-button" href="{% url 'advanced_search' %}">&nbsp;<b>Pokročilé vyhledání diskusí</b>&nbsp;</a>&nbsp;&nbsp;
-    {% if not request.user.is_anonymous %} 
-    <a class="a-small-button" href="{% url 'new_discussion' 'https:\\' 'none' 'none' 'none' %}">&nbsp;&star;&nbsp;<b>Založit diskusi</b>&nbsp;</a>&nbsp;&nbsp;
-    {% endif %} 
-    <a class="a-small-button" href="{% url 'article_search'%}">&nbsp;&lbrack;&equiv;&rbrack;&nbsp;<b>Vyhledání článků</b>&nbsp;</a>&nbsp;&nbsp;
+      <a class="a-small-button" href="{% url 'article_search'%}">&nbsp;&lbrack;&equiv;&rbrack;&nbsp;<b>Vyhledání článků</b>&nbsp;</a>&nbsp;&nbsp;
+      {% if not request.user.is_anonymous %} 
+      <a class="a-small-button" href="{% url 'new_discussion' 'https:\\' 'none' 'none' 'none' %}">&nbsp;&star;&nbsp;<b>Založit diskusi</b>&nbsp;</a>&nbsp;&nbsp;
+      {% endif %} 
     </p>
     <br>    
   {% endif %}
@@ -111,6 +111,6 @@
   </div>
 {% endif %}
 {% else %}
-<div style="text-align: right;""><img src="{% static 'images/noncensura.gif' %}" width="200" height="auto" alt="Obrázek"></div>
+<div style="text-align:center;""><img src="{% static 'images/noncensura.gif' %}" width="200" height="auto" alt="Obrázek"></div>
 {% endif %}
 {% endblock %}

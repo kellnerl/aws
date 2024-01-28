@@ -3,8 +3,9 @@
 <link rel="stylesheet" type="text/css" href="{% static 'users/css/style_users.css' %}">
 {% block content_header %} 
 <div style="display: flex; justify-content: space-between; align-items: center;">
-  <span style="text-align: left; font-size:large;">Události, které nastaly dne {{day}}.{{month}}.</span>
-  <span style="text-align: right; font-size:small;"><a class="a-diskuse" href="{%url 'navigate_back' %}">&nbsp;X&nbsp;</a>&nbsp;&nbsp;&nbsp;</span>
+  <span style="text-align: left; font-size:medium;">&nbsp;</span>
+  <span style="text-align: left; font-size:20px;">Události dne {{day}}.{{month}}.</span>
+  <span style="text-align: right; font-size:small;"><a class="a-diskuse" href="{%url 'navigate_back' %}">&nbsp;X&nbsp;</a></span>
 </div>
 {% endblock %}
 
@@ -42,10 +43,11 @@
     </tbody>
 </table>
 </div>
-            <hr>
-            <div style="text-align:right">
-              <a class="a-diskuse" href="{%url 'navigate_back' %}">&nbsp;X&nbsp;</a>&nbsp;&nbsp;&nbsp;
-              <br><br>
-            </div>
+<hr>
+<div style="text-align:center">
+    <br>
+    <a class="a-diskuse" href="{%url 'navigate_back' %}">&nbsp;zavřít&nbsp;</a>
+    <br><br>
+</div>
   
 {% endblock %}
