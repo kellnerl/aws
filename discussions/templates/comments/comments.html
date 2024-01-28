@@ -7,7 +7,7 @@
 {% block content_header %}
 <div style="margin-top:1px;padding-top: 1px;padding-bottom: 1px; display: flex; justify-content: space-between; align-items: center; white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
  <!-- <div style="font-size:x-large;margin-top:10px;text-align: left; white-space: nowrap;overflow: hidden;text-overflow: ellipsis; ">-->
-  <span style="text-align: right; font-size:19px;display: inline-block; max-width: 780px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"> Diskuse<a href="{{discussion.url}}">{{ discussion.title }}</a></span>
+  <span style="text-align: right; font-size:20px;display: inline-block; max-width: 780px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"> Diskuse<a href="{{discussion.url}}" style="color:azure">{{ discussion.title }}</a></span>
   <span style="text-align: left; font-size:small;"><a class="a-diskuse" href="{% url 'navigate_back'%}">&nbsp;X&nbsp;</a></span>
 </div>
 
@@ -25,10 +25,12 @@
     <div style="display: flex; justify-content: space-between;">
     <button type="submit" class="button-font-size">&nbsp;Uložit komentář&nbsp;</button>&nbsp;&nbsp;
     <span>
+      {% if not request.user.is_anonymous %}
       {% if request.user in discussion.favorite.all %} 
         <a class="a-small-button" href="{% url 'discussion_favorite_remove' diskuse_id %}">&nbsp;<span style="color:red;">&#x2764;</span>&nbsp;odebrat z oblíbených&nbsp;</a>&nbsp;&nbsp;
       {% else %}
         <a class="a-small-button" href="{% url 'discussion_favorite_add' diskuse_id %}">&nbsp;<span style="color:red;">&#x2661;</span>&nbsp;přidat do oblíbených&nbsp;</a>&nbsp;&nbsp;
+      {% endif %}
       {% endif %}
     </span>
     

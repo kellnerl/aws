@@ -4,7 +4,7 @@ services:
   db:
     image: postgres
     volumes:
-      - ./postgres/db:/var/lib/postgresql/data
+      - ../postgres/db:/var/lib/postgresql/data
       - ./postgres/init.sql:/docker-entrypoint-initdb.d/init.sql  # Přidáváme init.sql
 #      - ./postgres/pg_hba.conf:/etc/postgresql/pg_hba.conf
     ports:
