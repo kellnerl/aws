@@ -19,8 +19,21 @@ body {
   font-size: 16px;
 }
 
+button[type="submit"] {
+  border: 2px solid rgb(71, 31, 182); /* Barva okraje a tloušťka */
+  padding: 10px 20px; /* Volitelné nastavení polštáře pro vzhled */
+  background-color: white; /* Barva pozadí */
+  color: rgb(71, 31, 182); /* Barva textu */
+  cursor: pointer; /* Změnit kurzor při najetí myší */
+  border-radius: 3px; /* Zaoblené rohy */
+  font-size: 14px;
+}
+
 .button-font-size {
   font-size: 16px;
+  border: 1px solid rgb(71, 31, 182);
+  background-color: white;
+  color: rgb(71, 31, 182);
 }
 
 .text-area-frame {
