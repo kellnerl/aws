@@ -50,13 +50,14 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "mptt",
     "tempus_dominus",  
-    "captcha",
 #app
     "accounts",  
     "users",  
     "discussions",
     "articles",
 ]
+
+SILENCED_SYSTEM_CHECKS = ['captcha.recaptcha_test_key_error']
 
 #MIGRATION_MODULES = {
  #   'accounts': 'accounts.migrations',
@@ -118,6 +119,10 @@ WSGI_APPLICATION = "diskuze.wsgi.application"
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
+#"default": {
+#        "ENGINE": "django.db.backends.sqlite3",
+#        "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
+#},
 'default': {
     'ENGINE': 'django.db.backends.postgresql',
     'NAME': 'noncensuradb',#os.environ.get('POSTGRES_NAME'),
@@ -125,7 +130,7 @@ DATABASES = {
     'PASSWORD': 'postgres',#os.environ.get('POSTGRES_PASSWORD'),
     'HOST': 'db',
     'PORT': 5432, #default port you don't need to mention in docker-compose
-}
+},
 }
 
 

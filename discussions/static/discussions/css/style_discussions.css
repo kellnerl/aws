@@ -12,7 +12,6 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh; /* Minimální výška na celou obrazovku */
-
 }
 
 .input-font {
@@ -21,7 +20,7 @@ body {
 
 button[type="submit"] {
   border: 2px solid rgb(71, 31, 182); /* Barva okraje a tloušťka */
-  padding: 10px 20px; /* Volitelné nastavení polštáře pro vzhled */
+  padding: 2px 8px; /* Volitelné nastavení polštáře pro vzhled */
   background-color: white; /* Barva pozadí */
   color: rgb(71, 31, 182); /* Barva textu */
   cursor: pointer; /* Změnit kurzor při najetí myší */
