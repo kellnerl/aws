@@ -3,6 +3,7 @@ psycopg2==2.9.1
 requests==2.26.0
 python-dateutil
 django-tempus-dominus
+django-contrib-postgres
 django-mptt
 django-recaptcha
 tldextract

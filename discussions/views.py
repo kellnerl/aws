@@ -206,8 +206,10 @@ def home_discussions(request):
             form = SearchDiscussionForm(request.GET or None)
             if form.is_valid():
                 search_value = utils.remove_utm_parameters(form.cleaned_data['search_value'])
-                search_pattern = r'\b' + re.escape(search_value) + r'\b'
-                diskuses = Discussion.objects.filter(Q(title__regex=search_pattern) | Q(url__regex=search_pattern))
+                search_pattern = r'\m' + re.escape(search_value) + r'\M'
+                diskuses = Discussion.objects.filter(Q(title__iregex=search_pattern) | Q(url__iregex=search_pattern))
+                #search_pattern = r'\b' + re.escape(search_value) + r'\b'
+                #diskuses = Discussion.objects.filter(Q(title__regex=search_pattern) | Q(url__regex=search_pattern))
                 if len(diskuses) == 0:
                     try:
                         response = requests.head(search_value)
