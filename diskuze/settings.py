@@ -26,6 +26,9 @@ SECRET_KEY = "django-insecure-62_m!wqm8^1f1a&c$4e!#+@ap4&&rlp6_urli3v_*tm3)$k89q
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+SECURE_SSL_REDIRECT = False  # Přesměrovat všechny HTTP požadavky na HTTPS
+#SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
 ALLOWED_HOSTS = ['*']
 
 #AUTH_USER_MODEL = 'accounts.CustomUser'

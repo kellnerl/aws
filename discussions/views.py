@@ -26,9 +26,10 @@ from django.contrib.auth.tokens import default_token_generator
 from django.urls import reverse, reverse_lazy
 from django.core.paginator import Paginator
 from django.db.models import Q
+from django.db.models import F
 from django.db.models import QuerySet
 from mptt.templatetags.mptt_tags import cache_tree_children
-
+from django.db.models import Case, When, Value, IntegerField
 
 from discussions.forms import CommentCopyLinkForm, CommentReplyForm, CreateDiscussionForm, AdvancedSearchDiscussionForm, SearchDiscussionForm
 from discussions.forms import CommentForm
@@ -224,6 +225,14 @@ def home_discussions(request):
                 elif (sort_by == 2):
                     diskuses = diskuses.order_by('-comments_count')
                 else:
+                    diskuses = diskuses.annotate(
+                        filtered_comments_count=Case(
+                            When(comments_count__lte=0, comments_count__isnull=True, then=Value(0)),
+                            default=F('comments_count'),
+                            output_field=IntegerField()
+                        )
+                    )
+                    diskuses = diskuses.exclude(filtered_comments_count=0)
                     diskuses = diskuses.order_by('-last_comment')
                 page_obj, total_pages = utils.get_page_obj(request, diskuses, user_context_instance.rows_per_page)
                 sections = get_sections (request)
@@ -274,8 +283,7 @@ def advanced_search(request):
             search_value_last_comment_before = form.cleaned_data['search_value_last_comment_before']
             search_value_last_comment_after = form.cleaned_data['search_value_last_comment_after']
             sort_by = int(form.cleaned_data['orderby'])
-            print("sort_by")
-            print(sort_by)
+            print(f"sort_by: {sort_by}")
             # můžete použít metodu filter() spolu s podmínkami pro jednotlivá pole a operátorem __gt (větší než) nebo __gte (větší nebo rovno).
             #records = MyModel.objects.filter(field1__gt=value1, field2__gt=value2, field3__gte=value3)
             diskuses = Discussion.objects.filter(active=active)
@@ -305,6 +313,14 @@ def advanced_search(request):
             elif (sort_by == 2):
                 diskuses = diskuses.order_by('-comments_count')
             else:
+                diskuses = diskuses.annotate(
+                        filtered_comments_count=Case(
+                            When(comments_count__lte=0, comments_count__isnull=True, then=Value(0)),
+                            default=F('comments_count'),
+                            output_field=IntegerField()
+                        )
+                    )
+                diskuses = diskuses.exclude(filtered_comments_count=0)
                 diskuses = diskuses.order_by('-last_comment')
             user_context_instance = utils.get_user_context_instance(request)
             page_obj, total_pages = utils.get_page_obj(request, diskuses, user_context_instance.rows_per_page)      
@@ -438,6 +454,14 @@ def todays_discussions(request):
     elif (sort_by == 2):
         diskuses = diskuses.order_by('-comments_count')
     else:
+        diskuses = diskuses.annotate(
+                        filtered_comments_count=Case(
+                            When(comments_count__lte=0, comments_count__isnull=True, then=Value(0)),
+                            default=F('comments_count'),
+                            output_field=IntegerField()
+                        )
+        )
+        diskuses = diskuses.exclude(filtered_comments_count=0)
         diskuses = diskuses.order_by('-last_comment')
 
     user_context_instance = utils.get_user_context_instance(request)
@@ -501,6 +525,14 @@ def discussions(request, section_num, section_type):
     elif (sort_by == 2):
         diskuses = diskuses.order_by('-comments_count')
     else:
+        diskuses = diskuses.annotate(
+                        filtered_comments_count=Case(
+                            When(comments_count__lte=0, comments_count__isnull=True, then=Value(0)),
+                            default=F('comments_count'),
+                            output_field=IntegerField()
+                        )
+        )
+        diskuses = diskuses.exclude(filtered_comments_count=0)
         diskuses = diskuses.order_by('-last_comment')
     page_obj, total_pages = utils.get_page_obj(request, diskuses, user_context_instance.rows_per_page)
     ###total_pages =0

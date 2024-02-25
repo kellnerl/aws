@@ -28,16 +28,21 @@ services:
     depends_on:
       - db
 
-#  nginx:
-#    image: nginx:latest
-#    volumes:
-#      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
-#    ports:
-#      - "80:80"
-#    networks:
-#      - diskuze_network  # Přidejte, pokud používáte vlastní síť
-#    depends_on:
-#      - web
+  #nginx:
+  #  image: nginx:latest
+  #  volumes:
+  #    - ./nginx/default.conf:/etc/nginx/conf.d/default.conf  # Přidáváme konfiguraci pro proxy_pass na Django aplikaci
+  #    - ./certs/localhost.pem:/etc/nginx/certs/localhost.pem
+  #    - ./certs/localhost-key.pem:/etc/nginx/certs/localhost-key.pem
+   #   - ./nginx/cert.crt:/etc/nginx/cert.crt  # Certifikát pro HTTPS
+   #   - ./nginx/cert.key:/etc/nginx/cert.key  # Soukromý klíč pro HTTPS
+   # ports:
+   #   - "80:80"
+   #   - "443:443"  # Přidáváme port pro HTTPS
+   # networks:
+   #   - diskuze_network
+   # depends_on:
+   #    - web
 
 networks:
   diskuze_network:  # Přidejte, pokud používáte vlastní síť
