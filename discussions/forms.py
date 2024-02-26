@@ -31,7 +31,7 @@ class CommentCopyLinkForm(forms.ModelForm):
 
 # comment creating a form
 class CommentForm(forms.ModelForm):
-    content=forms.CharField (label='',required=True, widget=forms.Textarea(attrs={'rows': '6', 'size': '80', 'placeholder':'napište komentář k článku'}))
+    content=forms.CharField (label='',required=True, widget=forms.Textarea(attrs={'rows': '6', 'cols':'96', 'size': '120', 'placeholder':'napište komentář k článku', 'class': 'custom-textarea'}))
   
     class Meta:
         model = Comment
@@ -39,7 +39,7 @@ class CommentForm(forms.ModelForm):
 
 # comment reply a form
 class CommentReplyForm(forms.ModelForm):
-    content=forms.CharField (label='',required=False, widget=forms.Textarea(attrs={'rows': '8', 'placeholder':'napište reakci ke komentáři'}))
+    content=forms.CharField (label='',required=False, widget=forms.Textarea(attrs={'rows': '6', 'cols':'96', 'size': '120', 'placeholder':'napište reakci ke komentáři', 'class': 'custom-textarea'}))
   
     class Meta:
         model = Comment

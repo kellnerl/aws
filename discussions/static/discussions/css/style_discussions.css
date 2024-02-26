@@ -18,6 +18,14 @@ body {
   font-size: 16px;
 }
 
+.custom-textarea {
+  max-width: 794px;  /* Zde můžete nastavit maximální šířku podle svých potřeb */
+  max-height: 200px;  /* Zde můžete nastavit maximální výšku podle svých potřeb */
+  min-width: 240px;  /* Zde můžete nastavit minimální šířku podle svých potřeb */
+  min-height: 60px;  /* Zde můžete nastavit minimální výšku podle svých potřeb */
+  /* Další styly podle potřeby */
+}
+
 button[type="submit"] {
   border: 2px solid rgb(71, 31, 182); /* Barva okraje a tloušťka */
   padding: 2px 8px; /* Volitelné nastavení polštáře pro vzhled */
