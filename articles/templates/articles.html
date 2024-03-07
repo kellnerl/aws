@@ -72,7 +72,7 @@
         {% endif %}
         <br>
       {% if not article.discussion %}
-      <a class="a-diskuse" href="{% url 'new_discussion' article.url article.title article.theme|default:'none' article.author|default:'none' %}">Vytvoř diskusi</a>&nbsp;&nbsp;
+      <a class="a-diskuse" href="{% url 'new_discussion' article.url article.title article.theme|default:'none' article.author|default:'none' %}">Založ diskusi</a>&nbsp;&nbsp;
       {% else %}
       <a class="a-diskuse" href="{% url 'comments' article.discussion_id %}">Diskutuj</a>&nbsp;&nbsp;počet příspěvků: {{article.comments_count}}
       {% endif %}
