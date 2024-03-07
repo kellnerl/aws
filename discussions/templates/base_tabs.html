@@ -9,7 +9,7 @@
           {% if section.number == 0 %}
           <div id="tab0" class="tab" onclick="redirectToURL(`{% url 'home_discussions'  %}`)">{{section.name}}</div>
           {% else %} 
-           <div id="{{section.tabname}}" hint= "{{section.type}}" title="{{section.description}}, {{section.title}}" class="tab" onclick="redirectToURL(`{% url 'discussions' section.number section.type %}`)">{{section.name}}</div>
+           <div id="{{section.tabname}}" hint= "{{section.type}}" title="{{section.description}}{{section.title}}" class="tab" onclick="redirectToURL(`{% url 'discussions' section.number section.type %}`)">{{section.name}}</div>
           {% endif %}
           {% endfor %}  
         </div>

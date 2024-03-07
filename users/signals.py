@@ -29,16 +29,19 @@ def create_userSectionDomain(sender, instance, created, **kwargs):
             print (domains)
             for domain in domains:
                 UserSectionDomain.objects.create(userSection=usersection, domain=domain.domain, section_number=usersection.number)
-                title = title + domain.domain + ', '
-            usersection.title = title[:-2]
+                title = title + domain.domain + ',\n '
+            usersection.title = title[:-3]
             usersection.save()
         elif usersection.type == 'D':
             user_domains = UserSectionDomain.objects.filter(userSection=usersection)     
             title = ' domény:  '
             print (user_domains)
             for domain in user_domains:
-                title = title + domain.domain + ', '
-            usersection.title = title[:-2]
+                title = title + domain.domain + ',\n '
+            usersection.title = title[:-3]
+            usersection.save()
+        else:
+            usersection.title = '.'
             usersection.save()
         
 @receiver(post_save, sender=UserSectionDomain)

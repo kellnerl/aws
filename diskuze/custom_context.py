@@ -5,7 +5,7 @@ from datetime import date
 # custom_context.py
 def custom_data(request):
     # Zde můžete provádět logiku pro získání hodnoty, kterou chcete předat do headeru
-    version = "0.70 "
+    version = "0.71 "
     # Získání dnešního data
 
     response = requests.get("https://svatkyapi.cz/api/day")

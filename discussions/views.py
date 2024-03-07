@@ -51,7 +51,7 @@ def get_sections (request):
         id=1
         home = UserSection(id=id,name='diskuse', number=id-1, user=None, description='diskuse homepage')
         id=2
-        new = UserSection(id=id,name='nové', number=1, user=None, type='T', description='nové diskuse')
+        new = UserSection(id=id,name='nové', number=1, user=None, type='T', description='Nové diskuse', title='.')
         queryset.append(home)  # Přidání home fiktivního prvku do seznamu
         queryset.append(new)  # Přidání new doscussions fiktivního prvku do seznamu
         sections = Section.objects.filter(type="P")

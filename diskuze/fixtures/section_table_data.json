@@ -4,7 +4,7 @@
       "pk": 1,
       "fields": {
         "name": "nové",
-        "description": "dnes založené diskuse",
+        "description": "Nově založené diskuse",
         "number": "1",
         "type": "T"
       }
@@ -14,7 +14,7 @@
     "pk": 2,
     "fields": {
       "name": "oblíbené",
-      "description": "mé oblíbené diskuse",
+      "description": "Moje oblíbené diskuse",
       "number": "2",
       "type": "M"
     }
@@ -24,7 +24,7 @@
     "pk": 3,
     "fields": {
       "name": "iDnes",
-      "description": "články na ",
+      "description": "Diskuse na",
       "number": "3",
       "type": "P",
       "scrapping": "True"
@@ -35,7 +35,7 @@
     "pk": 4,
     "fields": {
       "name": "seznam",
-      "description": "články na ",
+      "description": "Diskuse na",
       "number": "4",
       "type": "P",
       "scrapping": "True"
@@ -46,7 +46,7 @@
     "pk": 5,
     "fields": {
       "name": "neviditelnypes",
-      "description": "články na ",
+      "description": "Diskuse na",
       "number": "5",
       "type": "P"
     }
@@ -56,7 +56,7 @@
       "pk": 6,
       "fields": {
         "name": "atlas",
-        "description": "diskuse na ",
+        "description": "Diskuse na",
         "number": "6",
         "type": "P"
       }
@@ -66,7 +66,7 @@
        "pk": 7,
        "fields": {
          "name": "youtube",
-         "description": "diskuse na ",
+         "description": "Diskuse na",
          "number": "7",
          "type": "P"
        }
@@ -76,7 +76,7 @@
         "pk": 8,
         "fields": {
           "name": "parlamentnilisty",
-          "description": "diskuse na ",
+          "description": "Diskuse na",
           "number": "8",
           "type": "P"
         }
@@ -86,7 +86,7 @@
           "pk": 9,
           "fields": {
             "name": "blesk",
-            "description": "články na ",
+            "description": "Diskuse na",
             "number": "9",
             "type": "P"
           }

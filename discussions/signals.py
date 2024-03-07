@@ -53,10 +53,15 @@ def create_Domain(sender, instance, created, **kwargs):
         # Title of Section update
         new_domain = instance
         section_obj=Section.objects.get(name=new_domain.section.name)
-        domains = Domain.objects.filter(section=section_obj)     
-        title = '  '
+        domains = Domain.objects.filter(section=section_obj)  
+        # Použití seznamové komprehenze a join pro spojení doménových názvů
+        #title = ', '.join(domain.domain for domain in domains)    
+        title = ''
         for domain in domains:
-            title = title + domain.domain + ', '
-        section_obj.title = title[:-2]
+            title = title + domain.domain + ',\n '
+        # Pokud seznam není prázdný, smaž posledni ', ', jinak nastavte na '.'
+        title = title[:-3] if len(title) > 1 else '.'
+            
+        section_obj.title = title
         section_obj.save()
 
