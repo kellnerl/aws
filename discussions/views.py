@@ -25,6 +25,7 @@ from django.utils.encoding import force_bytes, force_str
 from django.contrib.auth.tokens import default_token_generator
 from django.urls import reverse, reverse_lazy
 from django.core.paginator import Paginator
+from django.db.models import Func, Value, CharField
 from django.db.models import Q
 from django.db.models import F
 from django.db.models import QuerySet
@@ -40,6 +41,8 @@ from discussions.models import ArticleTheme
 
 # Create your views here.
 
+class Unaccent(Func):
+    function = 'remove_accents'
 
 def get_sections (request):
 
@@ -51,7 +54,7 @@ def get_sections (request):
         new = UserSection(id=id,name='nové', number=1, user=None, type='T', description='nové diskuse')
         queryset.append(home)  # Přidání home fiktivního prvku do seznamu
         queryset.append(new)  # Přidání new doscussions fiktivního prvku do seznamu
-        sections = Section.objects.filter(scrapping=True)
+        sections = Section.objects.filter(type="P")
         for section in sections:
            id=id+1
            new_section = UserSection(id=id, name=section.name, number=id, user=None, title=section.title, type=str(section.id), description=section.description)
@@ -188,17 +191,18 @@ def home_discussions(request):
     previous_pages = [request.path]
     request.session['previous_pages'] = previous_pages
     sort_by = request.GET.get('sort_by')
-    theme_filter = request.GET.get('theme')
+    ##theme_filter = request.GET.get('theme')
     search_value = request.GET.get('search_value')
     user_context_instance = utils.get_user_context_instance(request)
     if sort_by == None:
         sort_by = user_context_instance.default_discussions_ordering
     else:
         sort_by = int(sort_by)
-    if theme_filter == None:
-        theme_filter = user_context_instance.default_theme
-    else:
-        theme_filter = int(theme_filter)
+    ##if theme_filter == None:
+    ##    theme_filter = user_context_instance.default_theme
+    ##else:
+    ##    theme_filter = int(theme_filter)
+    theme_filter = 0
     utils.save_user_context_instance(request, theme_filter, sort_by, None)
     if request.method == 'GET':
         if 'clear' in request.GET:
@@ -209,8 +213,9 @@ def home_discussions(request):
                 search_value = utils.remove_utm_parameters(form.cleaned_data['search_value'])
                 search_pattern = r'\m' + re.escape(search_value) + r'\M'
                 diskuses = Discussion.objects.filter(Q(title__iregex=search_pattern) | Q(url__iregex=search_pattern))
-                #search_pattern = r'\b' + re.escape(search_value) + r'\b'
-                #diskuses = Discussion.objects.filter(Q(title__regex=search_pattern) | Q(url__regex=search_pattern))
+                ###diskuses = Discussion.objects.filter(Q(Unaccent('title', function='remove_accents', output_field=CharField()) | Q(url__iregex=search_pattern)))
+                ##search_pattern = r'\b' + re.escape(search_value) + r'\b'
+                ##diskuses = Discussion.objects.filter(Q(title__regex=search_pattern) | Q(url__regex=search_pattern))
                 if len(diskuses) == 0:
                     try:
                         response = requests.head(search_value)
@@ -218,8 +223,8 @@ def home_discussions(request):
                             return redirect('new_discussion', url=search_value, title="none", theme="none", author="none")
                     except:
                         pass
-                if theme_filter > 0:
-                    diskuses = diskuses.filter(theme=theme_filter)
+##                if theme_filter > 0:
+##                    diskuses = diskuses.filter(theme=theme_filter)
                 if (sort_by == 1):
                     diskuses = diskuses.order_by('-created_on')
                 elif (sort_by == 2):
@@ -239,7 +244,7 @@ def home_discussions(request):
                 form = SearchDiscussionForm(initial={'search_value': search_value})
                 context = {
                 'form_discussion': form,
-                'theme_number': theme_filter,
+ #               'theme_number': theme_filter,
                 'themes': ArticleTheme.objects.all().order_by('number'),
                 'section': 0,
                 'sections': sections,
@@ -256,7 +261,7 @@ def home_discussions(request):
     context = {
         'section': 0,
         'sort_by': sort_by,
-        'theme_number': theme_filter,
+ #       'theme_number': theme_filter,
         'page_obj': [],
         'sections': sections,
         'themes': ArticleTheme.objects.all().order_by('number'),
@@ -503,7 +508,7 @@ def discussions(request, section_num, section_type):
     elif section_type=='T':
         today = timezone.now().date()
         print (f"today {today}")
-        yesterday = today - timedelta(days=1)
+        yesterday = today - timedelta(days=2)
         print (f"yesterday {yesterday}")
         diskuses = Discussion.objects.filter(created_on__date__in=[today, yesterday])
     else:

@@ -7,10 +7,11 @@
 <!--<div style="justify-content: center; align-items: center; height: 200px;"></div>-->
 <p style="font-size:medium;"><a href="{% url 'about' %}">Diskusní portál</a> pro otevřenou společnost, která chce znát názory a hledat pravdu<a href="{% url 'about' %}">....</a></p>
 <p style="font-size:small;">Na tomto portále můžete diskutovat nad libovolným článkem nebo videem na webu a stačí vám k tomu jeden účet zde. 
-  Bez přihlášení můžete vyhledávat články na jiných portálech, můžete vyhledávat diskuse nad články a videi a číst diskusní příspěvky.
+  Bez přihlášení můžete vyhledávat články na jiných portálech, můžete vyhledávat diskuse nad články a videí a číst diskusní příspěvky.
   Po {% if request.user.is_anonymous %}<a href="{% url 'register' %}">registraci</a>{% else %} registraci {% endif %} a 
   {% if request.user.is_anonymous %}<a href="{% url 'login' %}">přihlášení</a>{% else %} přihlášení {% endif %}
-   můžete zakládat nové diskuse, psát diskusní komentáře, reagovat na jiné příspěvky, hodnotit příspěvky jiných diskutérů. Při diskutování je nutno respektovat určitá<a href="{% url 'discussion_rules' %}"">pravidla diskutování</a>. </p>
+   můžete zakládat nové diskuse, psát diskusní komentáře, reagovat na jiné příspěvky, hodnotit příspěvky jiných diskutérů. Výhodou tohoto portálu je, že přihlášený si může vytvořit své záložky s diskusema.
+   K tomu může využít předdefinované záložky nebo si nadefinovat své vlastní záložky. Při diskutování je nutno respektovat určitá<a href="{% url 'discussion_rules' %}"">pravidla diskutování</a>. </p>
   
 <br><br>
 <form  id="searchForm" method="GET" action="{% url 'home_discussions'  %}">
@@ -31,58 +32,64 @@
   {% endif %}
 
  
-  {% if section > 0 or search_value or today %}
-  
-  {% for theme in themes %}
-  {% if theme_number == theme.number %}
-    <a class="a-filter-selected" title="filtr: téma diskusí" href="?theme={{theme.number}}&search_value={{search_value}}">&nbsp;{{theme.name}}&nbsp;</a>&nbsp;&nbsp;
-  {% else %}
-    <a class="a-filter" title="filtr: téma diskusí" href="?theme={{theme.number}}&search_value={{search_value}}">&nbsp;{{theme.name}}&nbsp;</a>&nbsp;&nbsp;
-   {% endif %}
-  {% endfor %}
+  {% if section > 0 or today %}
+    {% for theme in themes %}
+      {% if theme_number == theme.number %}
+        <a class="a-filter-selected" title="filtr: téma diskusí" href="?theme={{theme.number}}&search_value={{search_value}}">&nbsp;{{theme.name}}&nbsp;</a>&nbsp;&nbsp;
+      {% else %}
+        <a class="a-filter" title="filtr: téma diskusí" href="?theme={{theme.number}}&search_value={{search_value}}">&nbsp;{{theme.name}}&nbsp;</a>&nbsp;&nbsp;
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+
   {% if page_obj %}
   
-  <div class="horizontal-line" style="margin-top:12px;margin-bottom:6px;justify-content:left">
-    <span class="line-text{% if sort_by == 1 %}-selected{% else %}-invisible{% endif%}" style="font-size:medium;">
-     <a class="a-bold-hover{% if sort_by == 1 %}-selected{% endif%}" href="?sort_by=1&search_value={{search_value}}" title="seřazení diskusí">&nbsp;od nejnovějších&nbsp;</a>
-   </span>
-   <span class="line-text{% if sort_by == 2 %}-selected{% else %}-invisible{% endif%}" style="font-size:medium;">
-     <a class="a-bold-hover{% if sort_by == 2 %}-selected{% endif%}" href="?sort_by=2&search_value={{search_value}}" title="seřazení diskusí">&nbsp;od nejdiskutovanějších&nbsp;</a>
-   </span>
-   <span class="line-text{% if sort_by == 3 %}-selected{% else %}-invisible{% endif%}" style="font-size:medium;">
-     <a class="a-bold-hover{% if sort_by == 3 %}-selected{% endif%}" href="?sort_by=3&search_value={{search_value}}" title="seřazení diskusí">&nbsp;dle času posledního příspěvku&nbsp;</a>
-   </span>
- </div>
+    {% if page_obj|length > 1 %}
+      <div class="horizontal-line" style="margin-top:12px;margin-bottom:6px;justify-content:left">
+        <span class="line-text{% if sort_by == 1 %}-selected{% else %}-invisible{% endif%}" style="font-size:medium;">
+          <a class="a-bold-hover{% if sort_by == 1 %}-selected{% endif%}" href="?sort_by=1&search_value={{search_value}}" title="seřazení diskusí">&nbsp;od nejnovějších&nbsp;</a>
+        </span>
+        <span class="line-text{% if sort_by == 2 %}-selected{% else %}-invisible{% endif%}" style="font-size:medium;">
+          <a class="a-bold-hover{% if sort_by == 2 %}-selected{% endif%}" href="?sort_by=2&search_value={{search_value}}" title="seřazení diskusí">&nbsp;od nejdiskutovanějších&nbsp;</a>
+        </span>
+        <span class="line-text{% if sort_by == 3 %}-selected{% else %}-invisible{% endif%}" style="font-size:medium;">
+          <a class="a-bold-hover{% if sort_by == 3 %}-selected{% endif%}" href="?sort_by=3&search_value={{search_value}}" title="seřazení diskusí">&nbsp;dle času posledního příspěvku&nbsp;</a>
+        </span>
+      </div>
+    {% endif %}
 
-
-  <!-- Display pagination links -->
-  {% if page_obj.paginator.num_pages > 1 %}
-  <div class="pagination">
-    <span class="step-links">
-        {% if page_obj.has_previous %}
-            <a href="?page=1&search_value={{search_value}}">&laquo; první</a>
-            {% if page_obj.previous_page_number > 1 %}
-            <a href="?page={{ page_obj.previous_page_number }}&search_value={{search_value}}">předchozí </a>
+    <!-- Display pagination links -->
+    {% if page_obj.paginator.num_pages > 1 %}
+    <div class="pagination">
+      <span class="step-links">
+          {% if page_obj.has_previous %}
+              <a href="?page=1&search_value={{search_value}}">&laquo; první</a>
+              {% if page_obj.previous_page_number > 1 %}
+              <a href="?page={{ page_obj.previous_page_number }}&search_value={{search_value}}">předchozí </a>
+              {% endif %}
+          {% endif %}
+          <span class="current-page">{{ page_obj.number }}</span>
+          {% if page_obj.has_next %}
+            {% if page_obj.next_page_number < page_obj.paginator.num_pages %}
+              <a href="?page={{ page_obj.next_page_number }}&search_value={{search_value}}"> další</a>
             {% endif %}
-        {% endif %}
-        <span class="current-page">{{ page_obj.number }}</span>
-        {% if page_obj.has_next %}
-           {% if page_obj.next_page_number < page_obj.paginator.num_pages %}
-            <a href="?page={{ page_obj.next_page_number }}&search_value={{search_value}}"> další</a>
-           {% endif %}
-            <a href="?page={{ page_obj.paginator.num_pages}}&search_value={{search_value}} ">poslední &raquo;</a>
-        {% endif %}
-    </span>
-  </div>
-  {% endif %}
-  <hr>
+              <a href="?page={{ page_obj.paginator.num_pages}}&search_value={{search_value}} ">poslední &raquo;</a>
+          {% endif %}
+      </span>
+    </div>
+    {% endif %}
+    <hr>
  
-  {% else %}
+  {% else %}  <!-- else k  if page_obj -->
     <br><br>
-    <span style="color:#471fb6;">Dle zvolených kritérií nenalezena žádná diskuse</span>
+    {% if section == 0 and search_value %}
+      <span style="color:#471fb6;">Dle zvolených kritérií nenalezena žádná diskuse</span>
+    {% endif %}
+    {% if section > 0 %}
+      <span style="color:#471fb6;">V této sekci nenalezena žádná diskuse</span>
+    {% endif %}
   {% endif %}
  
-  {% endif %}
   <div>
   {% for discussion in page_obj %}
     {% include "discussions/discussion_frame.html" %}

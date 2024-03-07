@@ -53,7 +53,7 @@
    {% if not page_obj %}
      <span style="color:#471fb6;">Dle zvolených kritérií nenalezen žádný článek</span>
    {% else %}
-      <span style="color:#471fb6;">Dle zvolených kritérií nalezeno {{articles|length}} článků.</span>
+      <span style="color:#471fb6;font-size:small">Dle zvolených kritérií nalezeno <b>{{articles|length}}</b> článků.</span>
    {% endif %}
    {% endif %}
 

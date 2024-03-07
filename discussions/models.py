@@ -153,27 +153,26 @@ class Comment(MPTTModel):
     class MPTTMeta:
         order_insertion_by = ['-created_on', 'lft']
 
-   
-
 
 
     def save(self, *args, **kwargs):
 
     # Funkce, která nahradí slovo "url" řetězcem "xxx"
-        def replace (value):
-            value = utils.remove_utm_parameters(value.group(0))
+        def replace (match):
+            value = utils.remove_utm_parameters(match.group(0))
             try:
                 response = requests.head(value)
                 if response.status_code == 200:
-                    return mark_safe(f'<a href="{escape(value)}">{escape(value)}</a>')
+                    escaped = escape(value)
+                    return mark_safe(f"<a href='{escaped}'>{escaped}</a>")
                 else:
                     return escape(value)
             except requests.exceptions.RequestException:               
                 return escape(value)
 
-        self.content = cenzurovat_text(self.content, sprosta_slova)
-        self.content = utils.remove_utm_parameters(self.content)
-        print (f"self.id {self.id}")
+        content = cenzurovat_text(self.content, sprosta_slova)
+        content = utils.remove_utm_parameters(content)
+
         if self._state.adding and self.id is None:
             if self.parent == None:
                 super().save(*args, **kwargs)
@@ -185,7 +184,8 @@ class Comment(MPTTModel):
         
         url_pattern = r'(http|https|ftp)\://([a-zA-Z0-9\.\-]+(\:[a-zA-Z0-9\.&%\$\-]+)*@)?((25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9])\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[0-9])|([a-zA-Z0-9\-]+\.)*[a-zA-Z0-9\-]+\.[a-zA-Z]{2,4})(\:[0-9]+)?(/[^/][a-zA-Z0-9\.\,\?\'\\/\+&%\$#\=~_\-@]*)*'
  
-        self.content = re.sub(url_pattern, replace, self.content, flags=re.IGNORECASE)
+        self.content = re.sub(url_pattern, replace, content, flags=re.IGNORECASE)
+
         super().save(*args, **kwargs)
 
     def __str__(self):

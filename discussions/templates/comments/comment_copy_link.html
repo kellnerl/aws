@@ -1,13 +1,14 @@
 {% extends "base_central.html" %}
 {% load static %}
 
-
-
 {% block content_header %} 
-<span style="font-size:x-large;margin:10px">Sdílet URL odkaz komentáře</span>
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+        <span style="text-align: left; font-size:medium;">&nbsp;</span>
+        <span style="text-align:left; font-size:20px; ">Sdílet URL odkaz komentáře</span>
+        <span style="text-align:right; font-size:small;"><a class="a-diskuse" href="{% url 'navigate_back' %}">&nbsp;X&nbsp;</a></span>
+    </div>
 {% endblock %} 
 {% block content_main %} 
-    <div style="text-align:right;"><a class="a-diskuse" href="{% url 'navigate_back' %}">&nbsp;X&nbsp;</a></div>
     <hr>
     <form  action="{% url 'comment_copy_link' comment_id%}" method="POST">
         {% csrf_token %}

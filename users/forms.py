@@ -55,7 +55,7 @@ class UserSectionForm(forms.ModelForm):
         # Uveďte pole, která chcete zahrnout do formuláře
         fields = ['name', 'description']
         labels = {'name':'Jméno sekce', 'description':'Popis'}
-        exclude = ()
+        #exclude = ()
 
 class UserSectionDomainForm(forms.ModelForm):       
 
@@ -64,7 +64,7 @@ class UserSectionDomainForm(forms.ModelForm):
         # Uveďte pole   
         fields = ['domain']
         labels = {'domain':'Doména'}
-        exclude = ()
+        #exclude = ()
 
 
 UserDomainFormSet = inlineformset_factory(UserSection, UserSectionDomain, form=UserSectionDomainForm, extra=1)

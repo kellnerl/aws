@@ -27,4 +27,4 @@ class ArticleUserQueryForm(forms.ModelForm):
     class Meta:
         model = ArticleUserQuery
         # Uveďte pole, která chcete zahrnout do formuláře
-        fields = ['key_word',]
+        fields = ['key_word']
