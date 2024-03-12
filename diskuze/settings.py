@@ -63,6 +63,9 @@ INSTALLED_APPS = [
 
 SILENCED_SYSTEM_CHECKS = ['captcha.recaptcha_test_key_error']
 
+PASSWORD_RESET_EMAIL_TEMPLATE_NAME = 'registration/password_reset_email.html'
+PASSWORD_RESET_DONE_REDIRECT_URL = 'accounts/password_reset_done/'
+
 #MIGRATION_MODULES = {
  #   'accounts': 'accounts.migrations',
  #   'articles': 'articles.migrations',

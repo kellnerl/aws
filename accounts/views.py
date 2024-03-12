@@ -30,26 +30,29 @@ from datetime import datetime
 
 # Create your views here.
 
-
 class MyPasswordResetView(PasswordResetView):
-    email_template_name = 'registration/password_reset_email.html'
-    subject_template_name = 'registration/password_reset_subject.txt'
-    success_url = reverse_lazy('password_reset_done')
-    form_class = MyPasswordResetForm
-    token_generator = default_token_generator
-    template_name = 'registration/password_reset.html'  # Změňte cestu k vaší šabloně
+    template_name = 'registration/password_reset.html'
+    email_template_name = 'registration/password_reset_email.html'  # Šablona pro e-mail
+    subject_template_name = 'registration/password_reset_subject.txt'  # Předmět e-mailu
+    success_url = reverse_lazy('reset/done')
+    form_class = MyPasswordResetForm  # Vlastní formulář pro reset hesla
+    token_generator = default_token_generator  # Vlastní token generator, pokud potřebujete úpravy
 
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        messages.success(self.request, 'E-mail s instrukcemi pro reset hesla byl odeslán.')
+        return response
 
 class MyPasswordResetDoneView(PasswordResetDoneView):
-    template_name = 'registration/password_reset_done.html'
+    template_name = 'registration/password_reset_done.html'  # Změňte cestu k vaší šabloně
 
 class MyPasswordResetConfirmView(PasswordResetConfirmView):
-    success_url = reverse_lazy('password_reset_complete')
-    form_class = MySetPasswordForm
-
+    template_name = 'registration/password_reset_confirm.html'  # Změňte cestu k vaší šabloně
+    success_url = 'password_reset_complete'
 
 class MyPasswordResetCompleteView(PasswordResetCompleteView):
-    template_name = 'registration/password_reset_complete.html'
+    template_name = 'registration/password_reset_complete.html'  # Změňte cestu k vaší šabloně
+
 
 
 class LoginInterfaceView(LoginView):

@@ -5,6 +5,7 @@ from datetime import datetime, timedelta
 from django.utils import timezone
 from urllib.parse import quote
 from urllib.parse import urlencode
+from bs4 import BeautifulSoup
 import requests
 import utils
 from django.forms import ValidationError
@@ -48,16 +49,16 @@ def get_sections (request):
 
     if request.user.is_anonymous:
         queryset = list()
-        id=1
-        home = UserSection(id=id,name='diskuse', number=id-1, user=None, description='diskuse homepage')
-        id=2
-        new = UserSection(id=id,name='nové', number=1, user=None, type='T', description='Nové diskuse', title='.')
+        home = UserSection(id=1,name='diskuse', number=0, user=None, description='diskuse homepage')
+        new = UserSection(id=2,name='nové', number=1, user=None, type='T', description='Nové diskuse', title='.')
         queryset.append(home)  # Přidání home fiktivního prvku do seznamu
         queryset.append(new)  # Přidání new doscussions fiktivního prvku do seznamu
         sections = Section.objects.filter(type="P")
-        for section in sections:
-           id=id+1
-           new_section = UserSection(id=id, name=section.name, number=id, user=None, title=section.title, type=str(section.id), description=section.description)
+        for idx, section in enumerate(sections, start=3):
+        #id=2
+        #for section in sections:
+           #id=id+1
+           new_section = UserSection(id=idx, name=section.name, number=idx-1, user=None, title=section.title, type=str(section.id), description=section.description)
            queryset.append(new_section) 
         return queryset #sorted(queryset, key=lambda x: x.number)
     else:
@@ -217,14 +218,24 @@ def home_discussions(request):
                 ##search_pattern = r'\b' + re.escape(search_value) + r'\b'
                 ##diskuses = Discussion.objects.filter(Q(title__regex=search_pattern) | Q(url__regex=search_pattern))
                 if len(diskuses) == 0:
-                    try:
-                        response = requests.head(search_value)
-                        if response.status_code == 200:
-                            return redirect('new_discussion', url=search_value, title="none", theme="none", author="none")
-                    except:
-                        pass
-##                if theme_filter > 0:
-##                    diskuses = diskuses.filter(theme=theme_filter)
+                    if not request.user.is_anonymous:
+                        try:
+                            response = requests.head(search_value)
+                            if response.status_code == 200:
+                                content = requests.get(search_value).text
+                                soup = BeautifulSoup(content, 'html.parser')
+                                # Najdeme tag 'title' a získáme jeho hodnotu
+                                print(soup)
+                                title_tag = soup.title
+                                print(title_tag)
+                                if title_tag:
+                                    title_value = title_tag.string
+                                else:
+                                    title_value = "none"
+                                return redirect('new_discussion', url=search_value, title=title_value, theme="none", author="none")
+                        except:
+                            pass
+
                 if (sort_by == 1):
                     diskuses = diskuses.order_by('-created_on')
                 elif (sort_by == 2):
@@ -244,7 +255,6 @@ def home_discussions(request):
                 form = SearchDiscussionForm(initial={'search_value': search_value})
                 context = {
                 'form_discussion': form,
- #               'theme_number': theme_filter,
                 'themes': ArticleTheme.objects.all().order_by('number'),
                 'section': 0,
                 'sections': sections,

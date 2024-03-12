@@ -5,6 +5,7 @@ from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import force_bytes
+from django.core.mail import send_mail
 #from captcha.fields import ReCaptchaField
 
 
@@ -38,7 +39,10 @@ class MyPasswordResetForm(PasswordResetForm):
             token = default_token_generator.make_token(user)
             user_email = user.email
             user_email = user_email.lower()
-            subject = "Reset password"
-            message = f"Reset your password here: {uid}/{token}"
-            user.email_user(subject, message)
+            subject = "Reset hesla"
+            message = f"Reset hesla zde: {uid}/{token}"
+            print("posílám email...")
+            send_mail(subject, message, 'info@ipe.cz', [user_email], html_message=message)
+
+            #user.email_user(subject, message)
 

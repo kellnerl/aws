@@ -18,6 +18,8 @@ from django.urls import path
 from django.template.defaultfilters import register
 
 from . import views
+from . views import MyPasswordResetView, MyPasswordResetDoneView, MyPasswordResetConfirmView, MyPasswordResetCompleteView
+
 
 
 urlpatterns = [
@@ -30,7 +32,11 @@ urlpatterns = [
     path('activation_success/', views.activation_success, name='activation_success'),
     path('password_reset/', views.MyPasswordResetView.as_view(), name='password_reset'),
     path('password_reset_done/', views.MyPasswordResetDoneView.as_view(template_name='registration/password_reset_done.html'), name='password_reset_done'),
-    path('reset/<uidb64>/<token>/', views.MyPasswordResetConfirmView.as_view(), name='password_reset_confirm'),
-    path('password_reset_complete/', views.MyPasswordResetCompleteView.as_view(), name='password_reset_complete'),
+  #  path('reset/<uidb64>/<token>/', views.MyPasswordResetConfirmView.as_view(), name='password_reset_confirm'),
+  #  path('password_reset_complete/', views.MyPasswordResetCompleteView.as_view(), name='password_reset_complete'),
+    path('reset/', MyPasswordResetView.as_view(), name='password_reset'),
+    path('reset/done/', MyPasswordResetDoneView.as_view(), name='password_reset_done'),
+    path('reset/<uidb64>/<token>/', MyPasswordResetConfirmView.as_view(), name='password_reset_confirm'),
+    path('reset/complete/', MyPasswordResetCompleteView.as_view(), name='password_reset_complete'),
 
 ]

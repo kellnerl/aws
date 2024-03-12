@@ -16,19 +16,20 @@
 <br><br>
 <form  id="searchForm" method="GET" action="{% url 'home_discussions'  %}">
   {% csrf_token %} 
-    <button id="clearButton" type="submit" name="clear" class="button-font-size">X</button>
+  <span style="color:darkslategray">Vyhledání&nbsp;&#128269;&nbsp;nebo založení&nbsp;&star;&nbsp;diskuse:</span><br>
+    <button id="clearButton" type="submit" name="clear" class="button-font-size"><b>x</b></button>
     {{ form_discussion.search_value }}
-    <button id="searchButton" type="submit" name="search" title="Dle url článku nebo dle titulku diskuse vyhledat zde vytvořené diskuse">&#128269;&nbsp;Vyhledat</button>  
+    <button id="searchButton" type="submit" name="search" title="Vyhledat diskuse dle URL nebo titulku článku">&#9654;</button>  
   </form>
   <br>
+  <br>
     <p>
-      <a class="a-small-button" href="{% url 'advanced_search' %}">&nbsp;<b>Pokročilé vyhledání diskusí</b>&nbsp;</a>&nbsp;&nbsp;
+      <a class="a-small-button" href="{% url 'advanced_search' %}">&nbsp;&#128269;&nbsp;<b>Pokročilé vyhledání diskusí</b>&nbsp;</a>&nbsp;&nbsp;
       <a class="a-small-button" href="{% url 'article_search'%}">&nbsp;&lbrack;&equiv;&rbrack;&nbsp;<b>Vyhledání článků</b>&nbsp;</a>&nbsp;&nbsp;
       {% if not request.user.is_anonymous %} 
       <a class="a-small-button" href="{% url 'new_discussion' 'https:\\' 'none' 'none' 'none' %}">&nbsp;&star;&nbsp;<b>Založit diskusi</b>&nbsp;</a>&nbsp;&nbsp;
       {% endif %} 
     </p>
-    <br>    
   {% endif %}
 
  
@@ -46,13 +47,13 @@
   
     {% if page_obj|length > 1 %}
       <div class="horizontal-line" style="margin-top:12px;margin-bottom:6px;justify-content:left">
-        <span class="line-text{% if sort_by == 1 %}-selected{% else %}-invisible{% endif%}" style="font-size:medium;">
+        <span class="line-text{% if sort_by == 1 %}-selected{% else %}-invisible{% endif%}">
           <a class="a-bold-hover{% if sort_by == 1 %}-selected{% endif%}" href="?sort_by=1&search_value={{search_value}}" title="seřazení diskusí">&nbsp;od nejnovějších&nbsp;</a>
         </span>
-        <span class="line-text{% if sort_by == 2 %}-selected{% else %}-invisible{% endif%}" style="font-size:medium;">
+        <span class="line-text{% if sort_by == 2 %}-selected{% else %}-invisible{% endif%}">
           <a class="a-bold-hover{% if sort_by == 2 %}-selected{% endif%}" href="?sort_by=2&search_value={{search_value}}" title="seřazení diskusí">&nbsp;od nejdiskutovanějších&nbsp;</a>
         </span>
-        <span class="line-text{% if sort_by == 3 %}-selected{% else %}-invisible{% endif%}" style="font-size:medium;">
+        <span class="line-text{% if sort_by == 3 %}-selected{% else %}-invisible{% endif%}">
           <a class="a-bold-hover{% if sort_by == 3 %}-selected{% endif%}" href="?sort_by=3&search_value={{search_value}}" title="seřazení diskusí">&nbsp;dle času posledního příspěvku&nbsp;</a>
         </span>
       </div>

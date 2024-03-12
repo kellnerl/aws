@@ -7,34 +7,36 @@
 {% block content_header %}
 <div style="margin-top:1px;padding-top: 1px;padding-bottom: 1px; display: flex; justify-content: space-between; align-items: center; white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
  <!-- <div style="font-size:x-large;margin-top:10px;text-align: left; white-space: nowrap;overflow: hidden;text-overflow: ellipsis; ">-->
-  <span style="text-align: right; font-size:20px;display: inline-block; max-width: 780px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"> Diskuse<a href="{{discussion.url}}" style="color:azure">{{ discussion.title }}</a></span>
+  <span style="text-align: right; font-size:20px;display: inline-block; max-width: 780px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"> Diskuse<a href="{{discussion.url}}" target="_blank" style="color:azure">{{ discussion.title }}</a></span>
   <span style="text-align: left; font-size:small;"><a class="a-diskuse" href="{% url 'navigate_back'%}">&nbsp;X&nbsp;</a></span>
 </div>
 
 
 {% endblock %}
 {% block content_main %}
-<div class="text-area-frame" style="background-color:whitesmoke;">
+<div class="text-area-frame" style="background-color:whitesmoke;display: flex; justify-content: space-between; align-items: center;">
+  <span>
   <span style="text-align: left;margin:10px;font-weight:normal;font-size:medium">{{ discussion.domain }}</span>
   {% if discussion.theme %}<span style="font-weight:normal;font-size: medium">&bull;&nbsp;&nbsp;<b>téma:</b> {{ discussion.theme.name }}</span>{% endif %}
   {% if discussion.author %}<span style="font-weight:normal;font-size: medium">&nbsp;&bull;&nbsp;&nbsp;<b>author:</b> {{ discussion.author }}</span>{% endif %}
+  </span>
+  <span style="text-align: right;">
+  {% if not request.user.is_anonymous %}
+    {% if request.user in discussion.favorite.all %} 
+      <a class="a-small-button" href="{% url 'discussion_favorite_remove' diskuse_id %}">&nbsp;<span style="color:red;">&#x2764;</span>&nbsp;odebrat z oblíbených&nbsp;</a>&nbsp;&nbsp;
+    {% else %}
+      <a class="a-small-button" href="{% url 'discussion_favorite_add' diskuse_id %}">&nbsp;<span style="color:red;">&#x2661;</span>&nbsp;přidat do oblíbených&nbsp;</a>&nbsp;&nbsp;
+    {% endif %}
+  {% else %}
+  &nbsp;
+  {% endif %}
+  </span>
 </div>
+<br>
 {% if not thread_id %} 
 <form  method="POST" action="{% url 'new_comment' diskuse_id %}">{% csrf_token %} 
-    {{ form_comment.as_p }} 
-    <div style="display: flex; justify-content: space-between;">
+    {{ form_comment.as_table }} 
     <button type="submit" class="button-font-size">&nbsp;Uložit komentář&nbsp;</button>&nbsp;&nbsp;
-    <span>
-      {% if not request.user.is_anonymous %}
-      {% if request.user in discussion.favorite.all %} 
-        <a class="a-small-button" href="{% url 'discussion_favorite_remove' diskuse_id %}">&nbsp;<span style="color:red;">&#x2764;</span>&nbsp;odebrat z oblíbených&nbsp;</a>&nbsp;&nbsp;
-      {% else %}
-        <a class="a-small-button" href="{% url 'discussion_favorite_add' diskuse_id %}">&nbsp;<span style="color:red;">&#x2661;</span>&nbsp;přidat do oblíbených&nbsp;</a>&nbsp;&nbsp;
-      {% endif %}
-      {% endif %}
-    </span>
-    
-    </div>
     <hr>
 </form>
 {% else %}
@@ -44,11 +46,13 @@
 
 
 {% if page_obj %}
-<p  style="text-align: left; font-size: medium;">
-  {% if not thread_id %}
-    {% include "comments/comments_sorting.html" %}
-  {% else %}
-    {% include "comments/comments_sorting_thread.html" %}
+  <p  style="text-align: left; font-size: medium;">
+  {% if page_obj|length > 1 %}
+    {% if not thread_id %}
+      {% include "comments/comments_sorting.html" %}
+    {% else %}
+      {% include "comments/comments_sorting_thread.html" %}
+    {% endif %}
   {% endif %}
   {% include "comments/comments_pagination.html" %}
 </p>
@@ -56,6 +60,8 @@
 <p style="text-align: left; font-size: medium;">
   <span style="color:#471fb6;">Nebyl vložen žádný komentář</span>
 </p> 
+<hr>
+<div style="text-align:center;""><img src="{% static 'images/noncensura.gif' %}" width="200" height="auto" alt="Obrázek"></div>
 {% endif %}
 
 {% if not thread_id %}
@@ -70,7 +76,7 @@
   {% include "comments/comment_tree.html" %}
 {% endif %}
 
-<hr>
+
 <!-- Display pagination links -->
 {% if page_obj %}
   {% include "comments/comments_pagination.html" %}
@@ -78,19 +84,6 @@
 <br><br><br><br><br><br><br><br><br><br><br>
 {% endblock %}
 
-{% block content2 %}
-
-    {% for comment,structure in comments|tree_info %}
-    {% if structure.new_level %}<ul><li>{% else %}</li><li>{% endif %}
-        <fieldset>
-        <legend><b>{{ comment.author }}</b> {{ node.created|date:"d.m.Y" }} {{ node.created|date:"H:i" }} </legend>
-        <p>{{ comment.content }}</p>
-        </fieldset>
-        <p><a href="#" style="color: green; font-weight: bold;" class="rate" data-url="{% url 'comment_rate_positive' comment.id %}">
-          +{{ comment.plus }}</a> | <a href="#" style="color: red; font-weight: bold;" class="rate" data-url="{% url 'comment_rate_negative' comment.id %}">-{{ comment.minus }}</a>
-          {% if not request.user.is_anonymous %} <a class="a-small-button" href="{% url 'reply_comment' section diskuse_id comment.id%}">reagovat</a>{% endif %}</p>    {% for level in structure.closed_levels %}</li></ul>{% endfor %}
-    {% endfor %}
-{% endblock %}
 
   
 

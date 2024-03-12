@@ -47,7 +47,7 @@ button[type="submit"] {
   border: 1px solid #010000;
   padding: 4px;
   border-radius:4px;
-  background-color: #fefefe;
+  background-color: white;
   margin: 1 auto
 }
 
@@ -333,20 +333,19 @@ a:hover {
 }
 
 .a-bold-hover {
-  font-size: medium;
+  font-size: 14px;
   font-weight: normal;
   padding: 0px;
   margin-top: 3px;
-  
-  color:#696969;
+  color:#010101;
   background-color: rgba(255, 255, 255, 0.1); 
 }
 .a-bold-hover-selected {
-  font-size: medium;
+  font-size: 14px;
   font-weight: bold;
   padding: 0px;
   margin-top: 3px;
-  color:#2a2b2b;
+  color:#010101;
   background-color: rgba(255, 255, 255, 0.1); 
 }
 
@@ -360,7 +359,8 @@ a:hover {
 .a-bold-hover-selected:hover {
   text-decoration: none;
   font-weight: bold;
-  color:#696969;
+  color:#2a2b2b;
+  background-color: white;
 }
 
 
@@ -452,7 +452,7 @@ a:hover {
 
 .line-text-selected {
   padding: 0 10px; /* Přidáme odsazení kolem textu */
-  border-bottom: 3px solid #6f6f6f; /* Vytvoříme vodorovnou čáru */
+  border-bottom: 3px solid #2e2e2e; /* Vytvoříme vodorovnou čáru */
   font-weight: bold;
 }
 
