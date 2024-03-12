@@ -13,23 +13,26 @@
    můžete zakládat nové diskuse, psát diskusní komentáře, reagovat na jiné příspěvky, hodnotit příspěvky jiných diskutérů. Výhodou tohoto portálu je, že přihlášený si může vytvořit své záložky s diskusema.
    K tomu může využít předdefinované záložky nebo si nadefinovat své vlastní záložky. Při diskutování je nutno respektovat určitá<a href="{% url 'discussion_rules' %}"">pravidla diskutování</a>. </p>
   
+<p>
+  <a class="a-small-button" href="{% url 'advanced_search' %}">&nbsp;&#128269;&nbsp;<b>Pokročilé vyhledání diskusí</b>&nbsp;</a>&nbsp;&nbsp;
+  <a class="a-small-button" href="{% url 'article_search'%}">&nbsp;&lbrack;&equiv;&rbrack;&nbsp;<b>Vyhledání článků</b>&nbsp;</a>&nbsp;&nbsp;
+  {% if not request.user.is_anonymous and ttt %} 
+  <a class="a-small-button" href="{% url 'new_discussion' 'https:\\' 'none' 'none' 'none' %}">&nbsp;&star;&nbsp;<b>Založit diskusi</b>&nbsp;</a>&nbsp;&nbsp;
+  {% endif %} 
+</p>
 <br><br>
 <form  id="searchForm" method="GET" action="{% url 'home_discussions'  %}">
   {% csrf_token %} 
   <span style="color:darkslategray">Vyhledání&nbsp;&#128269;&nbsp;nebo založení&nbsp;&star;&nbsp;diskuse:</span><br>
-    <button id="clearButton" type="submit" name="clear" class="button-font-size"><b>x</b></button>
+   <span style="background-color:darkblue;border-radius: 7px; padding: 9px;line-height: 34px"> 
+   <button id="clearButton" type="submit" name="clear" class="button-font-size" style="padding: 3px;">X</button>
     {{ form_discussion.search_value }}
-    <button id="searchButton" type="submit" name="search" title="Vyhledat diskuse dle URL nebo titulku článku">&#9654;</button>  
+    <button id="searchButton" type="submit" name="search" style="padding: 3px;" title="Vyhledat diskuse dle URL nebo titulku článku">&nbsp;&#9654;&nbsp;</button>  
+    </span>
   </form>
   <br>
   <br>
-    <p>
-      <a class="a-small-button" href="{% url 'advanced_search' %}">&nbsp;&#128269;&nbsp;<b>Pokročilé vyhledání diskusí</b>&nbsp;</a>&nbsp;&nbsp;
-      <a class="a-small-button" href="{% url 'article_search'%}">&nbsp;&lbrack;&equiv;&rbrack;&nbsp;<b>Vyhledání článků</b>&nbsp;</a>&nbsp;&nbsp;
-      {% if not request.user.is_anonymous %} 
-      <a class="a-small-button" href="{% url 'new_discussion' 'https:\\' 'none' 'none' 'none' %}">&nbsp;&star;&nbsp;<b>Založit diskusi</b>&nbsp;</a>&nbsp;&nbsp;
-      {% endif %} 
-    </p>
+   
   {% endif %}
 
  

@@ -46,7 +46,7 @@ class CommentReplyForm(forms.ModelForm):
         fields = ['content']  # Uveďte pole, která chcete zahrnout do formuláře
 
 class SearchDiscussionForm(forms.ModelForm):
-    search_value = forms.CharField(max_length=320, widget=forms.TextInput(attrs={'class': 'input-font', 'size':65, 'placeholder':'Zadejte URL nebo titulek článku (část nebo celý)'}))
+    search_value = forms.CharField(max_length=340, widget=forms.TextInput(attrs={'class': 'input-font', 'size':70, 'placeholder':'Zadejte URL nebo titulek článku (část nebo celý)', 'style': 'border-color: rgb(71, 31, 182); border-width: 1px;border-radius: 2px; height: 20px;'}))
 
     class Meta:
         model = Discussion
