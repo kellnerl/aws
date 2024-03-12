@@ -7,7 +7,7 @@ from discussions.models import ArticleTheme, Section
 
 
 class ArticleUserQueryForm(forms.ModelForm):
-    key_word=forms.CharField(label='Klíčové slovo', required=True, widget=forms.TextInput(attrs={'class': 'input-font', 'size':35, 'placeholder':'hledané klíčové slovo'}))
+    key_word=forms.CharField(label='Klíčové slovo', required=True, widget=forms.TextInput(attrs={'class': 'input-font', 'size':35, 'placeholder':'hledané klíčové slovo', 'style': 'border-color: rgb(71, 31, 182); border-width: 2px; border-radius: 3px;'}))
     #section=forms.CharField(label='Portál', required=False, widget=forms.TextInput(attrs={'class': 'input-font', 'size':20, 'placeholder':'jméno portálu'}))
     section = forms.ChoiceField(choices=[], label='Portál', required=False)
     days_old_choices = [('7', 'týden'),('14', '2 týdny'),('28', '4 týdny')]

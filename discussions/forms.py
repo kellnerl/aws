@@ -84,8 +84,8 @@ class AdvancedSearchDiscussionForm(forms.ModelForm):
 
 # discussion creating a form
 class CreateDiscussionForm(forms.ModelForm):
-    title=forms.CharField(label='Titulek', max_length=400, widget=forms.TextInput(attrs={'class': 'input-font', 'size':64, 'placeholder':'titulek článku'}))
-    url=URLField(label='URL', max_length=400, widget=forms.TextInput(attrs={'class': 'input-font', 'size':64, 'placeholder':'url článku','readonly': True}))
+    title=forms.CharField(label='Titulek', max_length=400, widget=forms.TextInput(attrs={'class': 'input-font', 'size':72, 'placeholder':'titulek článku'}))
+    url=URLField(label='URL', max_length=400, widget=forms.TextInput(attrs={'class': 'input-font', 'size':72, 'placeholder':'url článku','readonly': True}))
     author=forms.CharField(label='Author', required=False, widget=forms.TextInput(attrs={'class': 'input-font', 'size':20, 'placeholder':'jméno autora článku'}))
     theme_field = forms.ChoiceField(choices=[], label='Téma', required=False)
     

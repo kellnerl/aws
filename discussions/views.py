@@ -985,7 +985,7 @@ def reply_comment(request, diskuse_id, operation, comment_id):
         }
     elif operation == "none":
         context = {
-        'form_comment': form,
+        'form_comment': CommentForm(),#form,
         'page_obj': page_obj,
         'total_pages': total_pages,
         'sort_by': sort_by,

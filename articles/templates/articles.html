@@ -48,13 +48,13 @@
         margin: 1 auto
     }
   </style>
-    <br>
    {% if key_word %}
-   {% if not page_obj %}
+    {% if not page_obj %}
+     <br>
      <span style="color:#471fb6;">Dle zvolených kritérií nenalezen žádný článek</span>
-   {% else %}
-      <span style="color:#471fb6;font-size:small">Dle zvolených kritérií nalezeno <b>{{articles|length}}</b> článků.</span>
-   {% endif %}
+    {% else %}
+      <span style="color:#471fb6;font-size:medium">Dle zvolených kritérií nalezeno <b>{{articles|length}}</b> článků.</span>
+    {% endif %}
    {% endif %}
 
     <div>
