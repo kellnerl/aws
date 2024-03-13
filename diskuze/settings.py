@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.postgres",
+    'crispy_forms', #použití pokročilých crispy formulářů
     "mptt",
     "tempus_dominus",  
 #app
@@ -61,10 +62,14 @@ INSTALLED_APPS = [
     "articles",
 ]
 
+CRISPY_TEMPLATE_PACK = 'bootstrap4'  # Používáme šablonový balíček Bootstrap 4
+
 SILENCED_SYSTEM_CHECKS = ['captcha.recaptcha_test_key_error']
 
 PASSWORD_RESET_EMAIL_TEMPLATE_NAME = 'registration/password_reset_email.html'
 PASSWORD_RESET_DONE_REDIRECT_URL = 'accounts/password_reset_done/'
+
+
 
 #MIGRATION_MODULES = {
  #   'accounts': 'accounts.migrations',

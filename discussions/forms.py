@@ -55,14 +55,11 @@ class SearchDiscussionForm(forms.ModelForm):
 class AdvancedSearchDiscussionForm(forms.ModelForm):
     title=forms.CharField(label='Titulek článku', required=False, widget=forms.TextInput(attrs={'class': 'input-font', 'size':60, 'placeholder':'hledaný text'}))
     author=forms.CharField(label='Author článku', required=False, widget=forms.TextInput(attrs={'class': 'input-font', 'size':20, 'placeholder':'jméno autora článku'}))
-    #domain_choices = [('', '---------')] + list(Domain.objects.values_list('domain','domain'))
-    #domain_field = forms.ChoiceField(choices=domain_choices, label='Doména článku', required=False)
-    #theme_choices = [('', '---------')] + list(ArticleTheme.objects.values_list('id','name'))
-    #theme_field = forms.ChoiceField(choices=theme_choices, label='Téma článku', required=False)
     search_value_created_before = forms.DateField(label='Diskuse vložena před',required=False, widget=forms.SelectDateWidget())
     search_value_created_after  = forms.DateField(label='Diskuse vložena po',required=False, widget=forms.SelectDateWidget())
     search_value_last_comment_before = forms.DateField(label='Poslední komentář před',required=False, widget=forms.SelectDateWidget())
     search_value_last_comment_after  = forms.DateField(label='Poslední komentář po',required=False,  widget=forms.SelectDateWidget())
+    comments_count_min=forms.IntegerField(label='Počet příspěvků větší než', required=False, widget=forms.NumberInput(attrs={}))
     orderby_choices = [('1', 'dle času založení diskuze'),('2', 'dle počtu příspěvků'),('3', 'dle času posledního příspěvku')]
     orderby = forms.ChoiceField(choices=orderby_choices, label='Seřadit dle', widget=forms.RadioSelect, required=True)
     domain_field = forms.ChoiceField(choices=[], label='Doména článku', required=False)

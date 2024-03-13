@@ -6,6 +6,7 @@ django-tempus-dominus
 django-contrib-postgres
 django-mptt
 django-recaptcha
+django-crispy-forms
 tldextract
 Pillow
 bs4

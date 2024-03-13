@@ -49,7 +49,8 @@
   {% if page_obj %}
   
     {% if page_obj|length > 1 %}
-      <div class="horizontal-line" style="margin-top:12px;margin-bottom:6px;justify-content:left">
+      <div class="horizontal-line" style="margin-top:12px;margin-bottom:6px; display:flex; justify-content:space-between; align-items: bottom;">
+        <span>
         <span class="line-text{% if sort_by == 1 %}-selected{% else %}-invisible{% endif%}">
           <a class="a-bold-hover{% if sort_by == 1 %}-selected{% endif%}" href="?sort_by=1&search_value={{search_value}}" title="seřazení diskusí">&nbsp;od nejnovějších&nbsp;</a>
         </span>
@@ -58,6 +59,10 @@
         </span>
         <span class="line-text{% if sort_by == 3 %}-selected{% else %}-invisible{% endif%}">
           <a class="a-bold-hover{% if sort_by == 3 %}-selected{% endif%}" href="?sort_by=3&search_value={{search_value}}" title="seřazení diskusí">&nbsp;dle času posledního příspěvku&nbsp;</a>
+        </span>
+        </span>
+        <span>
+          <a class="a-xsmall-button" title="nastavení filtrace" href="{% url 'home_discussions' %}">&nbsp;<b>filtrovat</b>&nbsp;&blacktriangledown;&nbsp;</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         </span>
       </div>
     {% endif %}

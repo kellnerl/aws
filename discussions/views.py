@@ -25,7 +25,7 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_str
 from django.contrib.auth.tokens import default_token_generator
 from django.urls import reverse, reverse_lazy
-from django.core.paginator import Paginator
+#from django.core.paginator import Paginator
 from django.db.models import Func, Value, CharField
 from django.db.models import Q
 from django.db.models import F
@@ -55,9 +55,6 @@ def get_sections (request):
         queryset.append(new)  # Přidání new doscussions fiktivního prvku do seznamu
         sections = Section.objects.filter(type="P")
         for idx, section in enumerate(sections, start=3):
-        #id=2
-        #for section in sections:
-           #id=id+1
            new_section = UserSection(id=idx, name=section.name, number=idx-1, user=None, title=section.title, type=str(section.id), description=section.description)
            queryset.append(new_section) 
         return queryset #sorted(queryset, key=lambda x: x.number)
@@ -225,9 +222,7 @@ def home_discussions(request):
                                 content = requests.get(search_value).text
                                 soup = BeautifulSoup(content, 'html.parser')
                                 # Najdeme tag 'title' a získáme jeho hodnotu
-                                print(soup)
                                 title_tag = soup.title
-                                print(title_tag)
                                 if title_tag:
                                     title_value = title_tag.string
                                 else:
@@ -297,6 +292,7 @@ def advanced_search(request):
             search_value_created_after = form.cleaned_data['search_value_created_after']
             search_value_last_comment_before = form.cleaned_data['search_value_last_comment_before']
             search_value_last_comment_after = form.cleaned_data['search_value_last_comment_after']
+            comments_count_min = form.cleaned_data['comments_count_min']
             sort_by = int(form.cleaned_data['orderby'])
             print(f"sort_by: {sort_by}")
             # můžete použít metodu filter() spolu s podmínkami pro jednotlivá pole a operátorem __gt (větší než) nebo __gte (větší nebo rovno).
@@ -323,6 +319,9 @@ def advanced_search(request):
             if search_value_last_comment_after:
                 diskuses = diskuses.filter(
                     last_comment__gt=search_value_last_comment_after)
+            if comments_count_min:
+                diskuses = diskuses.filter(
+                    comments_count__gt=comments_count_min)
             if (sort_by == 1):
                 diskuses = diskuses.order_by('-created_on')
             elif (sort_by == 2):
@@ -346,6 +345,7 @@ def advanced_search(request):
                                                          'search_value_created_after':search_value_created_after,
                                                          'search_value_last_comment_before':search_value_last_comment_before,
                                                          'search_value_last_comment_after':search_value_last_comment_after,
+                                                         'comments_count_min':comments_count_min,
                                                          'orderby': sort_by,
                                                          }
                                                          )
@@ -529,7 +529,7 @@ def discussions(request, section_num, section_type):
         else:
             user_section = UserSection.objects.filter(number=section_num,user=request.user)[0]
             user_domains = UserSectionDomain.objects.filter(userSection=user_section)
-        diskuses = Discussion.objects.filter(domain__in=user_domains.values_list('domain', flat=True))
+        diskuses = Discussion.objects.filter(domain__in=user_domains.values_list('domain', flat=True), active=True)
      #   diskuses = Discussion.objects.filter(first_level_domain__in=domains.values_list('first_level_domain', flat=True))
     
     if theme_filter > 0:
