@@ -62,7 +62,8 @@ INSTALLED_APPS = [
     "articles",
 ]
 
-CRISPY_TEMPLATE_PACK = 'bootstrap4'  # Používáme šablonový balíček Bootstrap 4
+CRISPY_TEMPLATE_PACK = 'bootstrap'  # Používáme šablonový balíček Bootstrap 4
+
 
 SILENCED_SYSTEM_CHECKS = ['captcha.recaptcha_test_key_error']
 
@@ -119,9 +120,13 @@ TEMPLATES = [
                 "django.contrib.messages.context_processors.messages",
                 "diskuze.custom_context.custom_data",
             ],
+            'builtins': [
+                'crispy_forms.templatetags.crispy_forms_tags',  # Přidává Crispy Forms do všech šablon
+            ],
         },
     },
 ]
+
 
 
 WSGI_APPLICATION = "diskuze.wsgi.application"

@@ -1,5 +1,7 @@
 {% extends "base_header.html" %}
 {% load static %}
+{% load crispy_forms_tags %}
+
 <link rel="stylesheet" type="text/css" href="{% static 'users/css/style_users.css' %}">
 
 {% block content_header %}
@@ -12,7 +14,7 @@
 
 {% block content_main %}
 <div>
-<form  method="GET" action="{% url 'article_search' %}"">
+<form  method="GET" action="{% url 'article_search' %}">
   <table>
     {% csrf_token %}
     {% for field in form %}
@@ -36,7 +38,7 @@
 <br><br><hr>
   <div style="display: flex;  justify-content: center; align-items: center;">
     <span style="text-align: center; font-size: medium;">
-      <button type="submit" class="button-font-size">&#128269;&nbsp;Vyhledat články&nbsp;</button>
+      <button type="submit" class="button-font-size">&#128269;&nbsp;<b>Vyhledat</b>&nbsp;</button>
     </span> 
   </div>
   </form>
@@ -51,7 +53,7 @@
    {% if key_word %}
     {% if not page_obj %}
      <br>
-     <span style="color:#471fb6;">Dle zvolených kritérií nenalezen žádný článek</span>
+     <span style="color:#471fb6;">Dle zvolených kritérií nenalezen žádný článek.</span>
     {% else %}
       <span style="color:#471fb6;font-size:medium">Dle zvolených kritérií nalezeno <b>{{articles|length}}</b> článků.</span>
     {% endif %}

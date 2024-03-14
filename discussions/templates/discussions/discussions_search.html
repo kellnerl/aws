@@ -26,7 +26,7 @@
   <hr>
   <div style="display: flex; justify-content: center; align-items: center;">
     <span style="text-align: right; font-size: medium;">
-      <button type="submit" class="button-font-size">&#128269;&nbsp;Vyhledat diskuse&nbsp;</button>
+      <button type="submit" class="button-font-size">&#128269;&nbsp;<b>Vyhledat</b>&nbsp;</button>
     </span>
   </div>
   </form>
@@ -37,15 +37,34 @@
         background-color: #f5f4f4;
         margin: 1 auto
     }
-  </style>
-    <br>
+  </style>  
    {% if page_obj %}
-    <span style="color:#471fb6;"><b>Dle zvolených kritérií nalezeno {{diskuses.count}} diskusí.</b></span>
+    <span style="color:#471fb6;">Dle zvolených kritérií nalezeno <b>{{diskuses.count}}</b> diskusí.</span>
+    {% if page_obj|length > 1 %}
+    <div class="horizontal-line" style="margin-top:12px;margin-bottom:6px; display:flex; justify-content:space-between; align-items: bottom;">
+     <span>
+     <span class="line-text{% if sort_by == 1 %}-selected{% else %}-invisible{% endif%}">
+       <a class="a-bold-hover{% if sort_by == 1 %}-selected{% endif%}" href="?sort_by=1&tit={{tit}}&aut={{aut}}&dom={{dom}}&the={{the}}&act={{act}}&ccm={{ccm}}&lcb={{lcb}}&lca={{lca}}&crb={{crb}}&cra={{cra}}" title="seřazení diskusí">&nbsp;od nejnovějších&nbsp;</a>
+     </span>
+     <span class="line-text{% if sort_by == 2 %}-selected{% else %}-invisible{% endif%}">
+       <a class="a-bold-hover{% if sort_by == 2 %}-selected{% endif%}" href="?sort_by=2&tit={{tit}}&aut={{aut}}&dom={{dom}}&the={{the}}&act={{act}}&ccm={{ccm}}&lcb={{lcb}}&lca={{lca}}&crb={{crb}}&cra={{cra}}" title="seřazení diskusí">&nbsp;od nejdiskutovanějších&nbsp;</a>
+     </span>
+     <span class="line-text{% if sort_by == 3 %}-selected{% else %}-invisible{% endif%}">
+       <a class="a-bold-hover{% if sort_by == 3 %}-selected{% endif%}" href="?sort_by=3&tit={{tit}}&aut={{aut}}&dom={{dom}}&the={{the}}&act={{act}}&ccm={{ccm}}&lcb={{lcb}}&lca={{lca}}&crb={{crb}}&cra={{cra}}" title="seřazení diskusí">&nbsp;dle času posledního příspěvku&nbsp;</a>
+     </span>
+     </span>
+     <span>
+       &nbsp;
+     </span>
+    </div>
+
+    {% endif %}
     {% if diskuses.count > page_obj|length %}
      <span style="color:#471fb6;">Zobrazeno prvních {{page_obj|length}}.</span>
      {% endif  %}
    {% else %}
-     <span style="color:#471fb6;">Dle zvolených kritérií nenalezena žádná diskuse</span>
+      <br>
+      <span style="color:#471fb6;">Dle zvolených kritérií nenalezena žádná diskuse.</span>
    {% endif  %}
     <div>
       {% for discussion in page_obj %}

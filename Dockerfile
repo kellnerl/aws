@@ -1,5 +1,5 @@
 # base image
-FROM python:3.8
+FROM python:3.10
 
 #maintainer
 LABEL Author="IPE software"

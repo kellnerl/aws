@@ -280,95 +280,128 @@ def home_discussions(request):
 def advanced_search(request):
     #request.session['previous_url'] = request.META.get('HTTP_REFERER')
     utils.save_page(request)
-    if request.method == 'POST':
-        form = AdvancedSearchDiscussionForm(request.POST)
+# Získat parametr 'sort_by' z GET požadavku
+    sortby = request.GET.get('sort_by')
+    domain = request.GET.get('dom')
+    title = request.GET.get('tit')
+    theme = request.GET.get('the')
+    author = request.GET.get('aut')
+    active = request.GET.get('act')
+    comments_count_min = request.GET.get('ccm')
+    created_before = request.GET.get('crb')
+    created_after = request.GET.get('cra')
+    last_comment_before = request.GET.get('lcb')
+    last_comment_after = request.GET.get('lca')
+
+    # Pokud sort_by není None nebo prázdné, převedeme ho na celé číslo
+    if sortby:
+        sort_by = int(sortby)
+    else:
+        sort_by = 1
+
+    # Vytvořit instanci formuláře pouze pro POST požadavky nebo pokud je nastavený sort_by
+    if request.method == 'POST' or sortby:
+        form = AdvancedSearchDiscussionForm(request.POST or None, initial={'sort_by': sort_by})
+
         if form.is_valid():
             domain = form.cleaned_data['domain_field']
             title = form.cleaned_data['title']
             theme = form.cleaned_data['theme_field']
             author = form.cleaned_data['author']
             active = form.cleaned_data['active']
-            search_value_created_before = form.cleaned_data['search_value_created_before']
-            search_value_created_after = form.cleaned_data['search_value_created_after']
-            search_value_last_comment_before = form.cleaned_data['search_value_last_comment_before']
-            search_value_last_comment_after = form.cleaned_data['search_value_last_comment_after']
+            created_before = form.cleaned_data['search_value_created_before']
+            created_after = form.cleaned_data['search_value_created_after']
+            last_comment_before = form.cleaned_data['search_value_last_comment_before']
+            last_comment_after = form.cleaned_data['search_value_last_comment_after']
             comments_count_min = form.cleaned_data['comments_count_min']
-            sort_by = int(form.cleaned_data['orderby'])
-            print(f"sort_by: {sort_by}")
+            #sort_by = int(form.cleaned_data['orderby'])
             # můžete použít metodu filter() spolu s podmínkami pro jednotlivá pole a operátorem __gt (větší než) nebo __gte (větší nebo rovno).
             #records = MyModel.objects.filter(field1__gt=value1, field2__gt=value2, field3__gte=value3)
-            diskuses = Discussion.objects.filter(active=active)
+        diskuses = Discussion.objects.filter(active=active)
             
-            if domain:
-                diskuses = diskuses.filter(domain=domain)
-            if title:
-                diskuses = diskuses.filter(Q(title__icontains=title))
-            if author:
-                diskuses = diskuses.filter(Q(author__icontains=author))
-            if theme:
-                diskuses = diskuses.filter(theme=theme)
-            if search_value_created_before:
-                diskuses = diskuses.filter(
-                    created_on__lt=search_value_created_before)
-            if search_value_created_after:
-                diskuses = diskuses.filter(
-                    created_on__gt=search_value_created_after)
-            if search_value_last_comment_before:
-                diskuses = diskuses.filter(
-                    last_comment__lt=search_value_last_comment_before)
-            if search_value_last_comment_after:
-                diskuses = diskuses.filter(
-                    last_comment__gt=search_value_last_comment_after)
-            if comments_count_min:
-                diskuses = diskuses.filter(
-                    comments_count__gt=comments_count_min)
-            if (sort_by == 1):
-                diskuses = diskuses.order_by('-created_on')
-            elif (sort_by == 2):
-                diskuses = diskuses.order_by('-comments_count')
-            else:
-                diskuses = diskuses.annotate(
+        if domain:
+            diskuses = diskuses.filter(domain=domain)
+        if title:
+            diskuses = diskuses.filter(Q(title__icontains=title))
+        if author:
+            diskuses = diskuses.filter(Q(author__icontains=author))
+        if theme not in '1':
+            diskuses = diskuses.filter(theme=theme)
+        if created_before:
+            diskuses = diskuses.filter(
+                created_on__lt=created_before)
+        if created_after:
+            diskuses = diskuses.filter(
+                created_on__gt=created_after)
+        if last_comment_before:
+            diskuses = diskuses.filter(
+                last_comment__lt=last_comment_before)
+        if last_comment_after:
+            diskuses = diskuses.filter(
+                last_comment__gt=last_comment_after)
+        if comments_count_min:
+            diskuses = diskuses.filter(
+                comments_count__gt=comments_count_min)
+        if (sort_by == 1):
+            diskuses = diskuses.order_by('-created_on')
+        elif (sort_by == 2):
+            diskuses = diskuses.order_by('-comments_count')
+        else:
+            diskuses = diskuses.annotate(
                         filtered_comments_count=Case(
                             When(comments_count__lte=0, comments_count__isnull=True, then=Value(0)),
                             default=F('comments_count'),
                             output_field=IntegerField()
                         )
                     )
-                diskuses = diskuses.exclude(filtered_comments_count=0)
-                diskuses = diskuses.order_by('-last_comment')
-            user_context_instance = utils.get_user_context_instance(request)
-            page_obj, total_pages = utils.get_page_obj(request, diskuses, user_context_instance.rows_per_page)      
-            themes = ArticleTheme.objects.all().order_by('number')
-            form = AdvancedSearchDiscussionForm(initial={'title': title, 'author':author, 
-                                                         'domain_field': domain, 'theme_field': theme,
-                                                         'search_value_created_before':search_value_created_before,
-                                                         'search_value_created_after':search_value_created_after,
-                                                         'search_value_last_comment_before':search_value_last_comment_before,
-                                                         'search_value_last_comment_after':search_value_last_comment_after,
+            diskuses = diskuses.exclude(filtered_comments_count=0)
+            diskuses = diskuses.order_by('-last_comment')
+        user_context_instance = utils.get_user_context_instance(request)
+        page_obj, total_pages = utils.get_page_obj(request, diskuses, user_context_instance.rows_per_page)      
+        form = AdvancedSearchDiscussionForm(initial={'title': title, 
+                                                         'author':author, 
+                                                         'domain_field': domain, 
+                                                         'theme_field': theme,
+                                                         'search_value_created_before':created_before,
+                                                         'search_value_created_after':created_after,
+                                                         'search_value_last_comment_before':last_comment_before,
+                                                         'search_value_last_comment_after':last_comment_after,
                                                          'comments_count_min':comments_count_min,
-                                                         'orderby': sort_by,
+                                                         'active': active,
                                                          }
                                                          )
        
-            context = {
+        context = {
                 'form': form,
-                'themes': themes,
+                'sort_by': sort_by,
                 'diskuses': diskuses,
                 'section': 0,
                 'page_obj': page_obj,
                 'total_pages': total_pages,
                 'display_time': user_context_instance.display_time_difference,
-            }
-            return render(request, "discussions/discussions_search.html", context)
-        return redirect('advanced_search')
+                'tit': title, 
+                'aut': author, 
+                'dom': domain, 
+                'the': theme,
+                'crb': created_before if created_before else '',
+                'cra': created_after if created_after else '',
+                'lcb': last_comment_before if last_comment_before else '',
+                'lca': last_comment_after if last_comment_after else '',
+                'ccm': comments_count_min if comments_count_min else '',
+                'act': active,
+        }
+        return render(request, "discussions/discussions_search.html", context)
+        #return redirect('advanced_search')
     else:
-        sort_by = 1
-        form = AdvancedSearchDiscussionForm(initial={'orderby': sort_by,})
+        #sort_by = 1
+        #form = AdvancedSearchDiscussionForm(initial={'orderby': sort_by,'active': True,})
+        form = AdvancedSearchDiscussionForm(initial={'active': True,})
 
     user_context_instance = utils.get_user_context_instance(request)
     context = {
         'form': form,
         'section': 0,
+        'sort_by': sort_by,
     }
     return render(request, "discussions/discussions_search.html", context)
 

@@ -54,29 +54,35 @@ class SearchDiscussionForm(forms.ModelForm):
         
 class AdvancedSearchDiscussionForm(forms.ModelForm):
     title=forms.CharField(label='Titulek článku', required=False, widget=forms.TextInput(attrs={'class': 'input-font', 'size':60, 'placeholder':'hledaný text'}))
-    author=forms.CharField(label='Author článku', required=False, widget=forms.TextInput(attrs={'class': 'input-font', 'size':20, 'placeholder':'jméno autora článku'}))
+    author=forms.CharField(label='Autor článku', required=False, widget=forms.TextInput(attrs={'class': 'input-font', 'size':20, 'placeholder':'jméno autora článku'}))
     search_value_created_before = forms.DateField(label='Diskuse vložena před',required=False, widget=forms.SelectDateWidget())
     search_value_created_after  = forms.DateField(label='Diskuse vložena po',required=False, widget=forms.SelectDateWidget())
     search_value_last_comment_before = forms.DateField(label='Poslední komentář před',required=False, widget=forms.SelectDateWidget())
     search_value_last_comment_after  = forms.DateField(label='Poslední komentář po',required=False,  widget=forms.SelectDateWidget())
-    comments_count_min=forms.IntegerField(label='Počet příspěvků větší než', required=False, widget=forms.NumberInput(attrs={}))
-    orderby_choices = [('1', 'dle času založení diskuze'),('2', 'dle počtu příspěvků'),('3', 'dle času posledního příspěvku')]
-    orderby = forms.ChoiceField(choices=orderby_choices, label='Seřadit dle', widget=forms.RadioSelect, required=True)
+    comments_count_min = forms.IntegerField(
+        label='Počet příspěvků větší než',
+        required=False,
+        widget=forms.NumberInput(attrs={'min': 0, 'max': 1000, 'style': 'width: 50px;'})
+    )
+    #orderby_choices = [('1', 'dle času založení diskuze'),('2', 'dle počtu příspěvků'),('3', 'dle času posledního příspěvku')]
+    #orderby = forms.ChoiceField(choices=orderby_choices, label='Seřadit dle', widget=forms.RadioSelect, required=True)
     domain_field = forms.ChoiceField(choices=[], label='Doména článku', required=False)
     theme_field = forms.ChoiceField(choices=[], label='Téma článku', required=False)
+    active = forms.BooleanField (label='Aktivní diskuse', required=False)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
         # Načítání dat pro pole s možnými hodnotami až při inicializaci formuláře
         self.fields['domain_field'].choices = [('', '---------')] + list(Domain.objects.values_list('domain','domain'))
-        self.fields['theme_field'].choices = [('', '---------')] + list(ArticleTheme.objects.values_list('id','name'))
+        #self.fields['theme_field'].choices = [('', '---------')] + list(ArticleTheme.objects.values_list('id','name'))
+        self.fields['theme_field'].choices = list(ArticleTheme.objects.values_list('id','name'))
 
     class Meta:
         model = Discussion
         # Uveďte pole, která chcete zahrnout do formuláře
-        fields = ['title', 'author', 'search_value_created_before', 'search_value_created_after', 'search_value_last_comment_before', 'search_value_last_comment_after','active','orderby']  
-        labels = {'active':'Aktivní diskuse'} 
+        fields = ['title', 'author', 'search_value_created_before', 'search_value_created_after', 'search_value_last_comment_before', 'search_value_last_comment_after','active']  
+        #labels = {'active':'Aktivní diskuse'} 
 
 
 # discussion creating a form

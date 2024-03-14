@@ -3,6 +3,8 @@ import requests
 
 from articles.models import ArticleUserQuery
 from discussions.models import ArticleTheme, Section
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Layout, Div, Field
 
 
 
@@ -22,7 +24,20 @@ class ArticleUserQueryForm(forms.ModelForm):
 
         # Načítání dat pro pole s možnými hodnotami až při inicializaci formuláře
         self.fields['section'].choices = [('all', 'všechny')] + list(scraped_sections.values_list('name','name').order_by('name'))
-        
+
+#    def __init__(self, *args, **kwargs):
+#        super(ArticleUserQueryForm, self).__init__(*args, **kwargs)
+#        scraped_sections = Section.objects.filter(scrapping=True)
+#        self.fields['section'].choices = [('all', 'všechny')] + list(scraped_sections.values_list('name','name').order_by('name'))
+
+#        self.helper = FormHelper()
+#        self.helper.layout = Layout(
+#            Div(
+#                Field('key_word', css_class='col-md-6'),  # První pole zabere polovinu šířky
+#                Field('section', css_class='col-md-6'),  # Druhé pole zabere polovinu šířky
+#                css_class='row'
+#            )
+#        )    
 
     class Meta:
         model = ArticleUserQuery
