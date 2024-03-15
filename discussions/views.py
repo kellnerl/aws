@@ -690,6 +690,12 @@ def comments(request, diskuse_id):
     if sort_by > 3:
         sort_by=1
     utils.save_user_context_instance(request, None, None,  sort_by)
+    only_mine_threads = request.GET.get('only_mine_threads')
+    if only_mine_threads == None:
+        only_mine_threads = 0
+    else:
+        only_mine_threads = int(only_mine_threads)
+
     if diskuse_id == 0:
         return redirect('home_discussions')
     else:
@@ -701,10 +707,18 @@ def comments(request, diskuse_id):
         root_comments = Comment.objects.filter(discussion = discussion, parent__isnull=True).order_by('-replies_count')
     elif sort_by==3:
         root_comments = Comment.objects.filter(discussion = discussion, parent__isnull=True).order_by('-plus')
+    #####FILTROVÁNÍ: jen vlákna s mými příspěvky
+    if only_mine_threads:
+        for cmnt in root_comments:
+            exist = Comment.objects.filter(discussion = discussion, root_id=cmnt.root_id, created_by=request.user).exists()
+            if not exist:
+                root_comments=root_comments.exclude(id=cmnt.id)
+    #####TH
     for elem in root_comments:
         reply_comments = Comment.objects.filter(root_id = elem.root_id)
         cache_tree_children(reply_comments)
         elem.reply_comments = reply_comments
+    
     page_obj, total_pages = utils.get_page_obj(request, root_comments, user_context_instance.rows_per_page)
     # Načtení potomků pro každou kategorii
     #cache_tree_children(page_obj)
@@ -723,6 +737,7 @@ def comments(request, diskuse_id):
         'form_comment': CommentForm(),
         'form_reply': CommentReplyForm(),
         'sort_by': sort_by,
+        'only_mine_threads': only_mine_threads,
         'diskuse_id': diskuse_id,
         'page_obj': page_obj,
         'total_pages': total_pages,

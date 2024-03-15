@@ -35,10 +35,14 @@
 <br>
 {% if not thread_id %} 
 <form  method="POST" action="{% url 'new_comment' diskuse_id %}">{% csrf_token %} 
-    {{ form_comment.as_table }} 
-    <button type="submit" class="button-font-size">&nbsp;Uložit komentář&nbsp;</button>&nbsp;&nbsp;
+    {{ form_comment.as_table }}
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+      <button type="submit" class="button-font-size">&nbsp;Uložit komentář&nbsp;</button>&nbsp;&nbsp;
+      <a style="font-size: small;" title="zobrazit pouze vlákna s mými příspěvky" href="?sort_by={{sort_by}}&only_mine_threads={% if only_mine_threads == 1%}0{% else %}1{% endif %}">&nbsp;zobrazit pouze vlákna s mými příspěvky {% if only_mine_threads %}&nbsp;&#x2714;&nbsp;{% endif%}</a>
+    </div>
     <hr>
 </form>
+  
 {% else %}
   <br>
 {% endif %}

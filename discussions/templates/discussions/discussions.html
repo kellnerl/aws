@@ -24,10 +24,10 @@
 <form  id="searchForm" method="GET" action="{% url 'home_discussions'  %}">
   {% csrf_token %} 
   <span style="color:darkslategray">Vyhledání&nbsp;&#128269;&nbsp;nebo založení&nbsp;&star;&nbsp;diskuse:</span><br>
-   <span style="background-color:darkblue;border-radius: 7px; padding: 9px;line-height: 34px"> 
-   <button id="clearButton" type="submit" name="clear" class="button-font-size" style="padding: 3px;">X</button>
+   <span style="background-color:darkblue;border-radius: 7px; padding: 7px;margin-left:1px;margin-right: 1px;line-height: 36px;"> 
+   <button id="clearButton" type="submit" name="clear" class="button-font-size" style="padding: 3px;margin-left:1px;margin-right: 1px;">X</button>
     {{ form_discussion.search_value }}
-    <button id="searchButton" type="submit" name="search" style="padding: 3px;" title="Vyhledat diskuse dle URL nebo titulku článku">&nbsp;&#9654;&nbsp;</button>  
+    <button id="searchButton" type="submit" name="search" style="padding: 3px;margin-left:1px;margin-right: 1px;" title="Vyhledat diskuse dle URL nebo titulku článku">&nbsp;&#9654;&nbsp;</button>  
     </span>
   </form>
   <br>
@@ -49,8 +49,8 @@
   {% if page_obj %}
   
     {% if page_obj|length > 1 %}
-      <div class="horizontal-line" style="margin-top:12px;margin-bottom:6px; display:flex; justify-content:space-between; align-items: bottom;">
-        <span>
+      <div class="horizontal-line" style="margin-top:12px;margin-bottom:6px; display: flex; justify-content: space-between; align-items: center;">
+       <span> 
         <span class="line-text{% if sort_by == 1 %}-selected{% else %}-invisible{% endif%}">
           <a class="a-bold-hover{% if sort_by == 1 %}-selected{% endif%}" href="?sort_by=1&search_value={{search_value}}" title="seřazení diskusí">&nbsp;od nejnovějších&nbsp;</a>
         </span>
@@ -60,10 +60,10 @@
         <span class="line-text{% if sort_by == 3 %}-selected{% else %}-invisible{% endif%}">
           <a class="a-bold-hover{% if sort_by == 3 %}-selected{% endif%}" href="?sort_by=3&search_value={{search_value}}" title="seřazení diskusí">&nbsp;dle času posledního příspěvku&nbsp;</a>
         </span>
-        </span>
-        <span>
-          <a class="a-xsmall-button" title="nastavení filtrace" href="{% url 'home_discussions' %}">&nbsp;<b>filtrovat</b>&nbsp;&blacktriangledown;&nbsp;</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        </span>
+       </span>
+       <span>
+        &nbsp;
+       </span>
       </div>
     {% endif %}
 

@@ -34,7 +34,7 @@ def create_userSectionDomain(sender, instance, created, **kwargs):
             usersection.save()
         elif usersection.type == 'D':
             user_domains = UserSectionDomain.objects.filter(userSection=usersection)     
-            title = ' domény:  '
+            title = ' domény:    '
             print (user_domains)
             for domain in user_domains:
                 title = title + domain.domain + ',\n '

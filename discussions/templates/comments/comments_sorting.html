@@ -2,17 +2,17 @@
   <div class="horizontal-line" style="display: flex; justify-content: space-between; align-items: center;">
     <span>
      <span class="line-text{% if sort_by == 1 %}-selected{% endif%}">
-      <a class="a-bold-hover{% if sort_by == 1 %}-selected{% endif%}" href="?sort_by=1">&nbsp;od nejnovějších&nbsp;</a>
+      <a class="a-bold-hover{% if sort_by == 1 %}-selected{% endif%}" href="?sort_by=1&only_mine_threads={{only_mine_threads}}">&nbsp;od nejnovějších&nbsp;</a>
     </span>
     <span class="line-text{% if sort_by == 2 %}-selected{% endif%}">
-      <a class="a-bold-hover{% if sort_by == 2 %}-selected{% endif%}" href="?sort_by=2" >&nbsp;od nejreagovanějších&nbsp;</a>
+      <a class="a-bold-hover{% if sort_by == 2 %}-selected{% endif%}" href="?sort_by=2&only_mine_threads={{only_mine_threads}}" >&nbsp;od nejreagovanějších&nbsp;</a>
     </span>
     <span class="line-text{% if sort_by == 3 %}-selected{% endif%}">
-      <a class="a-bold-hover{% if sort_by == 3 %}-selected{% endif%}" href="?sort_by=3">&nbsp;od nejlépe hodnocených&nbsp;</a>
+      <a class="a-bold-hover{% if sort_by == 3 %}-selected{% endif%}" href="?sort_by=3&only_mine_threads={{only_mine_threads}}">&nbsp;od nejlépe hodnocených&nbsp;</a>
     </span>
     <span class="line-text" style="white-space: pre-line;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
     </span>
     <span>
-      <a class="a-xsmall-button" title="nastavení filtrace" href="{% url 'options_comment_thread' diskuse_id 0 0 %}">&nbsp;<b>pouze vlákna s mými příspěvky</b>&nbsp;&blacktriangledown;&nbsp;</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      &nbsp;
     </span>
   </div>
