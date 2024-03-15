@@ -38,7 +38,7 @@
     {{ form_comment.as_table }}
     <div style="display: flex; justify-content: space-between; align-items: center;">
       <button type="submit" class="button-font-size">&nbsp;Uložit komentář&nbsp;</button>&nbsp;&nbsp;
-      <a style="font-size: small;" title="zobrazit pouze vlákna s mými příspěvky" href="?sort_by={{sort_by}}&only_mine_threads={% if only_mine_threads == 1%}0{% else %}1{% endif %}">&nbsp;zobrazit pouze vlákna s mými příspěvky {% if only_mine_threads %}&nbsp;&#x2714;&nbsp;{% endif%}</a>
+      <a style="font-size: small;" title="zobrazit pouze vlákna s mými příspěvky" href="?sort_by={{sort_by}}&only_mine_threads={% if only_mine_threads == 1%}0{% else %}1{% endif %}">{% if only_mine_threads %}&nbsp;&#x2714;&nbsp;{% endif%}zobrazit pouze vlákna s mými příspěvky</a>&nbsp;&nbsp;
     </div>
     <hr>
 </form>
