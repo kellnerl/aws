@@ -288,10 +288,10 @@ def advanced_search(request):
     author = request.GET.get('aut')
     active = request.GET.get('act')
     comments_count_min = request.GET.get('ccm')
-    created_before = request.GET.get('crb')
-    created_after = request.GET.get('cra')
-    last_comment_before = request.GET.get('lcb')
-    last_comment_after = request.GET.get('lca')
+    created_before = datetime.strptime(request.GET.get('crb'), "%Y-%m-%d") if request.GET.get('crb') else None
+    created_after = datetime.strptime(request.GET.get('cra'), "%Y-%m-%d") if request.GET.get('cra') else None 
+    last_comment_before = datetime.strptime(request.GET.get('lcb'), "%Y-%m-%d") if request.GET.get('lcb') else None  
+    last_comment_after = datetime.strptime(request.GET.get('lca'), "%Y-%m-%d") if request.GET.get('lca') else None 
 
     # Pokud sort_by není None nebo prázdné, převedeme ho na celé číslo
     if sortby:

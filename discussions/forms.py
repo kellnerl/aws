@@ -81,7 +81,7 @@ class AdvancedSearchDiscussionForm(forms.ModelForm):
     class Meta:
         model = Discussion
         # Uveďte pole, která chcete zahrnout do formuláře
-        fields = ['title', 'author', 'comments_count_min','search_value_created_before', 'search_value_created_after', 'search_value_last_comment_before', 'search_value_last_comment_after','active']  
+        fields = ['title', 'author', 'comments_count_min','domain_field', 'theme_field', 'search_value_created_before', 'search_value_created_after', 'search_value_last_comment_before', 'search_value_last_comment_after','active']  
         #labels = {'active':'Aktivní diskuse'} 
 
 

@@ -80,13 +80,13 @@
     <div class="horizontal-line" style="margin-top:12px;margin-bottom:6px; display:flex; justify-content:space-between; align-items: bottom;">
      <span>
      <span class="line-text{% if sort_by == 1 %}-selected{% else %}-invisible{% endif%}">
-       <a class="a-bold-hover{% if sort_by == 1 %}-selected{% endif%}" href="?sort_by=1&tit={{tit}}&aut={{aut}}&dom={{dom}}&the={{the}}&act={{act}}&ccm={{ccm}}&lcb={{lcb}}&lca={{lca}}&crb={{crb}}&cra={{cra}}" title="seřazení diskusí">&nbsp;od nejnovějších&nbsp;</a>
+       <a class="a-bold-hover{% if sort_by == 1 %}-selected{% endif%}" href="?sort_by=1&tit={{tit}}&aut={{aut}}&dom={{dom}}&the={{the}}&act={{act}}&ccm={{ccm}}&lcb={{lcb|date:"Y-m-d"}}&lca={{lca|date:"Y-m-d"}}&crb={{crb|date:"Y-m-d"}}&cra={{cra|date:"Y-m-d"}}" title="seřazení diskusí">&nbsp;od nejnovějších&nbsp;</a>
      </span>
      <span class="line-text{% if sort_by == 2 %}-selected{% else %}-invisible{% endif%}">
-       <a class="a-bold-hover{% if sort_by == 2 %}-selected{% endif%}" href="?sort_by=2&tit={{tit}}&aut={{aut}}&dom={{dom}}&the={{the}}&act={{act}}&ccm={{ccm}}&lcb={{lcb}}&lca={{lca}}&crb={{crb}}&cra={{cra}}" title="seřazení diskusí">&nbsp;od nejdiskutovanějších&nbsp;</a>
+       <a class="a-bold-hover{% if sort_by == 2 %}-selected{% endif%}" href="?sort_by=2&tit={{tit}}&aut={{aut}}&dom={{dom}}&the={{the}}&act={{act}}&ccm={{ccm}}&lcb={{lcb|date:"Y-m-d"}}&lca={{lca|date:"Y-m-d"}}&crb={{crb|date:"Y-m-d"}}&cra={{cra|date:"Y-m-d"}}" title="seřazení diskusí">&nbsp;od nejdiskutovanějších&nbsp;</a>
      </span>
      <span class="line-text{% if sort_by == 3 %}-selected{% else %}-invisible{% endif%}">
-       <a class="a-bold-hover{% if sort_by == 3 %}-selected{% endif%}" href="?sort_by=3&tit={{tit}}&aut={{aut}}&dom={{dom}}&the={{the}}&act={{act}}&ccm={{ccm}}&lcb={{lcb}}&lca={{lca}}&crb={{crb}}&cra={{cra}}" title="seřazení diskusí">&nbsp;dle času posledního příspěvku&nbsp;</a>
+       <a class="a-bold-hover{% if sort_by == 3 %}-selected{% endif%}" href="?sort_by=3&tit={{tit}}&aut={{aut}}&dom={{dom}}&the={{the}}&act={{act}}&ccm={{ccm}}&lcb={{lcb|date:"Y-m-d"}}&lca={{lca|date:"Y-m-d"}}&crb={{crb|date:"Y-m-d"}}&cra={{cra|date:"Y-m-d"}}" title="seřazení diskusí">&nbsp;dle času posledního příspěvku&nbsp;</a>
      </span>
      </span>
      <span>
