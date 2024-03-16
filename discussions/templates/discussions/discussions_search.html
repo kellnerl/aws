@@ -16,12 +16,48 @@
 <form  method="POST" action="{% url 'advanced_search' %}"">
   <table>
     {% csrf_token %}
-    {% for field in form %}
-      <tr>
-        <td>{{ field.label_tag }}</td>
-        <td>{{ field }}</td>
-      </tr>
-    {% endfor %}
+    <table style="text-align: left;">
+      {% csrf_token %}
+          <tr>
+            <td>{{ form.title.label_tag }}</td>
+            <td>{{ form.title }}</td>
+          </tr>
+          <tr>
+            <td>{{ form.comments_count_min.label_tag }}</td>
+            <td>{{ form.comments_count_min }}</td>
+          </tr>
+    </table>
+    <br>
+    <table style="text-align: left;">
+      {% csrf_token %}
+          <tr>
+            <td>{{ form.author.label_tag }}</td>
+            <td>{{ form.author }}</td>
+            <td>&nbsp;&nbsp;&nbsp;{{ form.active.label_tag }}</td>
+            <td>{{ form.active }}</td>
+          </tr>  
+          <tr>
+            <td>{{ form.domain_field.label_tag }}</td>
+            <td>{{ form.domain_field }}</td>
+            <td>&nbsp;&nbsp;&nbsp;{{ form.theme_field.label_tag }}</td>
+            <td>{{ form.theme_field }}</td>
+          </tr>  
+          <tr>
+            <td>{{ form.search_value_created_after.label_tag }}</td>
+            <td>{{ form.search_value_created_after }}</td>
+            <td>&nbsp;&nbsp;&nbsp;{{ form.search_value_created_before.label_tag }}</td>
+            <td>{{ form.search_value_created_before }}</td>
+          </tr>  
+          <tr>
+            <td>{{ form.search_value_last_comment_after.label_tag }}</td>
+            <td>{{ form.search_value_last_comment_after }}</td>
+            <td>&nbsp;&nbsp;&nbsp;{{ form.search_value_last_comment_before.label_tag }}</td>
+            <td>{{ form.search_value_last_comment_before }}</td>
+          </tr>  
+          
+    </table>
+
+
   </table>
   <hr>
   <div style="display: flex; justify-content: center; align-items: center;">
