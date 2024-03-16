@@ -14,51 +14,48 @@
 {% block content_main %}
 
 <form  method="POST" action="{% url 'advanced_search' %}"">
-  <table>
     {% csrf_token %}
     <table style="text-align: left;">
-      {% csrf_token %}
           <tr>
             <td>{{ form.title.label_tag }}</td>
             <td>{{ form.title }}</td>
-          </tr>
-          <tr>
-            <td>{{ form.comments_count_min.label_tag }}</td>
-            <td>{{ form.comments_count_min }}</td>
+            <td>&nbsp;&nbsp;&nbsp;{{ form.active_field.label_tag }}</td>
+            <td>{{ form.active_field }}</td>
           </tr>
     </table>
     <br>
     <table style="text-align: left;">
-      {% csrf_token %}
           <tr>
             <td>{{ form.author.label_tag }}</td>
-            <td>{{ form.author }}</td>
-            <td>&nbsp;&nbsp;&nbsp;{{ form.active.label_tag }}</td>
-            <td>{{ form.active }}</td>
-          </tr>  
-          <tr>
-            <td>{{ form.domain_field.label_tag }}</td>
-            <td>{{ form.domain_field }}</td>
-            <td>&nbsp;&nbsp;&nbsp;{{ form.theme_field.label_tag }}</td>
+            <td>&nbsp;&nbsp;{{ form.author }}</td>
+            <td>&nbsp;&nbsp;{{ form.theme_field.label_tag }}</td>
             <td>{{ form.theme_field }}</td>
+            <td>&nbsp;&nbsp;{{ form.domain_field.label_tag }}</td>
+            <td>{{ form.domain_field }}</td>
+          </tr>  
+    <table>
+    <br>
+    <table style="text-align: left;">
+          <tr>
+            <td>{{ form.created_after.label_tag }}</td>
+            <td>{{ form.created_after }}</td>
+            <td>&nbsp;&nbsp;&nbsp;{{ form.created_before.label_tag }}</td>
+            <td>{{ form.created_before }}</td>
           </tr>  
           <tr>
-            <td>{{ form.search_value_created_after.label_tag }}</td>
-            <td>{{ form.search_value_created_after }}</td>
-            <td>&nbsp;&nbsp;&nbsp;{{ form.search_value_created_before.label_tag }}</td>
-            <td>{{ form.search_value_created_before }}</td>
-          </tr>  
-          <tr>
-            <td>{{ form.search_value_last_comment_after.label_tag }}</td>
-            <td>{{ form.search_value_last_comment_after }}</td>
-            <td>&nbsp;&nbsp;&nbsp;{{ form.search_value_last_comment_before.label_tag }}</td>
-            <td>{{ form.search_value_last_comment_before }}</td>
-          </tr>  
-          
+            <td>{{ form.last_comment_after.label_tag }}</td>
+            <td>{{ form.last_comment_after }}</td>
+            <td>&nbsp;&nbsp;&nbsp;{{ form.last_comment_before.label_tag }}</td>
+            <td>{{ form.last_comment_before }}</td>
+          </tr>   
     </table>
-
-
-  </table>
+    <br>
+    <table>
+          <tr>
+            <td>{{ form.comments_count_min.label_tag }}</td>
+            <td>{{ form.comments_count_min }}</td>
+          </tr>
+    </table> 
   <hr>
   <div style="display: flex; justify-content: center; align-items: center;">
     <span style="text-align: right; font-size: medium;">

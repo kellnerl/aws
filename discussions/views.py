@@ -1,6 +1,5 @@
 
 import re
-from datetime import date
 from datetime import datetime, timedelta
 from django.utils import timezone
 from urllib.parse import quote
@@ -16,7 +15,6 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from django.views.generic import TemplateView
 from django.views.generic import CreateView
-from django.contrib.auth import logout
 from django.contrib.auth.models import User
 from django.contrib.sites.shortcuts import get_current_site
 from django.shortcuts import render, redirect
@@ -308,24 +306,27 @@ def advanced_search(request):
             title = form.cleaned_data['title']
             theme = form.cleaned_data['theme_field']
             author = form.cleaned_data['author']
-            active = form.cleaned_data['active']
-            created_before = form.cleaned_data['search_value_created_before']
-            created_after = form.cleaned_data['search_value_created_after']
-            last_comment_before = form.cleaned_data['search_value_last_comment_before']
-            last_comment_after = form.cleaned_data['search_value_last_comment_after']
+            active = form.cleaned_data['active_field']
+            created_before = form.cleaned_data['created_before']
+            created_before if isinstance(created_before, datetime) else None
+            created_after = form.cleaned_data['created_after']
+            created_after if isinstance(created_after, datetime) else None
+            last_comment_before = form.cleaned_data['last_comment_before']
+            last_comment_before if isinstance(last_comment_before, datetime) else None
+            last_comment_after = form.cleaned_data['last_comment_after']
+            last_comment_after if isinstance(last_comment_after, datetime) else None
             comments_count_min = form.cleaned_data['comments_count_min']
-            #sort_by = int(form.cleaned_data['orderby'])
-            # můžete použít metodu filter() spolu s podmínkami pro jednotlivá pole a operátorem __gt (větší než) nebo __gte (větší nebo rovno).
-            #records = MyModel.objects.filter(field1__gt=value1, field2__gt=value2, field3__gte=value3)
-        diskuses = Discussion.objects.filter(active=active)
-            
+
+        diskuses = Discussion.objects.all() 
+        if active:
+            diskuses = diskuses.filter(active=active)           
         if domain:
             diskuses = diskuses.filter(domain=domain)
         if title:
             diskuses = diskuses.filter(Q(title__icontains=title))
         if author:
             diskuses = diskuses.filter(Q(author__icontains=author))
-        if theme not in '1':
+        if theme and theme not in '1':
             diskuses = diskuses.filter(theme=theme)
         if created_before:
             diskuses = diskuses.filter(
@@ -362,12 +363,12 @@ def advanced_search(request):
                                                          'author':author, 
                                                          'domain_field': domain, 
                                                          'theme_field': theme,
-                                                         'search_value_created_before':created_before,
-                                                         'search_value_created_after':created_after,
-                                                         'search_value_last_comment_before':last_comment_before,
-                                                         'search_value_last_comment_after':last_comment_after,
+                                                         'created_before':created_before,
+                                                         'created_after':created_after,
+                                                         'last_comment_before':last_comment_before,
+                                                         'last_comment_after':last_comment_after,
                                                          'comments_count_min':comments_count_min,
-                                                         'active': active,
+                                                         'active_field': active,
                                                          }
                                                          )
        
