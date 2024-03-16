@@ -17,14 +17,14 @@
 <form  method="GET" action="{% url 'article_search' %}">
   <table>
     {% csrf_token %}
-    {% for field in form %}
-    {% if field != form.days_old %}
+
       <tr>
-        <td>{{ field.label_tag }}</td>
-        <td>{{ field }}</td>
+        <td>{{ form.key_word.label_tag }}</td>
+        <td>{{ form.key_word }}</td>
+        <td>&nbsp;&nbsp;&nbsp;&nbsp;{{ form.section.label_tag }}</td>
+        <td>{{ form.section }}</td>
       </tr>
-    {% endif %}
-    {% endfor %}  
+
   </table>
   <br>
   <div class="horizontal-radio">
