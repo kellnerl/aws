@@ -966,7 +966,7 @@ def reply_comment(request, diskuse_id, operation, comment_id):
                 except:
                     messages.error(request, "Reakce nemůže být uložena. Původní komentář byl smazán")
                 operation='none'
-                #return redirect('comments', diskuse_id=str(diskuse_id))
+                #return redirect('comments', diskuse_id=str(diskuse_id))  ##
         elif 'edit' in request.POST: 
             form = CommentForm(request.POST)
             if form.is_valid():
@@ -976,7 +976,7 @@ def reply_comment(request, diskuse_id, operation, comment_id):
                 comment.ip_address = request.META.get("REMOTE_ADDR", None)
                 comment.save()
                 operation='none'
-                #return redirect('comments', diskuse_id=str(diskuse_id))
+                #return redirect('comments', diskuse_id=str(diskuse_id)) ##
     else:
         form = CommentForm()
     sort_by = request.GET.get('sort_by')

@@ -39,7 +39,7 @@ class CommentForm(forms.ModelForm):
 
 # comment reply a form
 class CommentReplyForm(forms.ModelForm):
-    content=forms.CharField (label='',required=False, widget=forms.Textarea(attrs={'rows': '6', 'cols':'96', 'size': '120', 'placeholder':'napište reakci ke komentáři', 'class': 'custom-textarea'}))
+    content=forms.CharField (label='',required=False, widget=forms.Textarea(attrs={'rows': '6', 'cols':'72', 'size': '100', 'placeholder':'napište reakci ke komentáři', 'class': 'custom-textarea'}))
   
     class Meta:
         model = Comment
