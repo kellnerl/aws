@@ -115,7 +115,7 @@ def register(request):
                     'token': token,
                     })
                     print("posílám email...")
-                    send_mail(mail_subject, message, 'info@ipe.cz', [user.email], html_message=message)
+                    #send_mail(mail_subject, message, 'info@ipe.cz', [user.email], html_message=message)
 
                     return redirect('registration_done', username=user.username)
         else:

@@ -11,80 +11,31 @@
 {% endblock %}
 
 {% block content_main %}
-<form  method="POST" action="{% url 'navigate_back' %}">
+<div style="display: left; justify-content: space-between;">
+  <span>
+    <a class="a-small-button" href="{% url 'user_detail' request.user.id %}">&nbsp;Nastavení profilu uživatele&nbsp;</a>
+  </span>
+  <span style="text-align: right; font-size: medium;">
+    <a class="a-small-button" href="{% url 'user_tabs' request.user.id %}">&nbsp;Definice záložek uživatele&nbsp;</a>
+  </span>
+</div>
+<br>
+<form  method="POST" action="{% url 'user_context' userid %}">
   <table>
     {% csrf_token %}
     {% for field in form %}
-      <tr style="font-size:small;">
+      <tr style="font-size:medium;">
         <td>{{ field.label_tag }}</td>
         <td>{{ field }}</td>
       </tr>
     {% endfor %}
   </table>
+  <br>
   <hr>
   <div style="display: flex; justify-content: space-between;">
-    <button type="submit" class="button-font-size">&nbsp;Uložit změny&nbsp;</button>&nbsp;&nbsp;
-    <span>
-      <a class="a-small-button" href="{% url 'user_detail' request.user.id %}">&nbsp;Nastavení profilu uživatele&nbsp;</a>
-    </span>
+    <button type="submit" class="button-font-size">&nbsp;<b>Uložit změny</b>&nbsp;</button>&nbsp;&nbsp;
   </div> 
   <br>
-  </form>
-  <div class="container" style="width:auto;">
-     <div class="headline" style="width:auto;font-size:medium;"> Moje sekce: </div>
-     <p>
-    {% if user_section_number != 0 %}
-    {% if user_section_number == 1 %}
-      <a class="a-xsmall-button" href="?op=l&usertab={{user_section_number}}&predeftab={{section_name}}" style="pointer-events: none">&nbsp;&lt;&lt;&nbsp;</a>
-    {% else  %}
-      <a class="a-xsmall-button" href="?op=l&usertab={{user_section_number}}&predeftab={{section_name}}">&nbsp;&lt;&lt;&nbsp;</a>
-    {% endif  %}
-    {% if user_section_number == user_sections|length  %}
-      <a class="a-xsmall-button" href="?op=g&usertab={{user_section_number}}&predeftab={{section_name}}" style="pointer-events: none">&nbsp;&gt;&gt;&nbsp;</a>
-    {% else  %}
-      <a class="a-xsmall-button" href="?op=g&usertab={{user_section_number}}&predeftab={{section_name}}">&nbsp;&gt;&gt;&nbsp;</a>
-    {% endif  %}
-    &nbsp;
-    <a class="a-xsmall-button" href="?op=d&usertab={{user_section_number}}&predeftab={{section_name}}">&nbsp;odebrat sekci&nbsp;</a>
-    {% endif  %}
-    &nbsp;
-    {% if section_name|length > 1 %}
-    <a class="a-xsmall-button" href="?op=a&usertab={{user_section_number}}&predeftab={{section_name}}">&nbsp;přidat předdefinovanou sekci&nbsp;</a>&nbsp;&nbsp;
-    {% endif  %}
-   
-   
-    <a class="a-xsmall-button" href="{% url 'usersection-add'  %}">&nbsp;nová vlastní sekce&nbsp;</a>&nbsp;&nbsp;
-    {% if user_section_type == 'D' %}
-    <a class="a-xsmall-button" href="{% url 'usersection-update' user_section_id %}">&nbsp;editovat vlastní sekci&nbsp;</a>&nbsp;&nbsp;
-    {% endif  %}
-    </p>
-  <div class="tabs">
-    {% for usersection in user_sections %}
-    <div  hint={{usersection.type}}  class="tab" style="padding:0px;"><a class="tab" id="{{usersection.tabname_s}}" hint={{usersection.type}} style="opacity: 1.0;padding:3px;font-size: small;" href="?usertab={{usersection.number}}&predeftab={{section_name}}">{{usersection.name}}</a></div>
-    {% endfor %}
-    <div id="tabx-content3" class="tab-content" style="background-color:rgb(204, 201, 197);min-height: 64px; height: auto;font-size: small">
-    <br><br>
-       {{user_section_title}}
-    </div>
-  </div>
-  <br>
-  <div class="headline" style="width:auto;font-size:medium;"> Předdefinované sekce: </div>
-  <div class="tabs">
-    {% for section in sections %}   
-    <div  class="tab" style="padding:0px;"><a id="{{section.tabname_s}}" class="tab" style="opacity: 1.0;padding:3px;font-size: small;" href="?usertab={{user_section_number}}&predeftab={{section.name}}">{{section.name}}</a></div>
-    {% endfor %}
-    <div id="tabx-content2" class="tab-content" style="background-color:rgb(204, 201, 197);min-height: 100px; height: auto;font-size: small">
-    <br>
-      <ul> 
-       {% for domain in domains %}
-        <li>{{domain.domain}}</li>
-       {% endfor %}
-      </ul>
-    </div>
-  </div>
-  <!--
-  <a class="button-link" href="{% url 'user_section_edit' userid user_section_number %}">upravit uživatelskou sekci</a>
-  &nbsp;
-  <a class="button-link" href="{% url 'user_section_new' userid 8 %}">vytvořit uživatelskou sekci</a>&nbsp;&nbsp; -->
-
+  
+  
 {% endblock %}

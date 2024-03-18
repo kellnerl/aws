@@ -10,10 +10,18 @@
 {% endblock %}
 
 {% block content_main %}
+<div style="display: left; justify-content: space-between;">
+  <span style="text-align: right; font-size: medium;">
+    <a class="a-small-button" href="{% url 'user_context' request.user.id %}">&nbsp;Nastavení prostředí uživatele&nbsp;</a>
+  </span>
+  <span style="text-align: right; font-size: medium;">
+    <a class="a-small-button" href="{% url 'user_tabs' request.user.id %}">&nbsp;Definice záložek uživatele&nbsp;</a>
+  </span>
+</div>
+<br>
 <div style="font-size:medium"><b>Jméno a příjmení: </b>{{request.user.first_name}}  {{request.user.last_name}}</div>
 <div style="font-size:medium"><b>Datum narození: </b>{{userdetail.born_on|date:'d.m.Y'}}</div>
 <div style="font-size:medium"><b>Datum registrace: </b>{{request.user.date_joined}}</div>
-
 <br><br>
 {% if userdetail.photo %}
 <img src="{{ userdetail.photo.url }}" alt="Fotka uživatele" height="120" width="auto">
@@ -32,10 +40,7 @@
   <span style="font-size:small">Zadáním těchto nepovinných údajů, souhlasím s jejich zveřejněním ostatním přihlášených uživatelům ve formě obrazovky profil uživatele.<span>
   <br><hr>
   <div style="display: flex; justify-content: space-between;">
-    <button type="submit" class="button-font-size">&nbsp;Uložit změny&nbsp;</button>&nbsp;&nbsp;
-    <span style="text-align: right; font-size: medium;">
-      <a class="a-small-button" href="{% url 'user_context' request.user.id %}">&nbsp;Nastavení prostředí uživatele&nbsp;</a>
-    </span>
+    <button type="submit" class="button-font-size">&nbsp;<b>Uložit změny</b>&nbsp;</button>&nbsp;&nbsp;
   </div>
   </form>
   <br>

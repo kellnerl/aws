@@ -10,6 +10,12 @@
 {% endblock %}
 
 {% block content_main %}
+<div style="display: flex; justify-content: space-between;">
+  <span>
+    <a class="a-small-button" href="{% url 'user_comments' 0 userdetail.user.username %}">&nbsp;Příspěvky uživatele&nbsp;</a>&nbsp;&nbsp;
+  </span>
+</div>
+<br>
 {% if userdetail.photo %}
 <img src="{{ userdetail.photo.url }}" alt="Fotka uživatele" height="100" width="auto">
 {% endif %}
@@ -54,13 +60,15 @@
       <td><b>Počet reakcí:</b></td>
       <td>{{reply_count}}</td>
     </tr>
+    <tr>
+      <td><b>Čas posledního příspěvku:</b></td>
+      <td>{{datetime_last_comment}}</td>
+    </tr>
+    <tr>
+      <td><b>Počet založených diskusí:</b></td>
+      <td>{{count_created_discussion}}</td>
+    </tr>
 </table>
-  <br><hr>
-  <div style="display: flex; justify-content: space-between;">
-    <span>
-      <a class="a-small-button" href="{% url 'user_comments' 0 userdetail.user.username %}">&nbsp;Příspěvky uživatele {{ userdetail.user.username}}&nbsp;</a>&nbsp;&nbsp;
-    </span>
-    </div>
-  <br><br>
+  <br><hr><br>
   
 {% endblock %}

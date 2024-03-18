@@ -22,6 +22,7 @@ urlpatterns = [
     path('user_info/<str:username>', views.user_info, name='user_info'),
     path('user_detail/<int:userid>', views.user_detail, name='user_detail'),
     path('user_context/<int:userid>', views.user_context, name='user_context'),
+    path('user_tabs/<int:userid>', views.user_tabs, name='user_tabs'),
     path('user_section_operation/<int:userid>/<int:section>/<int:operation>', views.user_section_operation, name='user_section_operation'),
     path('user_section_edit/<int:userid>/<int:section>', views.user_section_edit, name='user_section_edit'),
     path('user_section_new/<int:userid>/<int:number>', views.user_section_new, name='user_section_new'),

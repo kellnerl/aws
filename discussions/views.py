@@ -48,7 +48,7 @@ def get_sections (request):
     if request.user.is_anonymous:
         queryset = list()
         home = UserSection(id=1,name='diskuse', number=0, user=None, description='diskuse homepage')
-        new = UserSection(id=2,name='nové', number=1, user=None, type='T', description='Nové diskuse', title='.')
+        new = UserSection(id=2,name='nové', number=1, user=None, type='T', description='Nové diskuse (2 dny)', title='.')
         queryset.append(home)  # Přidání home fiktivního prvku do seznamu
         queryset.append(new)  # Přidání new doscussions fiktivního prvku do seznamu
         sections = Section.objects.filter(type="P")

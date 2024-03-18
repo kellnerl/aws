@@ -37,6 +37,7 @@ class UserContextForm(forms.ModelForm):
     #display_fullname=forms.BooleanField(label='Zobrazovat plné jméno místo přihlašovacího jména',required=False)
     display_time_difference=forms.BooleanField(label='Zobrazovat absolutní čas místo časového intervalu',required=False)
     auto_show_all_replies=forms.BooleanField(label='Automaticky zobrazit všechny odpovědi v diskusi',required=False)
+    days_in_new_tabs=forms.IntegerField(label='Počet dní diskuse v záložce "nové"', required=True, min_value=1, max_value=5, initial=2)
     #notify_on_comment=forms.BooleanField(label='Posílat denní notifikaci ohledně komentářů na mé oblíbené diskuse',required=False)
     #notify_on_discussion=forms.BooleanField(label='Posílat denní notifikaci ohledně reakcí na moje příspěvky',required=False)
     #notify_on_favorite=forms.BooleanField(label='Posílat denní notifikaci ohledně komentářů oblíbeného uživatele',required=False)
@@ -44,11 +45,11 @@ class UserContextForm(forms.ModelForm):
     class Meta:
         model = UserContext
         # Uveďte pole, která chcete zahrnout do formuláře
-        fields = ['rows_per_page', 'auto_show_all_replies', 'display_time_difference']
+        fields = ['rows_per_page', 'auto_show_all_replies', 'display_time_difference', 'days_in_new_tabs']
 
 class UserSectionForm(forms.ModelForm):       
-    name=forms.CharField(label='Jméno sekce', required=True, widget=forms.TextInput(attrs={'class': 'input-font', 'size': 52, 'placeholder':'název sekce'}))
-    description=forms.CharField (label='Popis sekce',required=False, widget=forms.Textarea(attrs={'rows': '3', 'cols':'40', 'size': '80', 'placeholder':'popis, účel a charakteristika sekce', 'class': 'custom-textarea'}))
+    name=forms.CharField(label='Jméno založky', required=True, widget=forms.TextInput(attrs={'class': 'input-font', 'size': 52, 'placeholder':'název sekce'}))
+    description=forms.CharField (label='Popis záložky',required=False, widget=forms.Textarea(attrs={'rows': '3', 'cols':'40', 'size': '80', 'placeholder':'popis, účel a charakteristika sekce', 'class': 'custom-textarea'}))
 
     class Meta:
         model = UserSection

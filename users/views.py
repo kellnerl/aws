@@ -14,7 +14,9 @@ from django.utils.encoding import force_bytes, force_str
 from django.urls import reverse_lazy
 from django.db.models import Q
 from django.db import transaction
-from discussions.models import Domain, Section, Comment
+from django.db.models import Max
+
+from discussions.models import Domain, Section, Discussion, Comment
 from .forms import UserDomainFormSet
 from django.forms.models import inlineformset_factory
 from django.views.generic.list import ListView
@@ -63,12 +65,17 @@ def user_info(request, username):
         age = None
     comment_count = Comment.objects.filter(created_by=request.user, parent__isnull=True).count()
     reply_count = Comment.objects.filter(created_by=request.user, parent__isnull=False).count()
+    discussions_count = Discussion.objects.filter(created_by=request.user).count()
+    datetime_last_comment = Comment.objects.filter(created_by=request.user).aggregate(Max('created_on'))['created_on__max']
+
     context = {
                 'userdetail':userDetail, 
                 'age':age, 
                 'comment_count':comment_count,
                 'reply_count':reply_count,
-            }
+                'count_created_discussion': discussions_count,
+                'datetime_last_comment': datetime_last_comment,
+              }
     return render(request, 'user/user_info.html', context)
 
 @login_required(login_url='/login')
@@ -96,6 +103,85 @@ def user_detail(request, userid):
 
 @login_required(login_url='/login')
 def user_context(request, userid):
+    usersection_number = int(request.GET.get('usertab', '1'))
+    section_name = request.GET.get('predeftab', '_')
+    if not usersection_number:
+        usersection_number = 1
+    if not section_name:
+        section_name = "_"
+    print (f"request.method {request.method}")
+    #request.session['previous_url'] = request.META.get('HTTP_REFERER')
+    if request.method == 'POST':
+        instanceContext = get_object_or_404(UserContext, user=request.user)
+        instanceDetail = get_object_or_404(UserDetail, user=request.user)
+        form = UserContextForm(request.POST, instance=instanceContext)
+        if form.is_valid():
+            userContext = form.save(commit=False)
+            userContext.rows_per_page = form.cleaned_data['rows_per_page']
+            #userContext.display_fullname = form.cleaned_data['display_fullname'] 
+            if userContext.display_fullname:
+                if instanceDetail.last_name:
+                    userContext.displayed_username = instanceDetail.first_name+" "+instanceDetail.last_name
+            else:
+                userContext.displayed_username = request.user.username
+            userContext.display_time_difference = form.cleaned_data['display_time_difference']
+            userContext.auto_show_all_replies = form.cleaned_data['auto_show_all_replies']
+           # userContext.notify_on_comment = form.cleaned_data['notify_on_comment']
+           # userContext.notify_on_discussion = form.cleaned_data['notify_on_discussion']
+           # userContext.notify_on_favorite = form.cleaned_data['notify_on_favorite']
+            userContext.save()
+            return redirect('navigate_back')
+    else:
+        instanceContext = get_object_or_404(UserContext, user=request.user)
+        form = UserContextForm(instance=instanceContext)
+        utils.save_page(request)
+    user_sections = UserSection.objects.filter(user=request.user).order_by('number')
+    print (user_sections)
+    if user_sections:
+        if usersection_number==0:
+            usersection_number=1
+        usersection_name = (user_sections.filter(number=usersection_number)[0]).name
+        usersection_title = (user_sections.filter(number=usersection_number)[0]).title
+        usersection_type = (user_sections.filter(number=usersection_number)[0]).type
+        usersection_id = (user_sections.filter(number=usersection_number)[0]).id
+    else:
+        usersection_name = ""
+        usersection_title = ""  
+        usersection_number = 0
+        usersection_type = ""
+        usersection_id = 0
+    excluded_names = UserSection.objects.filter(user=request.user).values_list('name',flat=True)
+    print (excluded_names)
+    #sections = Section.objects.exclude(name__in=excluded_names).values('name','name').order_by('number')
+    sections = Section.objects.exclude(name__in=excluded_names).order_by('number')
+    print (f"sections: {sections}")
+    if sections:
+        if not section_name or section_name=='_':
+            section_name = (sections[0]).name
+        print(f"section_name: {section_name}")
+        section_obj=Section.objects.filter(name=section_name)[0]
+        domains = Domain.objects.filter(section=section_obj)
+    else:
+        domains = None
+        section_name = "_"
+    
+    context = {
+        'form': form,
+        'userid': userid,
+        'user_section_number': usersection_number,
+        'user_section_name': usersection_name,
+        'user_section_title': usersection_title,
+        'user_section_type': usersection_type,
+        'user_section_id': usersection_id,
+        'user_sections': user_sections,
+        'section_name': section_name,
+        'sections': sections,
+        'domains': domains,
+    }
+    return render(request, 'user/user_context.html', context)
+
+@login_required(login_url='/login')
+def user_tabs(request, userid):
     usersection_number = int(request.GET.get('usertab', '1'))
     section_name = request.GET.get('predeftab', '_')
     if not usersection_number:
@@ -180,26 +266,6 @@ def user_context(request, userid):
         print(op)
         instanceContext = get_object_or_404(UserContext, user=request.user)
         form = UserContextForm(instance=instanceContext)
-    elif request.method == 'POST':
-        instanceContext = get_object_or_404(UserContext, user=request.user)
-        instanceDetail = get_object_or_404(UserDetail, user=request.user)
-        form = UserContextForm(request.POST, instance=instanceContext)
-        if form.is_valid():
-            userContext = form.save(commit=False)
-            userContext.rows_per_page = form.cleaned_data['rows_per_page']
-            #userContext.display_fullname = form.cleaned_data['display_fullname'] 
-            if userContext.display_fullname:
-                if instanceDetail.last_name:
-                    userContext.displayed_username = instanceDetail.first_name+" "+instanceDetail.last_name
-            else:
-                userContext.displayed_username = request.user.username
-            userContext.display_time_difference = form.cleaned_data['display_time_difference']
-            userContext.auto_show_all_replies = form.cleaned_data['auto_show_all_replies']
-           # userContext.notify_on_comment = form.cleaned_data['notify_on_comment']
-           # userContext.notify_on_discussion = form.cleaned_data['notify_on_discussion']
-           # userContext.notify_on_favorite = form.cleaned_data['notify_on_favorite']
-            userContext.save()
-            #return redirect('navigate_back')
     else:
         instanceContext = get_object_or_404(UserContext, user=request.user)
         form = UserContextForm(instance=instanceContext)
@@ -247,7 +313,7 @@ def user_context(request, userid):
         'sections': sections,
         'domains': domains,
     }
-    return render(request, 'user/user_context.html', context)
+    return render(request, 'user/user_tabs.html', context)
 
 @login_required(login_url='/login')
 def user_section_operation(request, userid, section, operation):
