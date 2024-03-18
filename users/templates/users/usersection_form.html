@@ -12,8 +12,17 @@
 {% block content_main %}
     <div class="col-md-4">
         <form action="" method="post">{% csrf_token %}
-            {{ form.as_p }}
-
+            <table>
+                  <tr>
+                    <td>Doména:</td>
+                    <td>{{ form.name }}</td>
+                  </tr>
+                  <tr>
+                    <td>Popis:</td>
+                    <td>{{ form.description }}</td>
+                  </tr>
+            </table>
+            <br>
             <table class="table">
                 {{ domains.management_form }}
 
@@ -22,7 +31,9 @@
                         <thead>
                         <tr>
                             {% for field in form.visible_fields %}
-                                <th>{{ field.label|capfirst }}</th>
+                                <th>Doména
+                                 <!--   {{ field.label_tag|capfirst }}-->
+                                </th>
                             {% endfor %}
                         </tr>
                         </thead>
@@ -43,7 +54,7 @@
                     </tr>
                 {% endfor %}
             </table>
-            <br><hr><br>
+            <br><hr>
             <div style="display: flex; justify-content: space-between;">
                 <span>
                     <input type="submit" value="&nbsp;Uložit sekci&nbsp;" class="button-font-size"/>

@@ -272,7 +272,7 @@ def user_section_edit(request, userid, section):
         'section': section,
         'section_domains': domains, 
     }
-    return render(request, 'user/user_section.html', context)
+    return render(request, 'user/usersection_form.html', context)
 
 
 def user_section_domains(request, usersectionid):
@@ -309,11 +309,13 @@ def user_section_new(request, userid, number):
         'userid': userid,
         'usersectionid': usersection.id,
     }
-    return render(request, 'user/user_section.html', context)
+    return render(request, 'user/usersection_form.html', context)
 
 
 class UserSectionList(ListView):
     model = UserSection
+    fields = ['name', 'description']
+    labels = {'name': 'Jméno sekce','description': 'Popis',}
 
 class UserSectionCreate(CreateView):
     model = UserSection

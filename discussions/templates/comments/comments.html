@@ -7,7 +7,7 @@
 {% block content_header %}
 <div style="margin-top:1px;padding-top: 1px;padding-bottom: 1px; display: flex; justify-content: space-between; align-items: center; white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
  <!-- <div style="font-size:x-large;margin-top:10px;text-align: left; white-space: nowrap;overflow: hidden;text-overflow: ellipsis; ">-->
-  <span style="text-align: right; font-size:20px;display: inline-block; max-width: 780px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"> Diskuse<a href="{{discussion.url}}" target="_blank" style="color:azure">{{ discussion.title }}</a></span>
+  <span style="text-align: right; font-size:20px;display: inline-block; max-width: 780px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"> Diskuse:<a href="{{discussion.url}}" target="_blank" style="color:azure">{{ discussion.title }}</a></span>
   <span style="text-align: left; font-size:small;"><a class="a-diskuse" href="{% url 'navigate_back'%}">&nbsp;X&nbsp;</a></span>
 </div>
 
@@ -37,7 +37,7 @@
 <form  method="POST" action="{% url 'new_comment' diskuse_id %}">{% csrf_token %} 
     {{ form_comment.as_table }}
     <div style="display: flex; justify-content: space-between; align-items: center;">
-      <button type="submit" class="button-font-size">&nbsp;Uložit komentář&nbsp;</button>&nbsp;&nbsp;
+      <button type="submit" class="button-font-size">&nbsp;<b>Uložit komentář</b>&nbsp;</button>&nbsp;&nbsp;
       {% if not reply_comment %}
       <a style="font-size: small;" title="zobrazit pouze vlákna s mými příspěvky" href="?sort_by={{sort_by}}&only_mine_threads={% if only_mine_threads == 1%}0{% else %}1{% endif %}">{% if only_mine_threads %}&nbsp;&#x2714;&nbsp;{% endif%}zobrazit pouze vlákna s mými příspěvky</a>
       {% endif %}

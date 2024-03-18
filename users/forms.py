@@ -47,14 +47,13 @@ class UserContextForm(forms.ModelForm):
         fields = ['rows_per_page', 'auto_show_all_replies', 'display_time_difference']
 
 class UserSectionForm(forms.ModelForm):       
-    name=forms.CharField(label='Jméno sekce', required=True, widget=forms.TextInput(attrs={'class': 'input-font', 'size':40, 'placeholder':'název sekce'}))
-    description=forms.CharField(label='Popis sekce', required=False, widget=forms.Textarea(attrs={'rows': '4', 'placeholder':'popis, účel a charakteristika sekce'}))
+    name=forms.CharField(label='Jméno sekce', required=True, widget=forms.TextInput(attrs={'class': 'input-font', 'size': 52, 'placeholder':'název sekce'}))
+    description=forms.CharField (label='Popis sekce',required=False, widget=forms.Textarea(attrs={'rows': '3', 'cols':'40', 'size': '80', 'placeholder':'popis, účel a charakteristika sekce', 'class': 'custom-textarea'}))
 
     class Meta:
         model = UserSection
         # Uveďte pole, která chcete zahrnout do formuláře
         fields = ['name', 'description']
-        labels = {'name':'Jméno sekce', 'description':'Popis'}
         #exclude = ()
 
 class UserSectionDomainForm(forms.ModelForm):       
@@ -63,7 +62,6 @@ class UserSectionDomainForm(forms.ModelForm):
         model = UserSectionDomain
         # Uveďte pole   
         fields = ['domain']
-        labels = {'domain':'Doména'}
         #exclude = ()
 
 
