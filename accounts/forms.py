@@ -13,7 +13,7 @@ from django.core.mail import send_mail
 class RegistrationForm(UserCreationForm):
     email = forms.EmailField()
     born_on = forms.DateField(label='Narozen dne',required=True, help_text="Registrovat se může pouze osoba starší 15ti let. Proto uveďte své datum narození.", widget=forms.SelectDateWidget(years=range(1940, 2013),empty_label='Vyberte datum'))
-    first_name=forms.CharField(label='Křestní jméno:', required=True, widget=forms.TextInput(attrs={'class': 'input-font', 'placeholder':'Křestní jméno'}))
+    first_name=forms.CharField(label='Jméno:', required=True, widget=forms.TextInput(attrs={'class': 'input-font', 'placeholder':'Jméno'}))
     last_name=forms.CharField(label='Příjmení:', required=True, widget=forms.TextInput(attrs={'class': 'input-font',  'placeholder':'Příjmení'}))
     confirm=forms.BooleanField(label='Potvrzuji, že jsem uvedl pravdivé údaje',required=True)
     #captcha = ReCaptchaField()
@@ -21,7 +21,7 @@ class RegistrationForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2', 'born_on', 'confirm')
+        fields = ('username', 'email', 'first_name', 'last_name',  'password1', 'password2', 'born_on', 'confirm')
 
 class MySetPasswordForm(SetPasswordForm):
    class Meta:

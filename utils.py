@@ -1,7 +1,8 @@
 from datetime import datetime, timedelta
 from urllib.parse import parse_qs, urlparse, urlunparse
 from django.core.paginator import Paginator
-
+import re
+import dns
 from users.models import UserContext
 
 ############################
@@ -24,6 +25,24 @@ from users.models import UserContext
 # změna emailu -> nová přeaktivace účtu
 # sdílet příspěvek na sociálních sítích
 
+def validate_email(email):
+    # Kontrola formátu emailu
+    if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
+        return False, "Neplatný formát emailové adresy"
+
+    # Rozdělení emailu na jméno a doménu
+    username, domain = email.split('@')
+
+    # Kontrola existence domény pomocí DNS dotazu
+    try:
+        dns.resolver.resolve(domain, 'MX')
+        return True, "Emailová adresa existuje"
+    except dns.resolver.NoAnswer:
+        return False, "Doména neexistuje"
+    except dns.resolver.NXDOMAIN:
+        return False, "Doména neexistuje"
+    except Exception as e:
+        return False, f"Chyba při ověřování domény: {e}"
 
 
 def remove_utm_parameters(url):

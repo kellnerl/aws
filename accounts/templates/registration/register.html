@@ -9,6 +9,11 @@
   </div>
 {% endblock %} 
 {% block content_main %} 
+    {% if form.errors %}
+        <div style="color: red;font-size:small">Registrace se nezdařila. {{form.errors}}</div>
+    {% else %}
+        <div>&nbsp;</div>
+    {% endif %}
     <br>
     {% if messages %}
     <ul class="messages" style="color:red;font-weight:bold">
@@ -17,7 +22,7 @@
         {% endfor %}
     </ul>
     {% endif %}
-    <form  action="{% url 'register' %}" method="POST">
+    <form  action="{% url 'register' %}" method="POST">{% csrf_token %} 
         <table>{% csrf_token %} 
             {% for field in form %}
             <tr>
@@ -33,13 +38,13 @@
                     {% if field.name == 'born_on' %}<br><br>{% endif %}</td>           
             </tr>
             {% endfor %}
-        </table>
-        <hr><br>
+        </table>   
+        <br><hr>
             <div style="display: flex; justify-content: center; align-items: center;">
               <span><button class="button-font-size" type="submit">&nbsp;<b>Registrovat</b>&nbsp;</button>&nbsp;</span>
             </div>
     </form>
-    <br><br>
+    <br>
 <script>
     const passwordInput1 = document.querySelector('#id_password1');
     const passwordInput2 = document.querySelector('#id_password2');

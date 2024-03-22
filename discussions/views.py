@@ -716,7 +716,12 @@ def comments(request, diskuse_id):
                 root_comments=root_comments.exclude(id=cmnt.id)
     #####TH
     for elem in root_comments:
-        reply_comments = Comment.objects.filter(root_id = elem.root_id)
+        if sort_by==1:
+            reply_comments = Comment.objects.filter(root_id = elem.root_id).order_by('-created_on')
+        elif sort_by==2:
+            reply_comments = Comment.objects.filter(root_id = elem.root_id).order_by('-replies_count')
+        elif sort_by==3:
+            reply_comments = Comment.objects.filter(root_id = elem.root_id).order_by('-plus')
         cache_tree_children(reply_comments)
         elem.reply_comments = reply_comments
     
@@ -765,7 +770,13 @@ def comments_thread (request, diskuse_id, thread_id):
     else:
         discussion = None
     for elem in thread_comments:
-        reply_comments = Comment.objects.filter(root_id = elem.root_id)
+        if sort_by==1:
+            reply_comments = Comment.objects.filter(root_id = elem.root_id).order_by('-created_on')
+        elif sort_by==2:
+            reply_comments = Comment.objects.filter(root_id = elem.root_id).order_by('-replies_count')
+        elif sort_by==3:
+            reply_comments = Comment.objects.filter(root_id = elem.root_id).order_by('-plus')
+
         cache_tree_children(reply_comments)
         elem.reply_comments = reply_comments
     page_obj = thread_comments
@@ -869,7 +880,12 @@ def options_comment(request, diskuse_id, comment_id):
     elif sort_by==3:
         root_comments = Comment.objects.filter(discussion=discussion, parent__isnull=True).order_by('-plus')
     for elem in root_comments:
-        reply_comments = Comment.objects.filter(root_id = elem.root_id)
+        if sort_by==1:
+            reply_comments = Comment.objects.filter(root_id = elem.root_id).order_by('-created_on')
+        elif sort_by==2:
+            reply_comments = Comment.objects.filter(root_id = elem.root_id).order_by('-replies_count')
+        elif sort_by==3:
+            reply_comments = Comment.objects.filter(root_id = elem.root_id).order_by('-plus')
         cache_tree_children(reply_comments)
         elem.reply_comments = reply_comments
 

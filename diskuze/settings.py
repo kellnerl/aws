@@ -202,11 +202,13 @@ LOGIN_REDIRECT_URL = "/"
 
 # Nastavení SMTP serveru pro posílání emailu
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.ipe.cz'  # Adresa SMTP serveru
-EMAIL_PORT = 465  # Port SMTP serveru
+EMAIL_HOST = 'smtp.zoner.cz'  # Adresa SMTP serveru
+EMAIL_PORT = 587#465  # Port SMTP serveru
 EMAIL_HOST_USER = 'ipe@ipe.cz'  # Uživatelské jméno pro přihlášení k SMTP serveru
-EMAIL_HOST_PASSWORD = '+xj3XXC*9TEyf+G'  # Heslo pro přihlášení k SMTP serveru
+#EMAIL_HOST_PASSWORD = '+xj3XXC*9TEyf+G'  # Heslo pro přihlášení k SMTP serveru
+EMAIL_HOST_PASSWORD = '+xj3XXC*9TEyf+G' 
 EMAIL_USE_TLS = False  # Použít TLS pro zabezpečené spojení
 EMAIL_USE_SSL = True  # Použít SSL pro zabezpečené spojení
+EMAIL_SSL_VERIFY = False  # Vypnout ověřování certifikátu SSL
 DEFAULT_FROM_EMAIL = 'ipe@ipe.com'  # Výchozí e-mailová adresa odesílatele
 

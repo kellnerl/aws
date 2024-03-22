@@ -12,6 +12,7 @@ tldextract
 bs4
 gunicorn
 captcha
+dnspython
 pytz
 Pillow==8.4.0
 

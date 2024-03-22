@@ -27,6 +27,7 @@ class UserContext(models.Model):
     display_time_difference = models.BooleanField(default=False)
     ip_address = models.GenericIPAddressField(null=True)
     rows_per_page = models.IntegerField(default=10, null=False)
+    days_in_new_tabs = models.IntegerField(default=2, null=False)
     auto_show_all_replies = models.BooleanField(default=False)
     notify_on_discussion = models.BooleanField(default=False)
     notify_on_comment = models.BooleanField(default=False)

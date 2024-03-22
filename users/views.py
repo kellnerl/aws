@@ -103,12 +103,7 @@ def user_detail(request, userid):
 
 @login_required(login_url='/login')
 def user_context(request, userid):
-    usersection_number = int(request.GET.get('usertab', '1'))
-    section_name = request.GET.get('predeftab', '_')
-    if not usersection_number:
-        usersection_number = 1
-    if not section_name:
-        section_name = "_"
+    
     print (f"request.method {request.method}")
     #request.session['previous_url'] = request.META.get('HTTP_REFERER')
     if request.method == 'POST':
@@ -118,6 +113,7 @@ def user_context(request, userid):
         if form.is_valid():
             userContext = form.save(commit=False)
             userContext.rows_per_page = form.cleaned_data['rows_per_page']
+            userContext.days_in_new_tabs = form.cleaned_data['days_in_new_tabs']
             #userContext.display_fullname = form.cleaned_data['display_fullname'] 
             if userContext.display_fullname:
                 if instanceDetail.last_name:
@@ -135,48 +131,10 @@ def user_context(request, userid):
         instanceContext = get_object_or_404(UserContext, user=request.user)
         form = UserContextForm(instance=instanceContext)
         utils.save_page(request)
-    user_sections = UserSection.objects.filter(user=request.user).order_by('number')
-    print (user_sections)
-    if user_sections:
-        if usersection_number==0:
-            usersection_number=1
-        usersection_name = (user_sections.filter(number=usersection_number)[0]).name
-        usersection_title = (user_sections.filter(number=usersection_number)[0]).title
-        usersection_type = (user_sections.filter(number=usersection_number)[0]).type
-        usersection_id = (user_sections.filter(number=usersection_number)[0]).id
-    else:
-        usersection_name = ""
-        usersection_title = ""  
-        usersection_number = 0
-        usersection_type = ""
-        usersection_id = 0
-    excluded_names = UserSection.objects.filter(user=request.user).values_list('name',flat=True)
-    print (excluded_names)
-    #sections = Section.objects.exclude(name__in=excluded_names).values('name','name').order_by('number')
-    sections = Section.objects.exclude(name__in=excluded_names).order_by('number')
-    print (f"sections: {sections}")
-    if sections:
-        if not section_name or section_name=='_':
-            section_name = (sections[0]).name
-        print(f"section_name: {section_name}")
-        section_obj=Section.objects.filter(name=section_name)[0]
-        domains = Domain.objects.filter(section=section_obj)
-    else:
-        domains = None
-        section_name = "_"
     
     context = {
         'form': form,
         'userid': userid,
-        'user_section_number': usersection_number,
-        'user_section_name': usersection_name,
-        'user_section_title': usersection_title,
-        'user_section_type': usersection_type,
-        'user_section_id': usersection_id,
-        'user_sections': user_sections,
-        'section_name': section_name,
-        'sections': sections,
-        'domains': domains,
     }
     return render(request, 'user/user_context.html', context)
 

@@ -94,30 +94,55 @@ def register(request):
                 if age<15:
                     messages.error(request, f"Věk {age} let neodpovídá požadavkům. Ukončete registraci!")
                 else:
-                    user = form.save(commit=False)
-                    user.is_active = False
-                    user.is_active = True ### pouze dočasně dokud není https
-                    user.save()
-                    userDetail = UserDetail.objects.get(user=user)
-                    userDetail.born_on = datum_narozeni
-                    userDetail.save()
-
-            # Generování potvrzovacího tokenu
-                    token = default_token_generator.make_token(user)
-
-            # Vytvoření potvrzovacího e-mailu
-                    current_site = get_current_site(request)
-                    mail_subject = 'Aktivace účtu na diskuze.cz'
-                    message = render_to_string('activation/activation_email.html', {
-                    'user': user,
-                    'domain': current_site.domain,
-                    'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-                    'token': token,
-                    })
-                    print("posílám email...")
-                    #send_mail(mail_subject, message, 'info@ipe.cz', [user.email], html_message=message)
-
+                    user=None
+                    user_detail=None
+                    try:
+                        user = form.save(commit=False)
+                        user.is_active = False
+                        user.is_active = True ### pouze dočasně dokud není https
+                        user.save()
+                    except Exception as e:
+                        messages.error(request, f"{str(e)}")
+                        return render(request, 'registration/register.html', {'form': form, 'central': True})
+                    try:
+                        userDetail = UserDetail.objects.get(user=user)
+                        userDetail.born_on = datum_narozeni
+                        userDetail.save()
+                    except Exception as e:
+                        if 'user' in locals():
+                            user.delete()
+                        messages.error(request, f"{str(e)}")
+                        return render(request, 'registration/register.html', {'form': form, 'central': True})
+                    try:                    
+                # Generování potvrzovacího tokenu
+                        token = default_token_generator.make_token(user)
+                # Vytvoření potvrzovacího e-mailu
+                        current_site = get_current_site(request)
+                        mail_subject = 'Aktivace účtu na diskuze.cz'
+                        message = render_to_string('activation/activation_email.html', {
+                        'user': user,
+                        'domain': current_site.domain,
+                        'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                        'token': token,
+                        })
+                        print("posílám email...")
+                        send_mail(mail_subject, message, 'info@ipe.cz', [user.email], html_message=message)
+                    except Exception as e:
+                        if 'userDetail' in locals():
+                            userDetail.delete() 
+                        if 'user' in locals():
+                            user.delete()
+                        messages.error(request, f"{str(e)}")
+                        return render(request, 'registration/register.html', {'form': form, 'central': True})
                     return redirect('registration_done', username=user.username)
+                  #  except Exception as e:
+                        # Zpracování chyb
+                  #      if 'user_detail' in locals():
+                  #          user_detail.delete()  # Smazání uživatelských detailů
+                  #      if 'user' in locals():
+                  #          user.delete()  # Smazání uživatele
+                  #      messages.error(request, f"Registrace neproběhla - systémová chyba. {str(e)}")
+
         else:
             print("form není validní {form}")
     else: 
