@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.postgres",
+    "mail",
     'crispy_forms', #použití pokročilých crispy formulářů
     "mptt",
     "tempus_dominus",  
