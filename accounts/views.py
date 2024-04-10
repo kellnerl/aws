@@ -85,9 +85,10 @@ def register(request):
         if form.is_valid():
             email = form.cleaned_data['email']
             users=User.objects.filter(email=email)
-            if users:
-                messages.error(request, f"Účet se zadaným emailem již existuje! Použijte jiný email.")
-            else:
+            #if users:
+            #    messages.error(request, f"Účet se zadaným emailem již existuje! Použijte jiný email.")
+            #else:
+            if users or not users:
                 datum_narozeni = form.cleaned_data['born_on']
                 aktualni_datum = datetime.now()
                 age = aktualni_datum.year - datum_narozeni.year - ((aktualni_datum.month, aktualni_datum.day) < (datum_narozeni.month, datum_narozeni.day))
