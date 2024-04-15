@@ -2,6 +2,7 @@ from django import forms
 import requests
 
 from discussions.models import ArticleTheme, Section
+from articles.models import Article
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Div, Field
 
@@ -57,4 +58,5 @@ class ArticleUserQueryForm(forms.ModelForm):
 
     class Meta:
         # Uveďte pole, která chcete zahrnout do formuláře
+        model = Article
         fields = ['key_word', 'section']
