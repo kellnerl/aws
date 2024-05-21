@@ -1,0 +1,222 @@
+/* Reset CSS */
+hvezdicka {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+  font-family: Arial, sans-serif;
+  /* Další vlastnosti fontu */
+}
+
+.input-font {
+  font-size: 16px;
+}
+
+.button-font-size {
+  font-size: 16px;
+}
+
+/* Styly rámečku */
+.container {
+  border: 1px solid #be6c6c;
+  background-color: #f1f0f4;
+  padding: 10px;
+  width: 800px;
+  height: auto;
+  margin: 1 auto;
+  border-radius: 2px;
+}
+
+.white_container {
+  border: 1px solid #be6c6c;
+  background-color: #fefefe;
+  padding: 10px;
+  width: 800px;
+  height: auto;
+  margin: 1 auto;
+  border-radius: 2px;
+}
+
+/* Styly záložek */
+.tabs {
+  overflow: hidden;
+  background-color: #f1f1f1;
+  border-radius: 3px;
+}
+
+.tab {
+  float: left;
+  border: 1px solid #aea6a6;
+  background-color: #ccc;
+  width: calc(98% / 3 - 10);
+  cursor: pointer;
+  padding: 6px;
+  text-align: center;
+  border-radius: 3px;
+}
+
+.tab:hover {
+  background-color: #2e1bc3;
+}
+
+/* Styly obsahu záložek */
+.tab-content {
+  display: none;
+  background-color: #c7c7c7;
+  height: auto;
+  padding: 10px;
+  margin: 10 auto;
+  border: 1px solid #aba9a9;
+  border-radius: 3px;
+}
+
+fieldset {
+  border: 1px solid #be6c6c;
+  background-color: #ffffff;
+  padding: 8px;
+  margin: 10 auto;
+  border-radius: 1px;
+}
+
+legend {
+  background-color: #f4f3f7;
+  border: 1px solid #be6c6c;
+  padding: 0px;
+  font-size: x-small;
+}
+
+a {
+  color: #471fb6;
+  text-decoration: none;
+  padding: 6px;
+  border-radius: 4px;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.a-selected {
+  color: rgb(71, 31, 182);
+  text-decoration: underline;
+  padding: 10px;
+}
+
+.a-selected:hover {
+  color: rgb(71, 31, 182);
+  text-decoration: none;
+  padding: 10px;
+}
+
+.a-diskuse  {
+  color: white;
+  background-color: rgb(71, 31, 182);
+  text-decoration: none;
+  padding: 4px;
+}
+
+.a-diskuse:hover {
+  text-decoration: underline;
+}
+
+.a-filter  {
+  color: white;
+  background-color: #979797;
+  text-decoration: none;
+  padding: 4px;
+  border-radius: 3px;
+}
+
+.a-filter-selected  {
+  color: white;
+  background-color: #5f5e5e;
+  text-decoration: underline;
+  padding: 4px;
+  border-radius: 3px;
+}
+
+.a-filter:hover {
+  text-decoration: underline;
+}
+
+.a-filter-selected:hover {
+  text-decoration: underline;
+}
+
+.rate {
+  text-decoration: none;
+}
+
+.dropdown {
+        position: relative;
+        display: inline-block;
+    }
+    
+    .dropdown-content {
+        display: none;
+        border: 1px solid #be6c6c;
+        background-color: #c6c0c0;
+        min-width: 120px;
+        box-shadow: 0px 8px 16px 0px rgba(12, 11, 11, 0.2);
+        padding: 6px 10px;
+        z-index: 999;
+    }
+    
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+    
+    .dropdown-content a {
+        color: black;
+        text-decoration: none;
+        display: block;
+    }
+    
+    .dropdown-content a:hover {
+        background-color: #f1f1f1;
+    }
+
+    .button-link {
+      display: inline-block;
+      padding: 5px 10px;
+      background-color: #afb1f1;
+      color: #070111;
+      text-decoration: none;
+      border: 2px;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+
+    .a-small-button {
+      font-size: medium;
+      padding: 1px;
+      margin-top: 3px;
+      border-radius: 4px;
+      border: 1px solid rgb(65, 1, 175);
+      color:rgb(65, 1, 175);
+      background-color: rgba(255, 255, 255, 0.1); 
+  }
+  
+  .a-small-button:hover {
+      text-decoration: none;
+      background-color: white; 
+      color: rgb(74, 5, 186);
+  }
+  
+  .a-xsmall-button {
+    font-size: small;
+    font-weight: bold;
+    padding: 1px;
+    margin-top: 3px;
+    border-radius: 4px;
+    border: 1px solid rgb(65, 1, 175);
+    color:rgb(65, 1, 175);
+    background-color: rgba(255, 255, 255, 0.1); 
+  }
+  
+  .a-xsmall-button:hover {
+    text-decoration: none;
+    background-color: white; 
+    color: rgb(65, 1, 175);
+  }

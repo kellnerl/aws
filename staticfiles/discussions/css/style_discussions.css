@@ -1,0 +1,464 @@
+/* Reset CSS */
+hvezdicka {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+    font-family: Arial, sans-serif;
+  /* Další vlastnosti fontu */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Minimální výška na celou obrazovku */
+}
+
+.input-font {
+  font-size: 16px;
+}
+
+.custom-textarea {
+  max-width: 794px;  /* Zde můžete nastavit maximální šířku podle svých potřeb */
+  max-height: 200px;  /* Zde můžete nastavit maximální výšku podle svých potřeb */
+  min-width: 240px;  /* Zde můžete nastavit minimální šířku podle svých potřeb */
+  min-height: 60px;  /* Zde můžete nastavit minimální výšku podle svých potřeb */
+  /* Další styly podle potřeby */
+}
+
+button[type="submit"] {
+  border: 2px solid rgb(71, 31, 182); /* Barva okraje a tloušťka */
+  padding: 2px 8px; /* Volitelné nastavení polštáře pro vzhled */
+  background-color: white; /* Barva pozadí */
+  color: rgb(71, 31, 182); /* Barva textu */
+  cursor: pointer; /* Změnit kurzor při najetí myší */
+  border-radius: 3px; /* Zaoblené rohy */
+  font-size: 14px;
+}
+
+.button-font-size {
+  font-size: 16px;
+  border: 1px solid rgb(71, 31, 182);
+  background-color: white;
+  color: rgb(71, 31, 182);
+}
+
+.text-area-frame {
+  border: 1px solid #010000;
+  padding: 4px;
+  border-radius:4px;
+  background-color: white;
+  margin: 1 auto
+}
+
+/* Styly rámečku */
+.container {
+  background-color: #e0e0e0;
+  padding: 10px;
+  width: 800px;
+  height: auto;
+  margin: 1 auto;
+  border-radius: 2px;
+  position: relative;
+}
+
+.header {
+  background-color: #f0f0f2;
+  padding: 10px;
+  width: 800px;
+  height: 40px;
+  margin: 1 auto;
+  margin-top: 22px;
+  border-radius: 2px;
+}
+
+.headline {
+  /* background-color: #bbbbbb; */
+  background-color: darkblue;
+  /* color: #29164f; */
+  color: white;
+  font-size: large;
+  font-weight: bold;
+  padding: 10px;
+  margin: 0px;
+  margin-top: 8px;
+  width: 800px;
+  height: auto;
+  margin: 1 auto;
+  border-radius: 3px;
+}
+
+/* Styly záložek */
+.tabs {
+  overflow: hidden;
+  background-color: #ababab;
+  border-radius: 3px;
+  padding: 0px;
+  margin: 0px;
+}
+
+.tab {
+  float: left;
+  border: 1px solid white;
+  background-color: #ababab;
+  width: calc(98% / 3 - 10);
+  cursor: pointer;
+  padding: 6px;
+  margin: 0px;
+  text-align: center;
+  border-radius: 3px;
+}
+
+.tab:hover {
+  background-color: #5749dd;
+}
+
+/* Styly obsahu záložek */
+.tab-content {
+  display: none;
+  background-color: #e0e0e0;
+ /* height: auto; */
+  padding: 8px;
+  margin-top: -2px;
+  margin: 2 auto;
+  border: 0px solid #ababab;
+  border-radius: 1px;
+}
+
+fieldset {
+  border: 1px solid #be6c6c;
+  background-color: #fefefe;
+  padding: 8px;
+  margin: 10 auto;
+  border-radius: 1px;
+}
+
+legend {
+  background-color: #f4f3f7;
+  border: 1px solid #be6c6c;
+  padding: 0px;
+  font-size: x-small;
+}
+
+a {
+  color: #471fb6;
+  text-decoration: none;
+  padding: 6px;
+  border-radius: 4px;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.a-selected {
+  color: rgb(71, 31, 182);
+  text-decoration: underline;
+  font-weight: bold;
+  border-radius: 4px;
+  padding: 6px;
+}
+
+.a-selected:hover {
+  color: rgb(71, 31, 182);
+  text-decoration: none;
+  padding: 6px;
+}
+
+.a-diskuse  {
+  color: white;
+  border: 1px solid white;
+  background-color: darkblue;
+  text-decoration: none;
+  padding: 4px;
+}
+
+.a-diskuse:hover {
+  text-decoration: none;
+  border: 1px solid rgb(71, 31, 182);
+  background-color: white;
+  color: rgb(71, 31, 182);
+}
+
+.a-diskuse-reverze {
+  background-color: white;
+  color: darkblue;
+  text-decoration: none;
+  padding: 4px;
+}
+
+.a-diskuse-reverze:hover {
+  text-decoration: none;
+  background-color: white;
+  color: rgb(71, 31, 182);
+}
+
+.a-small-button  {
+  color: white;
+  background-color: rgb(71, 31, 182);
+  text-decoration: none;
+  padding: 1px;
+  border-radius: 5px;
+}
+
+.a-small-button:hover {
+  text-decoration: underline;
+}
+
+.a-filter  {
+  color: white;
+  background-color: #696969;
+  text-decoration: none;
+  font-size: 11px;
+  padding: 4px;
+  border-radius: 3px;
+}
+
+.a-filter-selected  {
+  color: white;
+  font-size: 13px;
+  background-color: #2b2b2b;
+  text-decoration: underline;
+  padding: 4px;
+  border-radius: 3px;
+}
+
+.a-filter:hover {
+  text-decoration: none;
+  font-size: 11px;
+  background-color: white;
+  color: black; 
+}
+
+.a-filter-selected:hover {
+  text-decoration: none;
+}
+
+.s-char {
+  padding:4px;
+  border-radius: 50%;
+  background-color: rgb(80, 80, 169);
+  color: white;
+  font-weight: normal;
+  font-size: small;
+} 
+
+.a-char {
+    padding:1px;
+    border-radius:4px;
+    border: 1px solid gray;
+    background-color: rgb(235, 234, 234);
+    color:black;
+    font-weight:normal;
+    font-size:medium;
+}  
+.a-char:hover {
+  text-decoration: none;
+  border: 1px solid gray;
+  background-color: white;
+  font-weight:normal;
+}     
+
+.user-circle {
+  width: 22px;
+  height: 22px;
+  background-color: #3498db;
+  border-radius: 50%;
+  display: inline-block;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.dropdown {
+        position: relative;
+        display: inline-block;
+}
+    
+.dropdown-content {
+        display: none;
+        border: 1px solid #050505;
+        background-color: #e1e0e0;
+        min-width: 140px;
+        box-shadow: 0px 8px 16px 0px rgba(12, 11, 11, 0.2);
+        padding: 6px 10px;
+        z-index: 999;
+}
+    
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+    
+.dropdown-content a {
+    color: black;
+    text-decoration: none;
+    display: block;
+}
+    
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+.a-small-bold-hover {
+  font-size: small;
+  font-weight: normal;
+  padding: 0px;
+  margin-top: 3px;
+  
+  color:rgb(71, 31, 182);
+  background-color: rgba(255, 255, 255, 0.1); 
+}
+.a-small-bold-hover-selected {
+  font-size: small;
+  font-weight: bold;
+  padding: 0px;
+  margin-top: 3px;
+  color:rgb(71, 31, 182);
+  background-color: rgba(255, 255, 255, 0.1); 
+}
+
+.a-small-bold-hover:hover {
+  text-decoration: none;
+  font-weight: normal;
+  color:rgb(71, 31, 182);
+  background-color: white;
+}
+
+.a-small-bold-hover-selected:hover {
+  text-decoration: none;
+  font-weight: bold;
+  color:rgb(71, 31, 182);
+}
+
+.a-bold-hover {
+  font-size: 14px;
+  font-weight: normal;
+  padding: 0px;
+  margin-top: 3px;
+  color:#010101;
+  background-color: rgba(255, 255, 255, 0.1); 
+}
+.a-bold-hover-selected {
+  font-size: 14px;
+  font-weight: bold;
+  padding: 0px;
+  margin-top: 3px;
+  color:#010101;
+  background-color: rgba(255, 255, 255, 0.1); 
+}
+
+.a-bold-hover:hover {
+  text-decoration: none;
+  font-weight: normal;
+  color:#2a2b2b;
+  background-color: white;
+}
+
+.a-bold-hover-selected:hover {
+  text-decoration: none;
+  font-weight: bold;
+  color:#2a2b2b;
+  background-color: white;
+}
+
+
+.a-small-button {
+    font-size: medium;
+    padding: 1px;
+    margin-top: 3px;
+    border-radius: 4px;
+    border: 1px solid darkblue;
+    color:darkblue;
+    background-color: rgb(230, 230, 230); 
+}
+
+.a-small-button:hover {
+    text-decoration: none;
+    background-color: white; 
+    color: darkblue;
+}
+
+
+.a-xsmall-button {
+  font-size: small;
+  font-weight: normal;
+  padding: 1px;
+  margin-top: 3px;
+  border-radius: 4px;
+  border: 1px solid rgb(65, 1, 175);
+  color:rgb(65, 1, 175);
+  background-color: rgb(235, 235, 235); 
+}
+
+.a-xsmall-button:hover {
+  font-weight: normal;
+  text-decoration: none;
+  background-color: white; 
+  color: rgb(65, 1, 175);
+}
+
+.rate {
+    font-size: medium;
+    padding: 2px;
+    margin-top: 3px;
+    border-radius: 6px;
+    font-weight: normal;   
+    background-color: rgba(255, 255, 255, 0.1); 
+}
+
+.rate:hover {
+    font-weight: bold;
+    text-decoration: none;
+    background-color: white; 
+}
+
+.horizontal-radio {
+    display: inline-block;
+    margin-right: 10px; /* Volitelné pro odsazení mezi položkami */
+}
+
+
+.parent-div {
+  position: relative;
+  border-radius: 4px;
+  transition: opacity 0.2s ease; /* Adding a smooth transition effect */
+}
+
+.parent-div:hover  {
+ /* background-color: rgb(204, 202, 202);*/
+ background-color: rgb(232, 232, 232);
+}
+
+.child-element {
+  background-color: rgb(215, 215, 215);
+  padding: 10px;
+  margin: 5px;
+  border: 1px solid #ccc;
+  transition: opacity 0.4s ease; /* Adding a smooth transition effect */
+}
+
+.horizontal-line {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.line-text {
+  padding: 0 10px; /* Přidáme odsazení kolem textu */
+  border-bottom: 1px solid #6f6f6f; /* Vytvoříme vodorovnou čáru */
+}
+
+.line-text-selected {
+  padding: 0 10px; /* Přidáme odsazení kolem textu */
+  border-bottom: 3px solid #2e2e2e; /* Vytvoříme vodorovnou čáru */
+  font-weight: bold;
+}
+
+.line-text-invisible {
+  padding: 0 10px; /* Přidáme odsazení kolem textu */
+  border-bottom: 0px solid #6f6f6f; /* Vytvoříme vodorovnou čáru */
+  font-weight: normal;
+}
+
