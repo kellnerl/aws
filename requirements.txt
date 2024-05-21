@@ -1,5 +1,5 @@
 Django==4.2
-psycopg2==2.9.1
+psycopg2-binary
 requests==2.26.0
 python-dateutil==2.8.2
 django-recaptcha
