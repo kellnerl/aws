@@ -16,6 +16,7 @@ captcha
 dnspython
 pytz
 Pillow==8.4.0
+zlib
 
 
 
